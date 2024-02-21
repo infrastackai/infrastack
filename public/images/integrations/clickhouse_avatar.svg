@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128">
+    <path d="M0 106.667h14.222v14.222H0z" fill="red"/>
+    <path d="M0 7.111h14.222v99.556H0zm28.444 0h14.223v113.778H28.444zm28.445 0h14.222v113.778H56.889zm28.444 0h14.223v113.778H85.333zm28.445 46.222H128v21.334h-14.222z" fill="orange"/>
+</svg>

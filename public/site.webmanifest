@@ -1,0 +1,25 @@
+{
+    "name": "InfraStack AI",
+    "short_name": "InfraStack AI",
+    "start_url": ".",
+    "display": "InfraStack AI",
+    "background_color": "#000",
+    "description": "InfraStack AI | Next-Gen Observability Copilot for Developers.",
+    "icons": [
+      {
+        "src": "/apple-touch-icon.png",
+        "sizes": "80x80",
+        "type": "image/png"
+      },
+      {
+        "src": "images/touch/favicon-16x16.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      },
+      {
+        "src": "images/touch/preview.png",
+        "sizes": "800x800",
+        "type": "image/png"
+      }
+    ]
+  }
