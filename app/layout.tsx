@@ -12,6 +12,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { Toaster as DefaultToaster } from "@/components/ui/toaster"
 import { Toaster as NewYorkSonner } from "@/components/ui/sonner"
+import GoogleAnalytics from "@/components/ganalytics"
 
 export const metadata: Metadata = {
   title: {
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "InfraStack AI",
-      url: "https://infrastack.ai",
+      url: "https://www.infrastack.ai",
     },
   ],
   creator: "InfraStack AI",
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
     shortcut: "/icon.jpg",
     apple: "/icon.jpg",
   },
-  manifest: `${siteConfig.url}/site.webmanifest`,
+  manifest: `/site.webmanifest`,
 }
 
 export const viewport: Viewport = {
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <DefaultToaster />
             <NewYorkSonner />
           </ThemeProvider>
+          {process.env.NODE_ENV === "production" &&  <GoogleAnalytics />}
         </body>
       </html>
     </>

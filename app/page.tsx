@@ -359,7 +359,7 @@ export function register() {
             Traces, Metrics, and Logs
           </p>
           <p className="text-zinc-600 md:text-lg">
-            Only the most useful telemetry data, connected and correlated in real-time.
+            Only the most useful telemetry data, seamlessly integrated and intelligently correlated.
           </p>
         </div>
         <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
@@ -386,10 +386,10 @@ export function register() {
             </div>
           </div>
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Expert Copilots = Coworkers
+            Mixture of Expert Copilots
           </p>
           <p className="text-zinc-600 md:text-lg">
-            Receive real-time, expert advice and insights in specialized areas from our AI Copilots.
+            AI Copilots, equipped with specialized knowledge, ready to offer assistance & insights in niche domains.
           </p>
         </div>
         <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
@@ -418,9 +418,9 @@ export function register() {
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
             Discord & Slack
           </p>
-            <p className="text-zinc-600 md:text-lg w-full">
-              Get instant insights in your favorite productivity platform.
-            </p>
+          <p className="text-zinc-600 md:text-lg w-full">
+            Receive timely and actionable alerts directly within your preferred productivity platform.
+          </p>
         </div>
       </div>
 
