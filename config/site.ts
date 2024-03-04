@@ -2,7 +2,7 @@ export const siteConfig = {
     name: "InfraStack AI",
     url: "https://infrastack.ai",
     ogImage: "/preview.png",
-    title: "InfraStack AI | Next-Gen Observability Copilot for Developers.",
+    title: "InfraStack AI | Application Observability Copilot for Developers.",
     description:
       "AI-First Application & Infrastructure Observability Platform Empowering Developers and Modern Dev Teams Throughout Their Development and Deployment Journey.",
     links: {

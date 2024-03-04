@@ -1,21 +1,32 @@
 'use client'
 
 import { Application, SPEObject } from '@splinetool/runtime';
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense, use, useEffect, useRef, useState } from 'react';
 // @ts-ignore-start
 import anime from 'animejs';
 // @ts-ignore-end
 
 
-const Spline = React.lazy(() => import('@splinetool/react-spline'));
+import Spline from '@splinetool/react-spline';
 
 
 
 
-export function InfraStackLogo3D({scale = 2}) {
+export function InfraStackLogo3D() {
     const ref = useRef<SPEObject>();
     const [loaded, setLoaded] = React.useState(false);
     const [add, setAdd] = React.useState(false);
+
+    const [scale, setScale] =  useState(2);
+
+    useEffect(() => {
+        const { innerWidth: width, innerHeight: height } = window;
+        if (innerWidth < 768) {
+            setScale(3)
+        }
+        setLoaded(true);
+    }, []);
+
 
 
     function onMouseHover(splineEvent: any) {
@@ -40,7 +51,6 @@ export function InfraStackLogo3D({scale = 2}) {
             ref.current.scale.x = ref.current.scale.x / scale
             ref.current.scale.y = ref.current.scale.y / scale
             ref.current.scale.z = ref.current.scale.z / scale
-            console.log(ref.current)
             setLoaded(true);
             // anime({
             //     targets: ref.current.position,
@@ -187,11 +197,12 @@ export function InfraStackLogo3D({scale = 2}) {
         <>
             {/* <Suspense fallback={<div>Loading...</div>}> */}
 
-            <Spline scene="https://prod.spline.design/5y-fuynlIOIyog1p/scene.splinecode"
+
+            {loaded && <Spline scene="https://prod.spline.design/5y-fuynlIOIyog1p/scene.splinecode"
                 onLoad={onLoad}
                 // onMouseDown={onMouseHover}
                 className={`z-[51] ${!loaded ? 'opacity-0' : ''}`}
-            />
+            />}
             {/* </Suspense> */}
         </>
     )

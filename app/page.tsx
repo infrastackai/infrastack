@@ -16,7 +16,7 @@ import {
 import { buttonVariants } from "@/components/ui/button"
 import { InfraStackLogo3D } from "@/components/3d-logo"
 import { InfiniteMovingCards } from "@/components/infinite-moving-cards"
-import { ArrowUp, MessageSquare, MessagesSquare, Radio, Search, SearchCode, Signal, Sparkles, Zap } from "lucide-react"
+import { Activity, ArrowUp, BarChart2, BarChart4, LineChart, MessageSquare, MessagesSquare, Radio, Search, SearchCode, Signal, Sparkles, TrendingUp, Zap } from "lucide-react"
 import { MovingIntegrations } from "@/components/moving-integrations"
 // import MailPage from "@/app/examples/mail/page"
 
@@ -34,24 +34,38 @@ import { use, useEffect, useRef } from "react"
 const customers = [
   {
     logo: "/images/openai.svg",
-  },
-  {
-    logo: "/images/duolingo.svg",
-  },
-  {
-    logo: "/images/tesla.svg",
+    className: "h-28 w-28"
   },
   // {
   //   logo: "/images/mercedes.svg",
   // },
   {
+    logo: "/images/thirdweb.svg",
+    className: "h-40 w-40"
+  },
+  {
+    logo: "/images/permify-logo.svg",
+    className: "h-44 w-44"
+  },
+  {
     logo: "/images/vercel.svg",
+    className: "h-28 w-28"
   },
   {
-    logo: "/images/shopify.svg",
+    logo: "/images/formbricks.svg",
+    className: "h-44 w-44"
+  },
+  // {
+  //   logo: "/images/tesla.svg",
+  //   className: "h-28 w-28"
+  // },
+  {
+    logo: "/images/permify-logo.svg",
+    className: "h-40 w-40"
   },
   {
-    logo: "/images/stripe.svg",
+    logo: "/images/unwave.svg",
+    className: "h-44 w-44"
   },
   // {
   //   logo: "/images/dell.svg",
@@ -218,8 +232,9 @@ import { init } from '@infrastackai/otel';
 import { openAI, redis, postgres } from '@infrastackai/otel/instrument';
 
 export function register() { 
-  init({ serviceName: 'your-service-name', apiKey: 'your-api-key'});
-  openAI(); redis(); postgres();
+  init({ serviceName: 'your-service-name', apiKey: 'your-api-key',
+    instrumentations: [new openAI(), new redis(), new postgres()]
+  });
 }
 \`\`\``;
 
@@ -239,9 +254,12 @@ import { openAI, redis, postgres } from
 export function register() { 
   init({ 
     serviceName: 'your-service-name', 
-    apiKey: 'your-api-key'
+    apiKey: 'your-api-key',
+    instrumentations: [
+      new openAI(), new redis(), 
+      new postgres(),
+    ]
   });
-  openAI(); redis(); postgres();
 }
 \`\`\`
 `
@@ -249,7 +267,7 @@ export function register() {
   return (
 
     <div className="container relative">
-      <PageHeader className="relative dark:bg-dot-white/[0.2] bg-dot-black/[0.2]">
+      <PageHeader className="relative dark:bg-dot-white/[0.2] bg-dot-black/[0.2] rounded-full">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
         <Announcement />
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
@@ -290,8 +308,14 @@ export function register() {
           </Link> */}
           <GetDemoButton />
         </PageActions>
+        <div className="flex flex-col items-center justify-center z-[60]">
+            {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
+            <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">200M+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
+            <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1K+ Dev Hours Saved <Sparkles className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">By InfraStack AI Copilots</span></div>
+            {/* <div className="text text-3xl p-2 mt-6">Loved by Developers and Modern Dev Teams</div> */}
+          </div>
       </PageHeader>
-      <ExamplesNav className="[&>a:first-child]:text-primary pl-6 pr-6" />
+      {/* <ExamplesNav className="[&>a:first-child]:text-primary pl-6 pr-6 i" /> */}
       {/* <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
         <Image
           src="/examples/mail-dark.png"
@@ -312,23 +336,30 @@ export function register() {
 
         {/* <div className="overflow-hidden h-fit rounded-lg ring-1 ring-zinc-900 bg-background p-0"> */}
         {/* <MailPage /> */}
-        <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="object-center scale-100 mt-4 drop-shadow-2xl " />
+        {/* <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="object-center scale-100 mt-4 drop-shadow-2xl " /> */}
         {/* </div> */}
       </section>
-      <div className="w-full md:mt-14 relative" id="featuresContainerId">
-        <div className="m-auto left-0 right-0 top-6 blur-3xl bg-indigo-800/20 h-40 w-full absolute z-40"></div>
-        {/* <div className="w-full text-center">
-          <p className="text text-zinc-200 text-2xl">Trusted by developers at</p>
-        </div> */}
-        {/* <div className="w-full mt-4 hidden md:block">
+      <div className="w-full md:mt-40 mt-20 relative" id="featuresContainerId">
+        <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
+        <div className="w-full text-center">
+          <div className="flex flex-col space-y- items-center justify-center h-0">
+            {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
+            {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
+            <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
+            <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#EB459E] via-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text">Loved By Developers <br></br>And Modern Dev Teams</div>
+          </div>
+        </div>
+        
+        <div className="w-full mt-8 md:mt-12">
+          
           <InfiniteMovingCards
             items={customers}
             direction="left"
             speed="slow"
           />
-        </div> */}
+        </div>
       </div>
-      <div className="w-full text-center text-[26px] md:text-5xl font-semibold text-zinc-200 mt-18 md:mt-44">
+      <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-24 md:mt-40">
         <p className="">Supercharge your developers<br></br>with smart observability</p>
       </div>
 
@@ -386,7 +417,7 @@ export function register() {
             </div>
           </div>
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Mixture of Expert Copilots
+            Domain Expert Copilots
           </p>
           <p className="text-zinc-600 md:text-lg">
             AI Copilots, equipped with specialized knowledge, ready to offer assistance & insights in niche domains.
@@ -425,7 +456,7 @@ export function register() {
       </div>
 
       <div className="">
-        <div className="w-full text-center mt-12 md:mt-44">
+        <div className="w-full text-center mt-20 md:mt-44">
           <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
           <p className="text-zinc-500 mt-2  md:text-lg">Change a couple lines of code, and ask <br className="md:hidden"></br>InfraStack AI to find the pain</p>
           {/* <div className="flex flex-row items-center w-full justify-center">
@@ -449,13 +480,15 @@ export function register() {
         <div className="w-full flex flex-row space-x-4 items-center justify-center mt-4">
           <div className="border border-zinc-800 rounded-xl p-3 bg-zinc-950 text-sm md:text-base">FastAPI</div>
           <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">Next.JS</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Go</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">AWS</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-indigo-400 font-semibold text-sm md:text-base">+8</div>
+          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Go Lang</div>
+          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Rust</div>
+
+          {/* <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">AWS</div> */}
+          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-indigo-400 font-semibold text-sm md:text-base">+6</div>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
           <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">OpenAI</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-sm md:text-base">Mysql</div>
+          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-sm md:text-base">Prisma</div>
           <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">Postgres</div>
           <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 hidden md:block text-sm md:text-base">Redis</div>
           <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Pinecone</div>
@@ -549,13 +582,8 @@ export function register() {
       </div>
 
       <div className="relative mt-60 md:mt-80 pt-20 md:p-20">
-        <div className="md:hidden h-64 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] w-full absolute top-[-210px] m-auto left-0 right-0 z-50">
-          <InfraStackLogo3D scale={3} />
-          <div className="m-auto left-0 right-0 top-0 blur-3xl bg-indigo-700/20 h-60 w-full absolute z-30 rounded-2xl"></div>
-          <div className="absolute pointer-events-none inset-0 z-0 dark:bg-zinc-950 [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
-        </div>
-        <div className="hidden md:block h-64 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] w-full absolute top-[-210px] m-auto left-0 right-0 z-50">
-          <InfraStackLogo3D scale={2} />
+        <div className="h-64 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] w-full absolute top-[-210px] m-auto left-0 right-0 z-50">
+          <InfraStackLogo3D />
           <div className="m-auto left-0 right-0 top-0 blur-3xl bg-indigo-700/20 h-60 w-full absolute z-30 rounded-2xl"></div>
           <div className="absolute pointer-events-none inset-0 z-0 dark:bg-zinc-950 [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
         </div>
@@ -595,13 +623,21 @@ export function register() {
         <div className="w-full text-center text-[26px] md:text-5xl font-semibold text-white">
           <p>Backed By</p>
         </div>
-        <div className="container w-fit gap-x-5 gap-y-2 md:gap-y-0 grid grid-cols-1 md:grid-cols-1  lg:grid-cols-1 py-4  md:py-10">
+        <div className="container w-fit gap-x-5 gap-y-4 md:gap-y-4 grid grid-cols-1 md:grid-cols-1  lg:grid-cols-2 py-4  md:py-10">
           <div className="w-64 h-22 border border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center space-y-2 shadow-inner  shadow-zinc-900">
             <div className="hidden md:block">
               <Image src="/images/partners/nvidia.png" alt="NVIDIA" width={84} height={72} />
             </div>
             <div className="md:hidden">
               <Image src="/images/partners/nvidia.png" alt="NVIDIA" width={64} height={42} />
+            </div>
+          </div>
+          <div className="w-64 h-22 border border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center space-y-2 shadow-inner  shadow-zinc-900">
+            <div className="hidden md:block">
+              <Image src="/images/partners/microsoft.webp" alt="NVIDIA" width={160} height={72} />
+            </div>
+            <div className="md:hidden">
+              <Image src="/images/partners/microsoft.webp" alt="NVIDIA" width={160} height={42} />
             </div>
           </div>
           {/* <div className="w-64 h-22 border border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center space-y-2 shadow-inner  shadow-zinc-900">

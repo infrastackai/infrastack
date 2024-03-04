@@ -10,7 +10,7 @@ function PageHeader({
   return (
     <section
       className={cn(
-        "mx-auto flex max-w-[980px] flex-col items-center gap-2 py-12 md:py-20 md:pb-16 lg:py-28 lg:pb-16",
+        "mx-auto flex max-w-[980px] flex-col items-center gap-2 py-12 md:py-20 md:pb-16 lg:py-22 lg:pb-16",
         className
       )}
       {...props}
@@ -27,7 +27,7 @@ function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        "text-center text-[42px]  font-bold leading-tight tracking-tighter md:text-7xl lg:leading-[1.1]",
+        "text-center text-[42px]  font-bold leading-tight tracking-tighter md:text-[80px] lg:leading-[1.1]",
         className
       )}
       {...props}
@@ -57,7 +57,7 @@ function PageActions({
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-center space-x-4 py-4 md:pb-10",
+        "flex w-full items-center justify-center space-x-4 py-4 md:pb-14 pb-6",
         className
       )}
       {...props}

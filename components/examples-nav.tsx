@@ -66,9 +66,9 @@ export function ExamplesNav({ className, ...props }: ExamplesNavProps) {
       <ScrollArea className="whitespace-nowrap max-w-[600px] md:max-w-none lg:max-w-none">
         <div className={cn("mb-4 flex flex-row items-center", className)} {...props}>
           {examples.map((example, index) => (
-            <Link
-              href={"#"}
-              key={example.href}
+            <div
+              // href={"#"}
+              key={example.href+""+ index}
               className={cn(
                 "disabled  flex md:h-10 h-8 mr-2 items-center justify-center border border-zinc-800 shadow-inner rounded-full px-4 text-center text-sm md:text-base transition-colors hover:text-primary",
                 pathname?.startsWith(example.href) ||
@@ -78,7 +78,7 @@ export function ExamplesNav({ className, ...props }: ExamplesNavProps) {
               )}
             >
               {!example.icon ? <Sparkles className="h-4" /> : <example.icon className="h-4 mr-[3px]" />} {example.name}
-            </Link>
+            </div>
             
           ))}
         </div>

@@ -79,6 +79,13 @@ export function MobileNav() {
           >
             Features
           </MobileLink> */}
+          {/* <MobileLink
+            key={"/enterprise"}
+            href={"/enterprise"}
+            onOpenChange={setOpen}
+          >
+            For Enterprise
+          </MobileLink> */}
           <MobileLink
             key={"/company"}
             href={"/company"}
@@ -95,7 +102,7 @@ export function MobileNav() {
           </MobileLink>
           <MobileLink
             key={"blog"}
-            href={"/https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"}
+            href={"https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"}
             onOpenChange={setOpen}
           >
             Blog

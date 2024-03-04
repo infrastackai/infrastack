@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "InfraStack AI",
-      url: "https://www.infrastack.ai",
+      url: "https://infrastack.ai",
     },
   ],
   creator: "InfraStack AI",
@@ -65,11 +65,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.ogImage],
     creator: "@infrastackai",
-  },
-  icons: {
-    icon: "/icon.jpg",
-    shortcut: "/icon.jpg",
-    apple: "/icon.jpg",
   },
   manifest: `/site.webmanifest`,
 }

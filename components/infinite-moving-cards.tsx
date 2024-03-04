@@ -8,11 +8,12 @@ export const InfiniteMovingCards = ({
   items,
   direction = "left",
   speed = "fast",
-  pauseOnHover = true,
+  pauseOnHover = false,
   className,
 }: {
   items: {
     logo: string;
+    className: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -81,7 +82,7 @@ export const InfiniteMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          " flex min-w-full shrink-0 gap-4  w-max flex-nowrap",
+          " flex min-w-full shrink-0 gap-4  w-max flex-nowrap items-center",
           start && "animate-scroll ",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
@@ -89,11 +90,11 @@ export const InfiniteMovingCards = ({
         {items.map((item, idx) => (
           <li
             className="relative  flex-shrink-0  px-8 py-6 "
-            key={item.logo}
+            key={`${idx}-${item.logo}`}
           >
             <Image
               src={item.logo}
-              className="object-contain h-28 w-28 text-white fill-white"
+              className={` ${item.className} text-white fill-white`}
               width={112} height={112}
               alt="logo"
             />

@@ -43,7 +43,7 @@ export function MainNav() {
         >
           Features
         </Link> */}
-      {/* <Link
+        {/* <Link
           href="/docs/components"
           className={cn(
             "transition-colors hover:text-foreground/80",
@@ -54,39 +54,50 @@ export function MainNav() {
         >
           Use Cases
         </Link> */}
-      <Link
-        href="/company"
-        className={cn(
-          "transition-colors hover:text-foreground/80",
-          pathname?.startsWith("/company")
-            ? "text-foreground"
-            : "text-foreground/60"
-        )}
-      >
-        Company
-      </Link>
-      <Link
-        href="https://www.linkedin.com/company/infrastack-ai/jobs"
-        target="_blank"
-        className={cn(
-          "transition-colors hover:text-foreground/80",
-          pathname?.startsWith("/examples")
-            ? "text-foreground"
-            : "text-foreground/60"
-        )}
-      >
-        Careers
-      </Link>
-      <Link
-        href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
-        target="_blank"
-        className={cn(
-          "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block"
-        )}
-      >
-        Blog
-      </Link>
-    </nav>
+        {/* <div
+          // href="/company"
+          className={cn(
+            "transition-colors hover:text-foreground/80 disabled",
+            pathname?.startsWith("/enterprise")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          For Enterprise
+        </div> */}
+        <Link
+          href="/company"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/company")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Company
+        </Link>
+        <Link
+          href="https://www.linkedin.com/company/infrastack-ai/jobs"
+          target="_blank"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/examples")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Careers
+        </Link>
+        <Link
+          href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
+          target="_blank"
+          className={cn(
+            "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block"
+          )}
+        >
+          Blog
+        </Link>
+      </nav>
     </div >
   )
 }
