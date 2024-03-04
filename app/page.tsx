@@ -557,7 +557,7 @@ export function register() {
         /> */}
 
       <div className="w-full text-center mt-24  md:mt-48">
-        <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Top of Open Standards</p>
+        <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
       </div>
 

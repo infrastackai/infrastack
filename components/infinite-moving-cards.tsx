@@ -93,6 +93,7 @@ export const InfiniteMovingCards = ({
             key={`${idx}-${item.logo}`}
           >
             <Image
+              priority={true}
               src={item.logo}
               className={` ${item.className} text-white fill-white`}
               width={112} height={112}
