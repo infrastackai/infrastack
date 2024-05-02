@@ -309,11 +309,11 @@ export function register() {
           <GetDemoButton />
         </PageActions>
         <div className="flex flex-col items-center justify-center z-[60]">
-            {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
-            <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">200M+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
-            <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1K+ Dev Hours Saved <Sparkles className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">By InfraStack AI Copilots</span></div>
-            {/* <div className="text text-3xl p-2 mt-6">Loved by Developers and Modern Dev Teams</div> */}
-          </div>
+          {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
+          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">200M+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
+          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1K+ Dev Hours Saved <Sparkles className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">By InfraStack AI Copilots</span></div>
+          {/* <div className="text text-3xl p-2 mt-6">Loved by Developers and Modern Dev Teams</div> */}
+        </div>
       </PageHeader>
       {/* <ExamplesNav className="[&>a:first-child]:text-primary pl-6 pr-6 i" /> */}
       {/* <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
@@ -339,19 +339,19 @@ export function register() {
         {/* <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="object-center scale-100 mt-4 drop-shadow-2xl " /> */}
         {/* </div> */}
       </section>
-      <div className="w-full md:mt-40 mt-20 relative" id="featuresContainerId">
+      {false && <div className="w-full md:mt-40 mt-28 relative" id="featuresContainerId">
         <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
         <div className="w-full text-center">
           <div className="flex flex-col space-y- items-center justify-center h-0">
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
-            <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#EB459E] via-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text">Loved By Developers <br></br>And Modern Dev Teams</div>
+            <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#EB459E] via-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Developers <br></br>And Modern Dev Teams</div>
           </div>
         </div>
-        
+
         <div className="w-full mt-8 md:mt-12">
-          
+
           <InfiniteMovingCards
             items={customers}
             direction="left"
@@ -359,7 +359,8 @@ export function register() {
           />
         </div>
       </div>
-      <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-24 md:mt-40">
+      }
+      <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-16 md:mt-40">
         <p className="">Supercharge your developers<br></br>with smart observability</p>
       </div>
 
@@ -556,7 +557,7 @@ export function register() {
           speed="slow"
         /> */}
 
-      <div className="w-full text-center mt-24  md:mt-48">
+      <div className="w-full text-center mt-32  md:mt-48">
         <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
       </div>
