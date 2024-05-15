@@ -11,7 +11,7 @@ ECR_REPO = "324346964728.dkr.ecr.us-west-1.amazonaws.com"
 build:
 	docker build -t $(SERVICE):$(TAG) .
 push: build
-	AWS_DEFAULT_PROFILE=infrastack aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin $(ECR_REPO)
+	aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin $(ECR_REPO)
 	docker tag $(SERVICE):$(TAG) $(ECR_REPO)/$(SERVICE):$(TAG)
 	docker tag $(SERVICE):$(TAG) $(ECR_REPO)/$(SERVICE):latest
 	docker push $(ECR_REPO)/$(SERVICE):$(TAG)

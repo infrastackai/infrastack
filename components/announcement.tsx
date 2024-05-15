@@ -19,7 +19,7 @@ export function Announcement() {
       </span>
       <Separator className="mx-2 h-4 w-[1px] border-zinc-800" orientation="vertical" />{" "}
 
-      <div className="p-0  pr-2  text-[12px] rounded-xl text-yellow-500">Closed Beta</div>
+      {/* <div className="p-0  pr-2  text-[12px] rounded-xl text-yellow-500">Closed Beta</div> */}
         
       {/* <ArrowRightIcon className="ml-1 h-4 w-4" /> */}
     </div>

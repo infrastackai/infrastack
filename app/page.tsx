@@ -20,7 +20,7 @@ import { Activity, ArrowUp, BarChart2, BarChart4, LineChart, MessageSquare, Mess
 import { MovingIntegrations } from "@/components/moving-integrations"
 // import MailPage from "@/app/examples/mail/page"
 
-import demoPic from "@/public/images/p12.png"
+import demoPic from "@/public/infrastack-screenshot-main.jpeg"
 
 import burningMoney from "@/public/images/burning-money.gif"
 
@@ -271,13 +271,13 @@ export function register() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
         <Announcement />
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
-        <div className="top-32 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4">AI-Powered<br></br>Observability Copilot</PageHeaderHeading>
-        <PageHeaderDescription className="z-[60] text-zinc-300">
-          <p>Stop <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
-          Pinpoint performance bottlenecks, debug issues, and root causes, and get actionable insights within milliseconds
+        <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Full-Stack<br></br>Application Observability</PageHeaderHeading>
+        <PageHeaderDescription className="z-[60] text-2xl font-semibold mt-2 text-center text-zinc-400">
+          {/* <p>Stop wasting your time and <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p> */}
+          The easiest way to observe your application stacks at scale
         </PageHeaderDescription>
-        <PageActions>
+        <PageActions className="mt-2">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
             Get Started
           </Link> */}
@@ -289,14 +289,15 @@ export function register() {
           >
             Get started with InfraStack AI
           </Link> */}
-          <Link href="https://us1.infrastack.dev/">
+          <Link className="relaive" href="https://app.infrastack.ai/api/auth/login" prefetch={false}>
             <ButtonMoving
               borderRadius="0.6rem"
-              containerClassName='z-[60] w-[180px] md:w-[220px] h-[45px] mt-[-1px] rounded-sm dark:bg-zinc-950'
-              className="md:text-lg z-50 bg-white dark:hover:bg-zinc-900 dark:bg-zinc-950 text-black dark:text-white border-neutral-200 dark:border-zinc-800 "
+              containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-950'
+              className="md:text-lg z-50 font-semibold bg-white dark:hover:bg-zinc-900 dark:bg-zinc-950 text-black dark:text-indigo-400 border-neutral-200 dark:border-zinc-800 "
             >
               Try InfraStack AI
             </ButtonMoving>
+            <p className="absolute mt-1 ml-[40px] text-center text-muted-foreground text-sm">No credit card required</p>
           </Link>
           {/* <Link
             target="_blank"
@@ -308,12 +309,10 @@ export function register() {
           </Link> */}
           <GetDemoButton />
         </PageActions>
-        <div className="flex flex-col items-center justify-center z-[60]">
-          {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
-          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">200M+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
-          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1K+ Dev Hours Saved <Sparkles className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">By InfraStack AI Copilots</span></div>
-          {/* <div className="text text-3xl p-2 mt-6">Loved by Developers and Modern Dev Teams</div> */}
-        </div>
+        {/* <div className="flex flex-col items-center justify-center z-[60]">
+          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1B+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
+          <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1K+ Dev Hours Saved <Sparkles className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">By InfraStack AI</span></div>
+        </div> */}
       </PageHeader>
       {/* <ExamplesNav className="[&>a:first-child]:text-primary pl-6 pr-6 i" /> */}
       {/* <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
@@ -332,11 +331,11 @@ export function register() {
           className="block dark:hidden"
         />
       </section> */}
-      <section className="hidden md:block">
+      <section className="hidden md:block ">
 
-        {/* <div className="overflow-hidden h-fit rounded-lg ring-1 ring-zinc-900 bg-background p-0"> */}
+        {/* <div className="overflow-hidden h-fit rounded-lg riolng-1 ring-zinc-900 bg-background p-0"> */}
         {/* <MailPage /> */}
-        {/* <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="object-center scale-100 mt-4 drop-shadow-2xl " /> */}
+        <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border-none " />
         {/* </div> */}
       </section>
       {false && <div className="w-full md:mt-40 mt-28 relative" id="featuresContainerId">
