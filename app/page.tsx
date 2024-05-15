@@ -20,7 +20,7 @@ import { Activity, ArrowUp, BarChart2, BarChart4, LineChart, MessageSquare, Mess
 import { MovingIntegrations } from "@/components/moving-integrations"
 // import MailPage from "@/app/examples/mail/page"
 
-import demoPic from "@/public/infrastack-screenshot-main.jpeg"
+import demoPic from "@/public/images/app5.png"
 
 import burningMoney from "@/public/images/burning-money.gif"
 
@@ -269,13 +269,14 @@ export function register() {
     <div className="container relative">
       <PageHeader className="relative dark:bg-dot-white/[0.2] bg-dot-black/[0.2] rounded-full">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
-        <Announcement />
+        {/* <Announcement /> */}
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Full-Stack<br></br>Application Observability</PageHeaderHeading>
-        <PageHeaderDescription className="z-[60] text-2xl font-semibold mt-2 text-center text-zinc-400">
-          {/* <p>Stop wasting your time and <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p> */}
-          The easiest way to observe your application stacks at scale
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Next-Gen<br></br>Application Observability</PageHeaderHeading>
+        <PageHeaderDescription className="z-[60] text-2xl font-semibold mt-2 text-center text-zinc-200">
+          <p>Stop wasting your time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
+          <p className="text-lg text-muted-foreground">Pinpoint performance bottlenecks, debug issues, and root causes,
+          <br></br>and get actionable insights within milliseconds</p>
         </PageHeaderDescription>
         <PageActions className="mt-2">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
@@ -292,10 +293,10 @@ export function register() {
           <Link className="relaive" href="https://app.infrastack.ai/api/auth/login" prefetch={false}>
             <ButtonMoving
               borderRadius="0.6rem"
-              containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-950'
-              className="md:text-lg z-50 font-semibold bg-white dark:hover:bg-zinc-900 dark:bg-zinc-950 text-black dark:text-indigo-400 border-neutral-200 dark:border-zinc-800 "
+              containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-900'
+              className="md:text-lg z-50 font-semibold dark:hover:bg-zinc-900 dark:bg-infrastack bg-infrastack text-black dark:text-green-400 border-neutral-200 dark:border-zinc-800 "
             >
-              Try InfraStack AI
+              Get Started Free
             </ButtonMoving>
             <p className="absolute mt-1 ml-[40px] text-center text-muted-foreground text-sm">No credit card required</p>
           </Link>

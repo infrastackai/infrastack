@@ -20,14 +20,14 @@ export function MainNav() {
   }, [])
 
   return (
-    <div className="mr-4 hidden md:flex">
+    <div className="mr-4 hidden md:flex h-16">
       <Link href="/" className="mr-6 flex items-center space-x-2">
-        <Icons.infrastack className="h-6 w-6 drop-shadow-1" />
+        <Icons.infrastack className="h-8 w-8 drop-shadow-1" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
       </Link>
-      <nav className="flex items-center gap-6 text-sm">
+      <nav className="flex items-center gap-6 text-base justify-center">
         {/* <Link
           href="#"
           onClick={() => {
@@ -74,7 +74,7 @@ export function MainNav() {
               : "text-foreground/60"
           )}
         >
-          Company
+          About
         </Link>
         <Link
           href="https://www.linkedin.com/company/infrastack-ai/jobs"
@@ -96,6 +96,24 @@ export function MainNav() {
           )}
         >
           Blog
+        </Link>
+        <Link
+          href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
+          target="_blank"
+          className={cn(
+            "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block"
+          )}
+        >
+          Pricing
+        </Link>
+        <Link
+          href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
+          target="_blank"
+          className={cn(
+            "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block"
+          )}
+        >
+          Documents
         </Link>
       </nav>
     </div >
