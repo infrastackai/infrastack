@@ -28,6 +28,8 @@ const config = {
     },
     extend: {
       colors: {
+        infrastack: "#0F0F12",
+        infrastackLight: "#111114",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
