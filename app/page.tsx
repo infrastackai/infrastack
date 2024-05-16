@@ -459,7 +459,7 @@ export function register() {
       <div className="">
         <div className="w-full text-center mt-20 md:mt-44">
           <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Change a couple lines of code, and ask <br className="md:hidden"></br>InfraStack AI to find the pain</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Integrate with OpenTelemetry SDKs, or collectors based on your needs.</p>
           {/* <div className="flex flex-row items-center w-full justify-center">
           <div className="h-[60px] rounded-lg border border-zinc-800 w-[750px] flex flex-row mt-6">
             <div className="grow flex items-center pl-4 text-xl">
