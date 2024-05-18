@@ -12,7 +12,7 @@ export default function GetDemoButton() {
     }, [])
     return <Button
     variant={"outline"}
-    className={cn("text-zinc-300 dark:md:text-lg border-zinc-800 dark:border-[1px] dark:border-solid z-50 h-[56px]")} 
+    className={cn("text-zinc-300 dark:md:text-lg border-zinc-700 dark:border-[1px] dark:border-solid z-50 h-[56px]")} 
         data-cal-namespace=""
         data-cal-link="aykut-gedik-infrastack-ai/get-a-demo"
         data-cal-config='{"layout":"week_view"}'

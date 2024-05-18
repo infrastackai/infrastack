@@ -1,0 +1,44 @@
+## Django Integration
+ 
+import { Tabs } from 'nextra/components'
+import { Cards, Card } from 'nextra/components'
+
+<Tabs items={['pnpm', 'npm', 'yarn']} defaultIndex="1">
+  <Tabs.Tab>**pnpm**: Fast, disk space efficient package manager.</Tabs.Tab>
+  <Tabs.Tab>
+  <Cards>
+  {/* <Card icon={<IconPython />} title="Python" href="/docs/guide/built-ins/callout" /> */}
+</Cards>
+  </Tabs.Tab>
+  <Tabs.Tab>**Yarn** is a software packaging system.</Tabs.Tab>
+</Tabs>
+
+
+import { Steps } from 'nextra/components'
+ 
+<Steps>
+### Step 1
+ 
+Contents for step 1.
+ 
+### Step 2
+ 
+Contents for step 2.
+</Steps>
+
+
+```sh npm2yarn
+npm i -D @graphql-eslint/eslint-plugin
+```
+
+
+```js copy {1,4-5}
+import { useState } from 'react'
+ 
+function Counter() {
+  const [count, setCount] = useState(0)
+  return <button onClick={() => setCount(count + 1)}>{count}</button>
+}
+```
+
+

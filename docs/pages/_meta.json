@@ -1,9 +1,18 @@
 {
     "index": "Getting Started",
-    "contact": "Integrations",
     "github_link": {
         "title": "InfraStack AI",
-        "href": "https://github.com/infrastackai/site/docs",
+        "href": "https://github.com/infrastackai/site/tree/main/docs",
         "newWindow": true
-      }
-  }
+    },
+    "blog": {
+        "title": "Blog",
+        "type": "page"
+    },
+    "login": {
+        "title": "Log in",
+        "type": "page",
+        "href": "https://app.infrastack.ai",
+        "newWindow": true
+    }
+}

@@ -13,7 +13,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { InfraStackLogo3D } from "@/components/3d-logo"
 import { InfiniteMovingCards } from "@/components/infinite-moving-cards"
 import { Activity, ArrowUp, BarChart2, BarChart4, LineChart, MessageSquare, MessagesSquare, Radio, Search, SearchCode, Signal, Sparkles, TrendingUp, Zap } from "lucide-react"
@@ -272,13 +272,12 @@ export function register() {
         {/* <Announcement /> */}
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Next-Gen<br></br>Application Observability</PageHeaderHeading>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Ship High-Quality Code<br></br>with Next-Gen Observability</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-2xl font-semibold mt-2 text-center text-zinc-200">
-          <p>Stop wasting your time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
-          <p className="text-lg text-muted-foreground">Pinpoint performance bottlenecks, debug issues, and root causes,
-          <br></br>and get actionable insights within milliseconds</p>
+          <p>Stop wasting time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
+          <p>Find issues quickly and get actionable insights in milliseconds</p>
         </PageHeaderDescription>
-        <PageActions className="mt-2">
+        <PageActions className="mt-2 items-start">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
             Get Started
           </Link> */}
@@ -290,15 +289,19 @@ export function register() {
           >
             Get started with InfraStack AI
           </Link> */}
-          <Link className="relaive" href="https://app.infrastack.ai/api/auth/login" prefetch={false}>
-            <ButtonMoving
+          <Link className="relaive items-center flex flex-col space-y-1 z-[60]" href="https://app.infrastack.ai" prefetch={false}>
+            {/* <ButtonMoving
               borderRadius="0.6rem"
               containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-900'
               className="md:text-lg z-50 font-semibold dark:hover:bg-zinc-900 dark:bg-infrastack bg-infrastack text-black dark:text-green-400 border-neutral-200 dark:border-zinc-800 "
             >
               Get Started Free
-            </ButtonMoving>
-            <p className="absolute mt-1 ml-[40px] text-center text-muted-foreground text-sm">No credit card required</p>
+            </ButtonMoving> */}
+            <Button
+              variant={"outline"}
+              className={cn("text-white dark:hover:bg-indigo-800 bg-indigo-600 dark:md:text-lg border-zinc-800 dark:border-[1px] dark:border-solid z-50 h-[56px] w-[180px] md:w-[220px] rounded-lg")}
+            >Get Started Free</Button>
+            <p className="text-muted-foreground text-sm">No credit card required</p>
           </Link>
           {/* <Link
             target="_blank"
@@ -459,7 +462,7 @@ export function register() {
       <div className="">
         <div className="w-full text-center mt-20 md:mt-44">
           <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Integrate with OpenTelemetry SDKs, or collectors based on your needs.</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Integrate with OpenTelemetry SDKs or agent collector within minutes</p>
           {/* <div className="flex flex-row items-center w-full justify-center">
           <div className="h-[60px] rounded-lg border border-zinc-800 w-[750px] flex flex-row mt-6">
             <div className="grow flex items-center pl-4 text-xl">
