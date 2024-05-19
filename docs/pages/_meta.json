@@ -1,18 +1,59 @@
 {
-    "index": "Getting Started",
-    "github_link": {
-        "title": "InfraStack AI",
-        "href": "https://github.com/infrastackai/site/tree/main/docs",
-        "newWindow": true
+    "--": {
+        "type": "separator",
+        "title": "Docs"
     },
+    "index": "Getting Started",
     "blog": {
         "title": "Blog",
-        "type": "page"
-    },
-    "login": {
-        "title": "Log in",
         "type": "page",
-        "href": "https://app.infrastack.ai",
+        "theme": {
+            "layout": "full"
+        }
+    },
+    "changelog": {
+        "type": "page",
+        "title": "Changelog",
+        "theme": {
+            "layout": "full"
+        }
+    },
+    "roadmap": {
+        "type": "page",
+        "title": "Roadmap",
+        "theme": {
+            "layout": "full"
+        }
+    },
+    "company": {
+        "title": "Company",
+        "type": "menu",
+        "items": {
+            "about": {
+                "title": "About",
+                "href": "https://infrastack.ai/company",
+                "newWindow": true
+            },
+            "contact": {
+                "title": "Contact Us",
+                "href": "mailto:hello@infrastack.ai"
+            }
+        }
+    },
+    "404": {
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "timestamp": false
+        }
+    },
+    "-- More": {
+        "type": "separator",
+        "title": "More"
+    },
+    "opentelemetry-link": {
+        "title": "OpenTelemetry Docs ↗",
+        "href": "https://opentelemetry.io/docs/",
         "newWindow": true
     }
 }

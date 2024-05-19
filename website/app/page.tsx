@@ -16,7 +16,7 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button"
 import { InfraStackLogo3D } from "@/components/3d-logo"
 import { InfiniteMovingCards } from "@/components/infinite-moving-cards"
-import { Activity, ArrowUp, BarChart2, BarChart4, LineChart, MessageSquare, MessagesSquare, Radio, Search, SearchCode, Signal, Sparkles, TrendingUp, Zap } from "lucide-react"
+import { Activity, ArrowUp, BarChart2, BarChart4, ChevronRight, LineChart, MessageSquare, MessagesSquare, Radio, Search, SearchCode, Signal, Sparkles, TrendingUp, Zap } from "lucide-react"
 import { MovingIntegrations } from "@/components/moving-integrations"
 // import MailPage from "@/app/examples/mail/page"
 
@@ -342,14 +342,16 @@ export function register() {
         <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border-none " />
         {/* </div> */}
       </section>
-      {false && <div className="w-full md:mt-40 mt-28 relative" id="featuresContainerId">
+      {true && <div className="w-full md:mt-40 mt-28 relative" id="featuresContainerId">
         <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
         <div className="w-full text-center">
           <div className="flex flex-col space-y- items-center justify-center h-0">
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl "><span className="text-4xl text-green-400">1K+</span><br></br>Users signed up</div> */}
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
-            <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#EB459E] via-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Developers <br></br>And Modern Dev Teams</div>
+            {/* <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Next-Gen Developers</div> */}
+            <div className="text text-3xl md:text-5xl p-2 mt- font-semibold text-white inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Developers</div>
+
           </div>
         </div>
 
@@ -363,6 +365,85 @@ export function register() {
         </div>
       </div>
       }
+
+<div className="">
+        <div className="w-full text-center mt-20 md:mt-24">
+          <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing within minutes</p>
+        </div>
+
+        <div className="w-full flex flex-row space-x-4 items-center justify-center mt-4">
+          <div className="group h-26  cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconNextJs className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+            <p className="font-medium mt-2">Next.js</p>
+          </div>
+          <div className="h-26cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+            <Icons.IconExpressJS className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+            <p className="font-medium mt-2">Express.js</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconFastAPI className="w-10 h-10  bg-infrastack   rounded-full" />
+            <p className="font-medium mt-2">FastAPI</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconDjango className="w-10 h-10  bg-infrastack  rounded-full" />
+            <p className="font-medium mt-2">Django</p>
+          </div>
+          <div className="h-32 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+            <p className="font-medium mt-2 text-green-400">+2 more</p>
+          </div>
+        </div>
+        <div className="w-full flex flex-row space-x-4 justify-center mt-3">
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconGoLang className="w-10 h-10  bg-infrastack  rounded-full" />
+            <p className="font-medium mt-2">Go Lang</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconPython className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+            <p className="font-medium mt-2">Python</p>
+          </div>
+          <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+            <Icons.IconJava className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+            <p className="font-medium mt-2">Java</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconDotNet className="w-10 h-10  bg-infrastack   rounded-full" />
+            <p className="font-medium mt-2">.Net</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border     hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconRuby className="w-10 h-10  bg-infrastack  rounded-full" />
+            <p className="font-medium mt-2">Ruby</p>
+          </div>
+          <div className="h-26 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+            <p className="font-medium mt-2 text-green-400">+4 more</p>
+          </div>
+        </div>
+        <div className="w-full flex flex-row space-x-4 justify-center mt-3">
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconPostgres className="w-10 h-10  bg-infrastack  rounded-full" />
+            <p className="font-medium mt-2">Postgres</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconRedis className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+            <p className="font-medium mt-2">Redis</p>
+          </div>
+          <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+            <Icons.IconOpenAI className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+            <p className="font-medium mt-2">OpenAI</p>
+          </div>
+          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+            <Icons.IconPinecone className="w-10 h-10  bg-infrastack   rounded-full" />
+            <p className="font-medium mt-2">Pinecone</p>
+          </div>
+          <div className="h-26 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+            <p className="font-medium mt-2 text-green-400">+8 more</p>
+          </div>
+        </div>
+        <div className="w-full flex flex-row space-x-4 justify-center mt-3">
+        <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
+          </div>
+      </div>
+
       <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-16 md:mt-40">
         <p className="">Supercharge your developers<br></br>with smart observability</p>
       </div>
@@ -459,95 +540,6 @@ export function register() {
         </div>
       </div>
 
-      <div className="">
-        <div className="w-full text-center mt-20 md:mt-44">
-          <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Integrate with OpenTelemetry SDKs or agent collector within minutes</p>
-          {/* <div className="flex flex-row items-center w-full justify-center">
-          <div className="h-[60px] rounded-lg border border-zinc-800 w-[750px] flex flex-row mt-6">
-            <div className="grow flex items-center pl-4 text-xl">
-              I&apos;d like to<span className="text-green-400 ml-2 mr-2">observe</span>my nextjs app and openai api calls...
-            </div>
-            <div className="flex items-center justify-center w-14 ">
-              <ArrowUp className="h-[26px] w-[26px] text-white " />
-            </div>
-          </div>
-        </div> */}
-          <div className="flex flex-row justify-center items-center space-x-2 mt-8">
-            <div className="w-6 h-6  text-zinc-800 font-semibold rounded-full flex items-center justify-center bg-green-400">1</div>
-            <div className="text-zinc-300 md:text-lg">
-              Choose your application stacks
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full flex flex-row space-x-4 items-center justify-center mt-4">
-          <div className="border border-zinc-800 rounded-xl p-3 bg-zinc-950 text-sm md:text-base">FastAPI</div>
-          <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">Next.JS</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Go Lang</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Rust</div>
-
-          {/* <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">AWS</div> */}
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-indigo-400 font-semibold text-sm md:text-base">+6</div>
-        </div>
-        <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">OpenAI</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-sm md:text-base">Prisma</div>
-          <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 text-sm md:text-base">Postgres</div>
-          <div className="border border-zinc-800 bg-indigo-800 rounded-xl p-3 hidden md:block text-sm md:text-base">Redis</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 hidden md:block text-sm md:text-base">Pinecone</div>
-          <div className="border border-zinc-800 bg-zinc-950 rounded-xl p-3 text-indigo-400 font-semibold text-sm md:text-base">+20</div>
-        </div>
-
-        {/* <div className="flex flex-row justify-center items-center space-x-2 mt-8">
-        <div className="w-6 h-6 bg-green-400 text-zinc-800 font-semibold rounded-full text-center flex items-center justify-center">2</div>
-        <div className="text-zinc-300 text-lg">
-          Install OpenTelemetry SDKs
-        </div>
-      </div>
-
-      <div className="container w-[640px] py-4 prose prose-invert border border-zinc-800 bg-zinc-950 rounded-xl mt-4">
-        <Code code={install} />
-
-      </div> */}
-
-        <div className="flex flex-row justify-center items-center space-x-2 mt-12">
-          <div className="w-6 h-6 bg-green-400 text-zinc-800 font-semibold rounded-full text-center flex items-center justify-center">2</div>
-          <div className="text-zinc-300 md:text-lg">
-            Install and instrument
-          </div>
-        </div>
-
-        <div className="hidden md:block container text-sm md:text-base md:w-[780px]  py-4 prose prose-invert border border-zinc-800 rounded-xl mt-4 shadow-inner">
-          <Code code={instrument} />
-        </div>
-
-        <div className="md:hidden container text-xs md:text-lg w-[360px] py-4 prose prose-invert border border-zinc-800 rounded-xl mt-4 shadow-inner">
-          <Code code={instrumentMobile} />
-        </div>
-
-        <div className="flex flex-row justify-center items-center space-x-2 mt-12">
-          <div className="w-6 h-6  text-zinc-800 font-semibold rounded-full flex items-center justify-center bg-green-400">3</div>
-          <div className="text-zinc-300 md:text-lg">
-            Ask InfraStack AI Copilot
-          </div>
-        </div>
-
-        <div className="flex flex-row items-center w-full justify-center">
-          <div className="md:h-[60px] h-[50px] rounded-lg border border-zinc-800 w-[468px] md:w-[600px] flex flex-row mt-4 items-center ">
-            <div className="grow pl-4 text-sm hidden md:block md:text-xl">
-              <span className="text-green-400">Find</span>&nbsp;the slowest API endpoints, and&nbsp;<span className="text-green-400">explain</span>&nbsp;why...
-            </div>
-            <div className="grow pl-4 text-sm md:hidden md:text-xl">
-              <span className="text-green-400">Find</span>&nbsp;the slowest API endpoints, and&nbsp;<span className="text-green-400">explain</span>&nbsp;why...
-            </div>
-            <div className="flex items-center justify-center w-14 ">
-              <ArrowUp className="h-[26px] w-[26px] text-white " />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* <MovingIntegrations
           items={integrations1}
           direction="left"
@@ -561,7 +553,7 @@ export function register() {
         /> */}
 
       <div className="w-full text-center mt-32  md:mt-48">
-        <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Standards</p>
+        <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Source <br></br>& Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
       </div>
 
@@ -574,13 +566,22 @@ export function register() {
             OpenTelemetry is an open-source and vendor-neutral project, adopted and supported by industry leaders in the observability space.
           </p>
         </div>
-        <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
+        {/* <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
 
           <Image src="/images/integrations/prometheusio-icon.svg" alt="InfraStack AI Demo" width={38} height={38} />
 
           <p className="w-full text-lg md:text-xl text-zinc-200 mt-4">Prometheus</p>
           <p className="text-zinc-500 mt-4">
             Prometheus is an open-source, community-driven monitoring tool, widely used for its robust data model and query language.
+          </p>
+        </div> */}
+        <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
+
+          <Image src="/images/integrations/prometheusio-icon.svg" alt="InfraStack AI Demo" width={38} height={38} />
+
+          <p className="w-full text-lg md:text-xl text-zinc-200 mt-4">Clickhouse</p>
+          <p className="text-zinc-500 mt-4">
+          ClickHouse is an open-source, high-performance columnar database system, embraced and supported by industry leaders in data analytics.
           </p>
         </div>
       </div>
