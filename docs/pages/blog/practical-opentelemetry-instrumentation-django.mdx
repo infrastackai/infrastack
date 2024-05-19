@@ -1,0 +1,741 @@
+---
+title: "OpenTelemetry Instrumentation for Django Applications"
+date: 2024/05/18
+description: Practical OpenTelemetry Instrumentation in Django with infrastack.ai.
+ogImage: /images/blog/django-logo.gif
+tag: blog
+author: Artem Putikov
+---
+
+import { BlogHeader } from "@components/blog-header";
+
+<BlogHeader
+  title="Practical OpenTelemetry Instrumentation in Django with infrastack.ai"
+  date="May 18, 2024"
+  ogImage="/images/blog/django-logo.gif"
+  authors={["Artem Putikov"]}
+/>
+
+
+OpenTelemetry is an open-source observability framework designed to provide a unified set of tools, APIs, and SDKs for collecting, processing, and exporting telemetry data such as metrics, logs, and traces. It enables developers to gain deep insights into their applications' performance and behavior, facilitating effective monitoring and debugging. By standardizing the instrumentation of distributed systems, OpenTelemetry helps ensure that telemetry data is consistent and comprehensive, making it easier to diagnose issues, optimize performance, and maintain high availability in complex environments.
+
+In this article, we'll explore various methods of integrating OpenTelemetry into a Django project. We'll cover automatic instrumentation, programmatic instrumentation, and manual trace span creation, offering practical, realistic examples. By leveraging the capabilities of infrastack.ai as our telemetry backend, we aim to provide a comprehensive guide that goes beyond simplistic "hello world" scenarios to showcase meaningful telemetry implementation in a near-real-world context.
+
+We will be using the [Demo Bakery App](https://github.com/wagtail/bakerydemo/blob/afc8cf42a23a94fc49e70765dcd3bee9326588c3/) from [Wagtail CMS](https://wagtail.org) as our example. This project is a robust example application built with Wagtail, a popular content management system (CMS) based on Django. This demo project simulates a real-world CMS setup, providing a rich foundation for demonstrating advanced features and integrations.
+
+We will be leveraging the provided [docker-compose.yml orchestration](https://github.com/wagtail/bakerydemo/blob/afc8cf42a23a94fc49e70765dcd3bee9326588c3/docker-compose.yml) as a starting point of our stack. Please follow the [setup documentation](https://github.com/wagtail/bakerydemo/tree/afc8cf42a23a94fc49e70765dcd3bee9326588c3?tab=readme-ov-file#setup-with-docker) to get it running locally.
+
+## Automatic Integration
+
+Let's start by following the easiest recommended instrumentation method from the official [getting-started guide](https://opentelemetry.io/docs/languages/python/getting-started/#instrumentation) applying these steps to our [Demo Bakery App codebase](https://github.com/wagtail/bakerydemo/blob/afc8cf42a23a94fc49e70765dcd3bee9326588c3).
+
+### Installation
+
+The OpenTelemetry Python ecosystem provides us with convenient bootstrapping scripts capable of doing most of the integration automatically. Install it and run it inside our virtual environment:
+
+```sh
+pip install opentelemetry-distro
+opentelemetry-bootstrap -a install
+```
+
+The `opentelemetry-distro` package contains the OpenTelemetry API, SDK, and other foundational Python libraries to work with OpenTelemetry. It also includes tools like `opentelemetry-bootstrap` and `opentelemetry-instrument`.
+
+Our Bakery App uses `Postgres`, `Redis`, `uWSGI`, and includes possible integrations with `AWS S3`, `Elasticsearch`, and other common tools. The bootstrap script does a decent job of picking and installing appropriate instrumentation for each tech in our stack, provided by the [OpenTelemetry Python contrib package](https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation).
+
+However, the `opentelemetry-exporter-otlp` package, responsible for sending our traces to an OTLP-compatible backend, was not installed during bootstrapping. Without it, all we can do is print the tracing data using the default `console` exporter. This is useful for initial debugging, but for a real-life example, we need to send our traces to a real tracing backend. So let's go ahead and install it:
+
+```sh
+pip install opentelemetry-exporter-otlp
+```
+
+Now that we have everything we need, we can extend our requirements list.
+
+```diff
+diff --git requirements/base.txt requirements/base.txt
+index 79bedf6..25fe437 100644
+--- requirements/base.txt
++++ requirements/base.txt
+@@ -6,3 +6,29 @@ django-debug-toolbar>=4.2,<5
+ django-extensions==3.2.3
+ django-csp==3.7
+ dj-database-url==2.1.0
++
++opentelemetry-api==1.24.0
++opentelemetry-sdk==1.24.0
++opentelemetry-instrumentation==0.45b0
++opentelemetry-instrumentation-asgi==0.45b0
++opentelemetry-instrumentation-asyncio==0.45b0
++opentelemetry-instrumentation-aws-lambda==0.45b0
++opentelemetry-instrumentation-boto3sqs==0.45b0
++opentelemetry-instrumentation-botocore==0.45b0
++opentelemetry-instrumentation-dbapi==0.45b0
++opentelemetry-instrumentation-django==0.45b0
++opentelemetry-instrumentation-elasticsearch==0.45b0
++opentelemetry-instrumentation-logging==0.45b0
++opentelemetry-instrumentation-psycopg==0.45b0
++opentelemetry-instrumentation-redis==0.45b0
++opentelemetry-instrumentation-requests==0.45b0
++opentelemetry-instrumentation-sqlite3==0.45b0
++opentelemetry-instrumentation-urllib==0.45b0
++opentelemetry-instrumentation-urllib3==0.45b0
++opentelemetry-instrumentation-wsgi==0.45b0
++opentelemetry-exporter-otlp==1.24.0
++opentelemetry-distro==0.45b0
++opentelemetry-propagator-aws-xray==1.0.1
++opentelemetry-semantic-conventions==0.45b0
++opentelemetry-test-utils==0.45b0
++opentelemetry-util-http==0.45b0
+```
+
+Don't forget to rebuild our containerized app:
+
+```sh
+docker compose build app
+```
+
+### Updating the Application Command
+
+The next step is to use the `opentelemetry-instrument` agent for automatic instrumentation of our Bakery App server. The agent is responsible for running our application startup scripts, adding all the instruments and exporters into it via monkey-patching. Command line arguments as well as shell variables can be used to configure the agent. [Environment variables](https://opentelemetry-python.readthedocs.io/en/latest/sdk/environment_variables.html) seem a more natural way with `docker-compose.yml`. Let's update our orchestration to provide a new start command for our `app` and some configuration.
+
+```diff
+diff --git docker-compose.yml docker-compose.yml
+index 5c65d03..d1e529a 100644
+--- docker-compose.yml
++++ docker-compose.yml
+@@ -3,36 +3,44 @@ version: '2'
+ services:
+   db:
+     environment:
+       POSTGRES_DB: app_db
+       POSTGRES_USER: app_user
+       POSTGRES_PASSWORD: changeme
+     restart: unless-stopped
+     image: postgres:14.1
+     expose:
+       - '5432'
+
+   redis:
+     restart: unless-stopped
+     image: redis:6.2
+     expose:
+       - '6379'
+
+   app:
+     environment:
+       DJANGO_SECRET_KEY: changeme
+       DATABASE_URL: postgres://app_user:changeme@db/app_db
+       REDIS_URL: redis://redis
+       DJANGO_SETTINGS_MODULE: bakerydemo.settings.dev
++      OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: true
++      OTEL_SERVICE_NAME: wagtail_platform
++      OTEL_TRACES_EXPORTER: otlp
++      OTEL_LOGS_EXPORTER: otlp
++      OTEL_EXPORTER_OTLP_ENDPOINT: https://collector-us1.infrastack.ai
++      OTEL_EXPORTER_OTLP_PROTOCOL: grpc
++      OTEL_EXPORTER_OTLP_HEADERS: infrastack-api-key=${INFRASTACK_API_KEY}
+     build:
+       context: .
+       dockerfile: ./Dockerfile
++    command: "opentelemetry-instrument uwsgi /code/etc/uwsgi.ini"
+     volumes:
+       - ./bakerydemo:/code/bakerydemo
+     links:
+       - db:db
+       - redis:redis
+     ports:
+       - '8000:8000'
+     depends_on:
+       - db
+       - redis
+```
+
+We are using [infrastack.ai](https://app.infrastack.ai) as an OTLP-compatible backend for collecting traces and logs. `INFRASTACK_API_KEY` should be provided via shell environment variable or inside the `.env` file which will be parsed automatically by `docker compose`. `opentelemetry-instrument` works well with both `uWSGI` and `gunicorn` servers as well as the standard Django dev server. All we have to do is prepend our startup command with `opentelemetry-instrument`.
+
+And that's it! This is all that's necessary to start getting detailed traces and logs in any OTEL-compatible backend using automatic integration.
+
+### Adding OpenTelemetry Collector
+
+Although this simple setup works
+
+ quite well, the OpenTelemetry team suggests adding one more component to it - an [OpenTelemetry Collector](https://opentelemetry.io/docs/languages/python/getting-started/#send-telemetry-to-an-opentelemetry-collector).
+
+> The OpenTelemetry Collector is a critical component of most production deployments. Some examples of when it’s beneficial to use a collector:
+> - A single telemetry sink shared by multiple services, to reduce the overhead of switching exporters.
+> - Aggregating traces across multiple services, running on multiple hosts.
+> - A central place to process traces before exporting them to a backend.
+>
+> Unless you have just a single service or are experimenting, you’ll want to use a collector in production deployments.
+
+Let's follow their advice and add a `Collector` service to our stack. To make things more interesting, let's also add another tracing backend to demonstrate how we could easily split our traces between several backends using the `Collector` configuration.
+
+First, let's create a new configuration file for our `Collector` service.
+
+```yaml
+# /etc/otel-collector-config.yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+exporters:
+  debug:
+    verbosity: detailed
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+  otlp/infrastack:
+    endpoint: collector-us1.infrastack.ai:443
+    headers:
+      infrastack-api-key: ${env:INFRASTACK_API_KEY}
+processors:
+  batch:
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp/jaeger, otlp/infrastack]
+      processors: [batch]
+    metrics:
+      receivers: [otlp]
+      exporters: [debug]
+      processors: [batch]
+    logs:
+      receivers: [otlp]
+      exporters: [debug, otlp/infrastack]
+      processors: [batch]
+```
+
+The collector works as a local proxy, ingesting our logs and traces via its `receivers`, and sending them via its `pipelines` to the `exporters`, connected to the actual backends. The `debug` exporter simply prints traces and logs to `stdout`. Next, we use two `otlp` exporters to send data to two different backends using the `otlp grpc` protocol. We use the `service.pipelines` setup to route everything that goes into our collector.
+
+Let's update our `docker-compose.yml` to use this new configuration:
+
+```diff
+diff --git docker-compose.yml docker-compose.yml
+index d1e529a..5e6b634 100644
+--- docker-compose.yml
++++ docker-compose.yml
+@@ -3,44 +3,73 @@ version: '2'
+ services:
+   db:
+     environment:
+       POSTGRES_DB: app_db
+       POSTGRES_USER: app_user
+       POSTGRES_PASSWORD: changeme
+     restart: unless-stopped
+     image: postgres:14.1
+     expose:
+       - '5432'
+
+   redis:
+     restart: unless-stopped
+     image: redis:6.2
+     expose:
+       - '6379'
+
++  collector:
++    image: otel/opentelemetry-collector
++    command: --config=/etc/collector-config.yaml
++    volumes:
++      - ./collector-config.yaml:/etc/collector-config.yaml
++    environment:
++      INFRASTACK_API_KEY: ${INFRASTACK_API_KEY}
++
+   app:
+     environment:
+       DJANGO_SECRET_KEY: changeme
+       DATABASE_URL: postgres://app_user:changeme@db/app_db
+       REDIS_URL: redis://redis
+       DJANGO_SETTINGS_MODULE: bakerydemo.settings.dev
+       OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED: true
+       OTEL_SERVICE_NAME: wagtail_platform
+       OTEL_TRACES_EXPORTER: otlp
+       OTEL_LOGS_EXPORTER: otlp
+-      OTEL_EXPORTER_OTLP_ENDPOINT: https://collector-us1.infrastack.ai
++      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4317
++      OTEL_EXPORTER_OTLP_INSECURE: true
+       OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+-      OTEL_EXPORTER_OTLP_HEADERS: infrastack-api-key=${INFRASTACK_API_KEY}
+     build:
+       context: .
+       dockerfile: ./Dockerfile
+     command: "opentelemetry-instrument uwsgi /code/etc/uwsgi.ini"
+     volumes:
+       - ./bakerydemo:/code/bakerydemo
+     links:
+       - db:db
+       - redis:redis
+     ports:
+       - '8000:8000'
+     depends_on:
+       - db
+       - redis
++      - collector
++
++  jaeger:
++    image: jaegertracing/all-in-one
++    command: --log-level=debug
++    ports:
++      - "5775:5775/udp"
++      - "6831:6831/udp"
++      - "6832:6832/udp"
++      - "5778:5778"
++      - "4317:4317" # OpenTelemetry Collector gRPC
++      - "4318:4318" # OpenTelemetry Collector HTTP
++      - "16686:16686" # Jaeger UI
++      - "14268:14268" # Collector HTTP
++      - "14250:14250" # Collector HTTP
++      - "9411:9411" # Zipkin
++    restart: unless-stopped
++    volumes:
++      - type: tmpfs
++        target: /tmp
++
+```
+
+Here we have added the [Jaeger](https://www.jaegertracing.io) service to show how the same traces can be sent to more than one backend. We also added our `collector` service, supplying it with the newly created configuration as well as the `INFRASTACK_API_KEY` environment variable it expects. All we need to change in our App is to switch the exporter so that all traces and logs go to our `collector` first.
+
+This concludes the Automatic Integration part. Next, let's look at more granular instrumentation approaches.
+
+## Programmatic Integration
+
+If we don't want to use the `opentelemetry-instrument` magic and prefer more granular control while still using the benefits of community-provided instrumentation libraries, we should update our application codebase to embed the tracing instruments and exporters into it. This is what the OpenTelemetry team calls [Programmatic instrumentation](https://opentelemetry.io/docs/languages/python/automatic/example/#execute-the-programmatically-instrumented-server).
+
+Let's go ahead and add a telemetry module to our codebase.
+
+```python
+# bakerydemo/settings/telemetry.py
+
+from opentelemetry import trace
+from opentelemetry.instrumentation.django import DjangoInstrumentor
+from opentelemetry.instrumentation.psycopg import PsycopgInstrumentor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.instrumentation.redis import RedisInstrumentor
+import os
+
+
+import logging
+
+from opentelemetry._logs import set_logger_provider
+from opentelemetry.exporter.otlp.proto.grpc._log_exporter import (
+    OTLPLogExporter,
+)
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
+
+
+def instrument_app():
+    print("Instrumenting app")
+    resource = Resource(attributes={
+        SERVICE_NAME: "wagtail_platform"
+    })
+
+    provider = TracerProvider(resource=resource)
+    trace.set_tracer_provider(provider)
+
+    logger_provider = LoggerProvider(resource=resource)
+    set_logger_provider(logger_provider)
+
+    handler = LoggingHandler(level=logging.NOTSET,
+                             logger_provider=logger_provider)
+
+    # Attach OTLP handler to root logger
+    logging.getLogger().addHandler(handler)
+
+    INFRASTACK_URL = os.environ.get("INFRASTACK_URL")
+    INFRASTACK_API_KEY = os.environ.get("INFRASTACK_API_KEY")
+    if INFRASTACK_URL and INFRASTACK_API_KEY:
+        provider.add_span_processor(BatchSpanProcessor(
+            OTLPSpanExporter(endpoint=INFRASTACK_URL, headers=(("infrastack-api-key", INFRASTACK_API_KEY),))))
+        logger_provider.add_log_record_processor(BatchLogRecordProcessor(
+            OTLPLogExporter(endpoint=INFRASTACK_URL, headers=(("infrastack-api-key", INFRASTACK_API_KEY), ))))
+
+    DjangoInstrumentor().instrument(
+        trace_provider=provider, is_sql_commentor_enabled=True)
+    PsycopgInstrumentor().instrument(trace_provider=provider,
+                                     skip_dep_check=True, enable_commenter=True)
+    RedisInstrumentor().instrument(trace_provider=provider)
+```
+
+This module exports the `instrument_app` function that we can call at the very beginning of our application. Here, we start by declaring our resource, representing the source of traces and logs. We initiate both traces and logs providers, create, and attach our custom `LoggingHandler` to the root of the Python `logging` facility, which should ingest all the logs and send them to our backend.
+
+Next, we need to take care of the exporters' initialization. This setup will send our traces and logs directly to the [infrastack.ai backend](https://app.infrastack.ai).
+
+Finally, we initialize our instrumentor libraries. Here, we only use three instrumentors which will let us trace our `HTTP`, `SQL`, and `Redis` queries.
+
+If we wanted to use our local collector proxy, we could use its endpoint instead:
+
+```diff
+diff --git bakerydemo/settings/telemetry.py bakerydemo/settings/telemetry.py
+index 4bf5744..c756b28 100644
+--- bakerydemo/settings/telemetry.py
++++ bakerydemo/settings/telemetry.py
+
+@@ -42,16 +41,14 @@ def instrument_app():
+     # Attach OTLP handler to root logger
+     logging.getLogger().addHandler(handler)
+
+-    INFRASTACK_URL = os.environ.get("INFRASTACK_URL")
+-    INFRASTACK_API_KEY = os.environ.get("INFRASTACK_API_KEY")
+-    if INFRASTACK_URL and INFRASTACK_API_KEY:
++    COLLECTOR_URL = os.environ.get("COLLECTOR_URL")
++    if COLLECTOR_URL:
+         provider.add_span_processor(BatchSpanProcessor(
+-            OTLPSpanExporter(endpoint=INFRASTACK_URL, headers=(("infrastack-api-key", INFRASTACK_API_KEY),))))
++            OTLPSpanExporter(endpoint=COLLECTOR_URL, insecure=True)))
+         logger_provider.add_log_record_processor(BatchLogRecordProcessor(
+-            OTLPLogExporter(endpoint=INFRASTACK_URL, headers=(("infrastack-api-key", INFRASTACK_API_KEY), ))))
++            OTLPLogExporter(endpoint=COLLECTOR_URL, insecure=True)))
+
+     DjangoInstrumentor().instrument(
+         trace_provider=provider, is_sql_commentor_enabled=True)
+```
+
+Calling our `instrument_app` at the very beginning of our Django initialization (e.g., in `manage.py`) should allow us to achieve the same results without using `opentelemetry-instrument`.
+
+### Tracing in Production
+
+According to the [documentation](https://opentelemetry-python.readthedocs.io/en/latest/examples/fork-process-model/README.html), the `BatchSpanProcessor` is not fork-safe and doesn’t work well with application servers (Gunicorn, uWSGI) which are based on the pre-fork web server model.
+
+Since our Bakery app is running on a uWSGI server, we need to follow the recommendations and wrap our `instrument_app` call inside the `uWSGI postfork` decorator. To achieve that and still be able to use the Django dev server for local development, we could leverage the environment-specific settings modules that our application has. For instance, we call `instrument_app` as is inside `bakerydemo/settings/dev.py`. But in our `bakerydemo/settings/production.py`, we could add a simple wrapper using the `@postfork` decorator there.
+
+```diff
+diff --git bakerydemo/settings/production.py bakerydemo/settings/production.py
+index 2884776..acf4d2a 100644
+--- bakerydemo/settings/production.py
++++ bakerydemo/settings/production.py
+@@ -2,9 +2,18 @@
+ import os
+ import random
+ import string
++from uwsgidecorators import postfork
++from bakerydemo.settings.telemetry import instrument_app
+
+ from .base import *  # noqa: F403
+
++
++@postfork
++def instrument_app_uwsgi():
++    instrument_app()
++
++instrument_app_uwsgi()
++
+ DEBUG = False
+
+ # DJANGO_SECRET_KEY *should* be specified in the environment. If it's not, generate an ephemeral key.
+```
+
+## Manual Approach
+
+The manual approach means injecting spans directly into our codebase without using instrumentator libraries. This gives maximum flexibility and lets us trace exactly what we want to trace. It also means we can integrate tracing into the project using some tools for which the instrumentator libraries were not yet provided by the community.
+
+As an example of the manual approach, we will be using another application: [Saleor](https://github.com/saleor/saleor/tree/7f68c6c720f24624dddcacb09a71ebe1c9b5e24c) - the open-source, headless, GraphQL-first e-commerce platform based on Django.
+
+Currently, Saleor comes with [OpenTracing](https://opentracing.io) and [Jaeger](https://www.jaegertracing.io) custom integration out of the box. The OpenTracing project is a predecessor of OpenTelemetry and is currently being deprecated, recommending its users to [migrate to OpenTelemetry](https://opentelemetry.io/docs/migration/opentracing/).
+
+Let's follow the recommended approach so that we can demonstrate both manual instrumentation and the migration process in a single example.
+
+### Step 1. Install the OpenTelemetry SDK
+
+According to the migration guide, we should first [install new libraries and replace the existing tracer](https://opentelemetry.io/docs/migration/opentracing/#step-1-install-the-opentelemetry-sdk).
+
+The Saleor platform uses the `poetry` bundler, so our first command will be:
+
+```sh
+poetry add opentelemetry-api opentelemetry-sdk opentelemetry-exporter-otlp
+```
+
+This command installs the SDK and the OTLP exporter.
+
+Saleor has all the tracing setup in [saleor/setting.py](https://github.com/saleor/saleor/blob/7f68c6c720f24624dddcacb09a71ebe1c9b5e24c/saleor/settings.py). Let's replace the deprecated [jaeger-client library](https://www.jaegertracing.io/docs/1.57/client-libraries/) with the OpenTelemetry SDK there.
+
+```diff
+diff --git saleor/settings.py saleor/settings.py
+index 94180e45c8..1acd128598 100644
+--- saleor/settings.py
++++ saleor/settings.py
+@@ -11,7 +11,6 @@ import dj_database_url
+ import dj_email_url
+ import django_cache_url
+ import django_stubs_ext
+-import jaeger_client.config
+ import pkg_resources
+ import sentry_sdk
+ import sentry_sdk.utils
+@@ -26,6 +25,17 @@ from sentry_sdk.integrations.celery import CeleryIntegration
+ from sentry_sdk.integrations.django import DjangoIntegration
+ from sentry_sdk.integrations.logging import ignore_logger
+
++
++
++from opentelemetry.sdk.resources import SERVICE_NAME, Resource
++
++from opentelemetry import trace
++from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
++from opentelemetry.sdk.trace import TracerProvider
++from opentelemetry.sdk.trace.export import BatchSpanProcessor
++
++
++
+ from . import PatchedSubscriberExecutionContext, __version__
+ from .core.languages import LANGUAGES as CORE_LANGUAGES
+ from .core.schedules import initiated_promotion_webhook_schedule
+@@ -802,27 +812,30 @@ RESERVE_DURATION = 45
+ # Initialize a simple and basic Jaeger Tracing integration
+ # for open-tracing if enabled.
+ #
+ # Refer to our guide on https://docs.saleor.io/docs/next/guides/opentracing-jaeger/.
+ #
+ # If running locally, set:
+ #   JAEGER_AGENT_HOST=localhost
+-JAEGER_HOST = os.environ.get("JAEGER_AGENT_HOST")
+-if JAEGER_HOST:
+-    jaeger_client.Config(
+-        config={
+-            "sampler": {"type": "const", "param": 1},
+-            "local_agent": {
+-                "reporting_port": os.environ.get(
+-                    "JAEGER_AGENT_PORT", jaeger_client.config.DEFAULT_REPORTING_PORT
+-                ),
+-                "reporting_host": JAEGER_HOST,
+-            },
+-            "logging": get_bool_from_env("JAEGER_LOGGING", False),
+-        },
+-        service_name="saleor",
+-        validate=True,
+-    ).initialize_tracer()
+-
++JAEGER_URL = os.environ.get("JAEGER_AGENT_URL")
++INFRASTACK_URL = os.environ.get("INFRASTACK_URL")
++INFRASTACK_API_KEY = os.environ.get("INFRASTACK_API_KEY")
++# Service name is required for most backends
++resource = Resource(attributes={
++    SERVICE_NAME: "saleor"
++})
++traceProvider = TracerProvider(resource=resource)
++
++if JAEGER_URL:
++    processor = BatchSpanProcessor(
++        OTLPSpanExporter(endpoint=JAEGER_URL, insecure=True))
++    traceProvider.add_span_processor(processor)
++
++if INFRASTACK_URL and INFRASTACK_API_KEY:
++    infrastack_processor = BatchSpanProcessor(OTLPSpanExporter(
++        endpoint=INFRASTACK_URL, headers=(("infrastack-api-key", INFRASTACK_API_KEY),)))
++    traceProvider.add_span_processor(infrastack_processor)
++
++trace.set_tracer_provider(traceProvider)
+
+ # Some cloud providers (Heroku) export REDIS_URL variable instead of CACHE_URL
+ REDIS_URL = os.environ.get("REDIS_URL")
+```
+
+We kept the original `jaeger` integration and added the `infrastack.ai` as a secondary traces backend demonstrating another possible way to export traces to several backends at once. To make this production-ready, consider adding a local OTEL Collector service instead (see above).
+
+Since `BatchSpanProcessor` is used here and Saleor is running under a `gunicorn` server, please consider safeguarding this solution to be compatible with [fork process models](https://opentelemetry-python.readthedocs.io/en/latest/examples/fork-process-model/README.html) before going to production.
+
+### Step 2. Progressively Replace Instrumentation
+
+The OpenTelemetry team provides special shims to let the OpenTracing work seamlessly with the new SDK. Please refer to the [documentation](https://opentelemetry.io/docs/migration/opentracing/#step-2-progressively-replace-instrumentation). Luckily, because it is using GraphQL, Saleor has most of the instrumentation concentrated in a single file, [saleor/graphql/views.py](https://github.com/saleor/saleor/blob/7f68c6c720f24624dddcacb09a71ebe1c9b5e24c/saleor/graphql/views.py). This makes replacing instrumentation trivial: we only have to replace `opentracing` calls with `opentelemetry` in just one file.
+
+```diff
+diff --git saleor/graphql/views.py saleor/graphql/views.py
+index 24adc05c22..a09904d8fc 100644
+--- saleor/graphql/views.py
++++ saleor/graphql/views.py
+@@ -4,8 +4,6 @@ import json
+ from inspect import isclass
+ from typing import Any, Optional, Union
+
+-import opentracing
+-import opentracing.tags
+ from django.conf import settings
+ from django.core.cache import cache
+ from django.db import connection
+@@ -28,25 +26,27 @@ from .context import clear_context, get_context_value
+ from .core.validators.query_cost import validate_query_cost
+ from .query_cost_map import COST_MAP
++from opentelemetry import trace
++from opentelemetry.semconv.trace import SpanAttributes, DbSystemValues
++
+
+ INT_ERROR_MSG = "Int cannot represent non 32-bit signed integer value"
+
+
++tracer = trace.get_tracer(__name__)
++
+ def tracing_wrapper(execute, sql, params, many, context):
+     conn: DatabaseWrapper = context["connection"]
+     operation = f"{conn.alias} {conn.display_name}"
+-    with opentracing.global_tracer().start_active_span(operation) as scope:
+-        span = scope.span
+-        span.set_tag(opentracing.tags.COMPONENT, "db")
+-        span.set_tag(opentracing.tags.DATABASE_STATEMENT, sql)
+-        span.set_tag(opentracing.tags.DATABASE_TYPE, conn.display_name)
+-        span.set_tag(opentracing.tags.PEER_HOSTNAME, conn.settings_dict.get("HOST"))
+-        span.set_tag(opentracing.tags.PEER_PORT, conn.settings_dict.get("PORT"))
+-        span.set_tag("service.name", "postgres")
+-        span.set_tag("span.type", "sql")
++    with tracer.start_as_current_span(operation, kind=trace.SpanKind.CLIENT) as span:
++        span.set_attribute("component", "db")
++        span.set_attribute(SpanAttributes.DB_STATEMENT, sql)
++        span.set_attribute(SpanAttributes.DB_SYSTEM, "postgresql")
++        span.set_attribute(SpanAttributes.SERVER_ADDRESS, conn.settings_dict.get("HOST"))
++        span.set_attribute(SpanAttributes.SERVER_PORT, conn.settings_dict.get("PORT"))
++        span.set_attribute("span.type", "sql")
+         return execute(sql, params, many, context)
+
+-
+ class GraphQLView(View):
+     # This class is our implementation of `graphene_django.views.GraphQLView`,
+     # which was extended to support the following features:
+@@ -146,7 +146,6 @@ class GraphQLView(View):
+         return JsonResponse(data=result, status=status_code, safe=False)
+
+     def handle_query(self, request: HttpRequest) -> JsonResponse:
+-        tracer = opentracing.global_tracer()
+
+         # Disable extending spans from header due to:
+         # https://github.com/DataDog/dd-trace-py/issues/2030
+@@ -156,17 +155,16 @@ class GraphQLView(View):
+         # )
+         # We should:
+         # Add `from opentracing.propagation import Format` to imports
+-        # Add `child_of=span_ontext` to `start_active_span`
+-        with tracer.start_active_span("http") as scope:
+-            span = scope.span
+-            span.set_tag(opentracing.tags.COMPONENT, "http")
+-            span.set_tag(opentracing.tags.HTTP_METHOD, request.method)
+-            span.set_tag(
+-                opentracing.tags.HTTP_URL,
++        # Add `child_of=span_ontext` to `start_as_current_span`
++        with tracer.start_as_current_span("http", kind=trace.SpanKind.SERVER) as span:
++            span.set_attribute("component", "http")
++            span.set_attribute(SpanAttributes.HTTP_METHOD, request.method)
++            span.set_attribute(
++                SpanAttributes.HTTP_URL,
+                 request.build_absolute_uri(request.get_full_path()),
+             )
+-            span.set_tag("http.useragent", request.META.get("HTTP_USER_AGENT", ""))
+-            span.set_tag("span.type", "web")
++            span.set_attribute(SpanAttributes.HTTP_USER_AGENT, request.META.get("HTTP_USER_AGENT", ""))
++            span.set_attribute("span.type", "web")
+
+             main_ip_header = settings.REAL_IP_ENVIRON[0]
+             additional_ip_headers = settings.REAL_IP_ENVIRON[1:]
+@@ -174,23 +172,25 @@ class GraphQLView(View):
+             request_ips = request.META.get(main_ip_header, "")
+             for ip in request_ips.split(","):
+                 if is_valid_ipv4(ip):
+-                    span.set_tag(opentracing.tags.PEER_HOST_IPV4, ip)
++                    span.set_attribute(SpanAttributes.NET_PEER_IP, ip)
++                    span.set_attribute(SpanAttributes.NETWORK_TYPE, "ipv4")
+                 elif is_valid_ipv6(ip):
+-                    span.set_tag(opentracing.tags.PEER_HOST_IPV6, ip)
++                    span.set_attribute(SpanAttributes.NET_PEER_IP, ip)
++                    span.set_attribute(SpanAttributes.NETWORK_TYPE, "ipv6")
+                 else:
+                     continue
+                 break
+             for additional_ip_header in additional_ip_headers:
+                 if request_ips := request.META.get(additional_ip_header):
+-                    span.set_tag(f"ip_{additional_ip_header}", request_ips[:100])
++                    span.set_attribute(f"ip_{additional_ip_header}", request_ips[:100])
+
+             response = self._handle_query(request)
+-            span.set_tag(opentracing.tags.HTTP_STATUS_CODE, response.status_code)
++            span.set_attribute(SpanAttributes.HTTP_STATUS_CODE, response.status_code)
+
+             # RFC2616: Content-Length is defined in bytes,
+             # we can calculate the RAW UTF-8 size using the length of
+             # response.content of type 'bytes'
+-            span.set_tag("http.content_length", len(response.content))
++            span.set_attribute("http.content_length", len(response.content))
+             with observability.report_api_call(request) as api_call:
+                 api_call.response = response
+                 api_call.report()
+@@ -265,11 +265,10 @@ class GraphQLView(View):
+         return query_with_schema
+
+     def execute_graphql_request(self, request: HttpRequest, data: dict):
+-        with opentracing.global_tracer().start_active_span("graphql_query") as scope:
+-            span = scope.span
+-            span.set_tag(opentracing.tags.COMPONENT, "graphql")
+-            span.set_tag(
+-                opentracing.tags.HTTP_URL,
++        with tracer.start_as_current_span("graphql_query") as span:
++            span.set_attribute("component", "graphql")
++            span.set_attribute(
++                SpanAttributes.HTTP_URL,
+                 request.build_absolute_uri(request.get_full_path()),
+             )
+
+@@ -284,9 +283,9 @@ class GraphQLView(View):
+                 return error
+
+             raw_query_string = document.document_string
+-            span.set_tag("graphql.query", raw_query_string)
+-            span.set_tag("graphql.query_identifier", query_identifier(document))
+-            span.set_tag("graphql.query_fingerprint", query_fingerprint(document))
++            span.set_attribute("graphql.query", raw_query_string)
++            span.set_attribute("graphql.query_identifier", query_identifier(document))
++            span.set_attribute("graphql.query_fingerprint", query_fingerprint(document))
+             try:
+                 query_contains_schema = self.check_if_query_contains_only_schema(
+                     document
+@@ -301,7 +300,7 @@ class GraphQLView(View):
+                 COST_MAP,
+                 settings.GRAPHQL_QUERY_MAX_COMPLEXITY,
+             )
+-            span.set_tag("graphql.query_cost", query_cost)
++            span.set_attribute("graphql.query_cost", query_cost)
+             if settings.GRAPHQL_QUERY_MAX_COMPLEXITY and cost_errors:
+                 result = ExecutionResult(errors=cost_errors, invalid=True)
+                 return set_query_cost_on_result(result, query_cost)
+@@ -315,8 +314,8 @@ class GraphQLView(View):
+
+             context = get_context_value(request)
+             if app := getattr(request, "app", None):
+-                span.set_tag("app.id", app.id)
+-                span.set_tag("app.name", app.name)
++                span.set_attribute("app.id", app.id)
++                span.set_attribute("app.name", app.name)
+
+             try:
+                 with connection.execute_wrapper(tracing_wrapper):
+@@ -342,7 +341,7 @@ class GraphQLView(View):
+
+                     return set_query_cost_on_result(response, query_cost)
+             except Exception as e:
+-                span.set_tag(opentracing.tags.ERROR, True)
++                span.set_attribute("error", True)
+
+                 # In the graphql-core version that we are using,
+                 # the Exception is raised for too big integers value.
+```
+
+Both `opentracing` and `opentelemetry` share a similar approach to manual instrumentation: we create a new span context and then supply the open span with additional attributes/tags and/or events if
+
+ necessary. Nested contexts create nested spans. Here we have three levels, generating the following tree of tracing spans:
+
+- http
+  - graphql
+    - sql
+    - sql
+    - sql
+    - ...
+
+To standardize common span attributes, OpenTelemetry provides special [Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/) available via the `opentelemetry.semconv` Python package shipped together with the SDK.
+
+This simple change is enough to integrate Saleor with any OTEL-compatible tracing backend and gather useful information about application performance.
+
+## Conclusion
+
+In this article, we've explored practical ways to integrate OpenTelemetry into Django projects using the Wagtail demo app as a foundation. We demonstrated automatic, programmatic, and manual instrumentation methods, each with detailed steps and configurations. By leveraging the capabilities of infrastack.ai and other OTEL-compatible backends, you can gain comprehensive insights into your application's performance, making monitoring and debugging more effective. Whether you're looking for a quick setup or a more granular approach, these examples provide a robust starting point for implementing OpenTelemetry in your Django projects.
+
+

@@ -1,0 +1,15 @@
+---
+description: The latest updates and releases from the InfraStack AI team.
+---
+
+import Link from "next/link";
+import {BlogIndex} from "@components/blog-index";
+
+<div className="md:container mt-12">
+  <div className="flex flex-col items-center space-y-4 text-center">
+    <h1 className="text-6xl font-bold">InfraStack AI Blog</h1>
+    <p className="text-xl">The latest updates & posts from InfraStack AI Team. See<br></br><Link href="/changelog" className="underline nx-text-primary-600 dark:nx-text-primary-600">Changelog</Link> for more product updates.</p>
+  </div>
+  <div className="h-12 block"></div>
+  <BlogIndex />
+</div>
