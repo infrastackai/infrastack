@@ -1,1 +1,114 @@
-# NextJS
+---
+title: "Next.js"
+description: InfraStack AI Next.js Integration with OpenTelemetry for application performance monitoring.
+---
+
+import { Tabs } from 'nextra/components'
+import { Cards, Card, Steps } from 'nextra/components'
+import Link from 'next/link'
+
+
+# Next.js Integration Steps
+
+<Steps>
+### Install SDKs
+
+```sh npm2yarn
+npm install @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/sdk-trace-node \
+@opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-grpc \ 
+@opentelemetry/resources @opentelemetry/semantic-conventions
+```
+ 
+You can use standard OpenTelemetry SDKs to send traces to our collector.
+List of all supported languages by OpenTelemetry and their SDK can be found in <Link href={"https://opentelemetry.io/docs/languages/"} target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600">OpenTelemetry docs</Link>.
+
+ 
+### Enable auto-instrumentation
+
+Next.js 13.4+ supports auto-instrumentation which means you no longer have to create a span for each request. To use this feature, you must explicitly enable it by adding `experimental.instrumentationHook = true` to your `next.config.js`.
+
+```js /default/#s showLineNumbers {3-5}
+const nextConfig = {
+    ...
+    experimental: {
+        instrumentationHook: true,
+    },
+    ...
+}
+       
+module.exports = nextConfig
+```
+
+ 
+### Import your environment variables
+
+InfraStack and OpenTelemetry SDKs accepts environment variables to configure the SDK securely.
+You can store these variables in your .env file or set them as environment variables.
+
+<Tabs items={['grpc', 'http']} defaultIndex="0">
+<Tabs.Tab>
+```bash
+OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRSTACK_API_KEY}}"
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```bash
+OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+OTEL_EXPORTER_OTLP_PROTOCOL="http"
+OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRSTACK_API_KEY}}"
+```
+</Tabs.Tab>
+</Tabs>
+<Link href="https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/#otel_exporter_otlp_protocol" 
+target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600">
+Learn more about OTLP Protocol
+</Link>
+
+### Initialize OpenTelemetry
+Create an instrumentation.ts and instrumentation-node.ts files in the root of your project and add the following code to initialize and configure the SDK.
+
+```ts filename="instrumentation.ts" /default/#s showLineNumbers
+export async function register() {
+    if (process.env.NEXT_RUNTIME === 'nodejs') {
+        await import('./instrumentation-node')
+    }
+}   
+```
+
+```ts filename="instrumentation-node.ts" /default/#s showLineNumbers
+'use strict'
+
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+
+import {
+    SEMRESATTRS_SERVICE_NAME,
+    SEMRESATTRS_SERVICE_VERSION,
+  } from '@opentelemetry/semantic-conventions';
+import { Resource } from '@opentelemetry/resources';
+
+const traceExporter = new OTLPTraceExporter();
+
+const sdk = new NodeSDK({
+    resource: new Resource({
+        [SEMRESATTRS_SERVICE_NAME]: 'service-name', // Change this to your service name
+    }),
+    traceExporter,
+    instrumentations: [
+      getNodeAutoInstrumentations({
+        '@opentelemetry/instrumentation-fs': {
+          requireParentSpan: true,
+        },
+      })
+    ],
+});
+  
+sdk.start(); 
+```
+
+### Run your application
+
+
+</Steps>

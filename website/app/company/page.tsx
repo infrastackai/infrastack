@@ -25,15 +25,21 @@ export default function IndexPage() {
                 <h1 className="font-semibold text-lg text-left text-zinc-300 mt-12">Meet our team</h1>
                 <div className="flex flex-col space-y-2 text-zinc-400">
                     <div className="mt-2"><Link href="https://www.linkedin.com/in/aykutgk/" target="_blank" className="text-indigo-500">Aykut Gedik</Link> - Founder</div>
-                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Data Science / Founding Team</div>
-                    <div><Link href="https://www.linkedin.com/in/mso96/" target="_blank" className="text-indigo-500">Sefa Oruc</Link> - Marketing & Sales / Founding Team</div>
-                    <div><Link href="https://www.linkedin.com/in/delly-tamer/" target="_blank" className="text-indigo-500">Delly Tamer</Link> - Advisor / Operations</div>
-                    <div><Link href="https://www.linkedin.com/in/cameron-essalat-96300913/" target="_blank" className="text-indigo-500">Cameron Essalat</Link> - Advisor / Enterprise Sales</div>
+                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Data Science</div>
+                    <div><Link href="https://www.linkedin.com/in/keremkocer/" target="_blank" className="text-indigo-500">Kerem Kocer</Link> - Head of Product</div>
+                    <div><Link href="https://www.linkedin.com/in/receperdg/" target="_blank" className="text-indigo-500">Recep Erdogan</Link> - Infrastructure Engineer</div>
+                    <div><Link href="https://www.linkedin.com/in/buketalkan/" target="_blank" className="text-indigo-500">Buket Alkan</Link> - Software Engineer Intern</div> 
+                    <div><Link href="https://www.linkedin.com/in/leon-krick-2170a1302/" target="_blank" className="text-indigo-500">Leon Krick</Link> - Data Science Intern</div> 
+                    <div><Link href="https://www.linkedin.com/in/emre-kocer/" target="_blank" className="text-indigo-500">Emre Kocer</Link> - Data Science Intern</div>
+                    <div><Link href="https://www.linkedin.com/in/caglakirdar/" target="_blank" className="text-indigo-500">Cagla Kırdar</Link> - Data Science Intern</div>
+                    <div><Link href="https://www.linkedin.com/in/mso96/" target="_blank" className="text-indigo-500">Sefa Oruc</Link> - Marketing & Sales Engineer</div>
+                    <div><Link href="https://www.linkedin.com/in/aliuygarkucukemre/" target="_blank" className="text-indigo-500">Ali Uygar Kucukemre</Link> - Solutions Architect</div>
+                    <div><Link href="https://www.linkedin.com/in/delly-tamer/" target="_blank" className="text-indigo-500">Delly Tamer</Link> - Operations Advisor</div>
                 </div>
 
                 <h1 className="font-semibold text-lg text-left text-zinc-300 mt-12">Where we work from</h1>
                 <div className="flex flex-col space-y-2 text-zinc-400 mb-4">
-                    <p className="mt-2 mb-4">We are located in Founders, Inc., Fort Mason, a stone’s throw from San Francisco’s Golden Gate Bridge.
+                    <p className="mt-2 mb-4">We are located in Fort Mason, a stone’s throw from San Francisco’s Golden Gate Bridge.
                     </p>
                     <Image src={fortMason} className="object-fit rounded-lg" alt="Fort Mason" />
                 </div>

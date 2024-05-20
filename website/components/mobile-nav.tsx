@@ -87,6 +87,20 @@ export function MobileNav() {
             For Enterprise
           </MobileLink> */}
           <MobileLink
+            key={"/pricing"}
+            href={"/pricing"}
+            onOpenChange={setOpen}
+          >
+            Pricing
+          </MobileLink>
+          <MobileLink
+            key={"/docs"}
+            href={"https://docs.infrastack.ai"}
+            onOpenChange={setOpen}
+          >
+            Docs
+          </MobileLink>
+          <MobileLink
             key={"/company"}
             href={"/company"}
             onOpenChange={setOpen}
@@ -102,7 +116,7 @@ export function MobileNav() {
           </MobileLink>
           <MobileLink
             key={"blog"}
-            href={"https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"}
+            href={"https://docs.infrastack.ai/blog"}
             onOpenChange={setOpen}
           >
             Blog

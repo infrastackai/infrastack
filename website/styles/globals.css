@@ -82,6 +82,9 @@
   .drop-shadow-1 {
     filter: drop-shadow(0px 2px 2px #4444dd);
   }
+  .drop-shadow-2 {
+    filter: drop-shadow(0px 0px 0.75rem #4444dd);
+  }
   .step {
     counter-increment: step;
   }

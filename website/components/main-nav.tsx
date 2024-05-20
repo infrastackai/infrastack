@@ -32,8 +32,7 @@ export function MainNav() {
             </span>
           </Link>
           <Link
-            href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
-            target="_blank"
+            href="/pricing"
             className={cn(
               "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block uppercase font-semibold"
             )}
@@ -41,7 +40,7 @@ export function MainNav() {
             Pricing
           </Link>
           <Link
-            href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
+            href="https://docs.infrastack.ai"
             target="_blank"
             className={cn(
               "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block uppercase font-semibold"
@@ -50,7 +49,7 @@ export function MainNav() {
             Docs
           </Link>
           <Link
-            href="https://medium.com/@ayged/introducing-the-new-era-of-ai-first-developer-driven-observability-e9b5c0b8542d"
+            href="https://docs.infrastack.ai/blog"
             target="_blank"
             className={cn(
               "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block uppercase font-semibold"
@@ -84,7 +83,7 @@ export function MainNav() {
             Careers
           </Link>
           <Link
-            href={siteConfig.links.github}
+            href={"https://app.infrastack.ai"}
             target="_blank"
             rel="noreferrer"
           >
@@ -100,7 +99,7 @@ export function MainNav() {
             </div>
           </Link>
           <Link
-            href={siteConfig.links.github}
+            href={"https://app.infrastack.ai"}
             target="_blank"
             rel="noreferrer"
           >

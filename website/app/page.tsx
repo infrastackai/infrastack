@@ -20,7 +20,7 @@ import { Activity, ArrowUp, BarChart2, BarChart4, ChevronRight, LineChart, Messa
 import { MovingIntegrations } from "@/components/moving-integrations"
 // import MailPage from "@/app/examples/mail/page"
 
-import demoPic from "@/public/images/app5.png"
+import demoPic from "@/public/images/latest-product.png"
 
 import burningMoney from "@/public/images/burning-money.gif"
 
@@ -32,10 +32,10 @@ import { use, useEffect, useRef } from "react"
 
 
 const customers = [
-  {
-    logo: "/images/openai.svg",
-    className: "h-28 w-28"
-  },
+  // {
+  //   logo: "/images/openai.svg",
+  //   className: "h-28 w-28"
+  // },
   // {
   //   logo: "/images/mercedes.svg",
   // },
@@ -48,8 +48,8 @@ const customers = [
     className: "h-44 w-44"
   },
   {
-    logo: "/images/vercel.svg",
-    className: "h-28 w-28"
+    logo: "/images/upstash.svg",
+    className: "h-12 w-44"
   },
   {
     logo: "/images/formbricks.svg",
@@ -62,6 +62,10 @@ const customers = [
   {
     logo: "/images/permify-logo.svg",
     className: "h-40 w-40"
+  },
+  {
+    logo: "/images/upstash.svg",
+    className: "h-12 w-44"
   },
   {
     logo: "/images/unwave.svg",
@@ -273,9 +277,10 @@ export function register() {
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
         <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Ship High-Quality Code<br></br>with Next-Gen Observability</PageHeaderHeading>
-        <PageHeaderDescription className="z-[60] text-2xl font-semibold mt-2 text-center text-zinc-200">
-          <p>Stop wasting time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
-          <p>Find issues quickly and get actionable insights in milliseconds</p>
+        <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-200">
+          <p className="hidden md:block">Stop wasting time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
+          <p className="hidden md:block ">Find issues quickly and get actionable insights in milliseconds</p>
+          <p className="md:hidden">Stop wasting time and money <br></br><Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image>on legacy monitoring<br></br>Find issues quickly and get actionable insights <br></br> in milliseconds</p>
         </PageHeaderDescription>
         <PageActions className="mt-2 items-start">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
@@ -335,14 +340,13 @@ export function register() {
           className="block dark:hidden"
         />
       </section> */}
-      <section className="hidden md:block ">
-
+      <section className="">
         {/* <div className="overflow-hidden h-fit rounded-lg riolng-1 ring-zinc-900 bg-background p-0"> */}
         {/* <MailPage /> */}
-        <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border-none " />
+        <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border border-indigo-700 rounded-lg drop-shadow-2" />
         {/* </div> */}
       </section>
-      {true && <div className="w-full md:mt-40 mt-28 relative" id="featuresContainerId">
+      {true && <div className="w-full md:mt-40 mt-20 relative" id="featuresContainerId">
         <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
         <div className="w-full text-center">
           <div className="flex flex-col space-y- items-center justify-center h-0">
@@ -350,7 +354,7 @@ export function register() {
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
             {/* <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Next-Gen Developers</div> */}
-            <div className="text text-3xl md:text-5xl p-2 mt- font-semibold text-white inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Developers</div>
+            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Developers</div>
 
           </div>
         </div>
@@ -366,82 +370,147 @@ export function register() {
       </div>
       }
 
-<div className="">
+      <div className=" md:hidden">
         <div className="w-full text-center mt-20 md:mt-24">
+          <p className="text-[28px] md:text-5xl font-bold text-zinc-200">Getting Started is Simple</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing in minutes</p>
+        </div>
+        <div className="w-full flex flex-row space-x-4 items-center justify-center mt-8">
+          <Link href="https://docs.infrastack.ai/integrations/nextjs" target="_blank" prefetch={false}>
+            <div className="group h-28  cursor-pointer flex w-32 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconNextJs className="w-8 h-8  bg-infrastack    p-1 rounded-full" />
+              <p className="font-medium mt-2">Next.js</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/fastapi" target="_blank" prefetch={false}>
+            <div className="group h-28 cursor-pointer flex w-32 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconFastAPI className="w-8 h-8  bg-infrastack   rounded-full" />
+              <p className="font-medium mt-2">FastAPI</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <div className="group h-28 cursor-pointer flex w-32 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <p className="font-medium mt-2 text-green-400">+16 more</p>
+            </div>
+          </Link>
+        </div>
+        <div className="w-full flex flex-row space-x-4 justify-center mt-3">
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
+          </Link>
+        </div>
+      </div>
+
+      <div className="hidden md:block mt-20 md:mt-32">
+        <div className="w-full text-center">
           <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing within minutes</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing in minutes</p>
         </div>
 
-        <div className="w-full flex flex-row space-x-4 items-center justify-center mt-4">
-          <div className="group h-26  cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconNextJs className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
-            <p className="font-medium mt-2">Next.js</p>
-          </div>
-          <div className="h-26cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
-            <Icons.IconExpressJS className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
-            <p className="font-medium mt-2">Express.js</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconFastAPI className="w-10 h-10  bg-infrastack   rounded-full" />
-            <p className="font-medium mt-2">FastAPI</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconDjango className="w-10 h-10  bg-infrastack  rounded-full" />
-            <p className="font-medium mt-2">Django</p>
-          </div>
-          <div className="h-32 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
-            <p className="font-medium mt-2 text-green-400">+2 more</p>
-          </div>
+        <div className="w-full flex flex-row space-x-4 items-center justify-center mt-8">
+          <Link href="https://docs.infrastack.ai/integrations/nextjs" target="_blank" prefetch={false}>
+            <div className="group h-26  cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconNextJs className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+              <p className="font-medium mt-2">Next.js</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/expressjs" target="_blank" prefetch={false}>
+            <div className="h-26cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+              <Icons.IconExpressJS className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+              <p className="font-medium mt-2">Express.js</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/fastapi" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconFastAPI className="w-10 h-10  bg-infrastack   rounded-full" />
+              <p className="font-medium mt-2">FastAPI</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/django" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconDjango className="w-10 h-10  bg-infrastack  rounded-full" />
+              <p className="font-medium mt-2">Django</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+              <p className="font-medium mt-2 text-green-400">+2 more</p>
+            </div>
+          </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconGoLang className="w-10 h-10  bg-infrastack  rounded-full" />
-            <p className="font-medium mt-2">Go Lang</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconPython className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
-            <p className="font-medium mt-2">Python</p>
-          </div>
-          <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
-            <Icons.IconJava className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
-            <p className="font-medium mt-2">Java</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconDotNet className="w-10 h-10  bg-infrastack   rounded-full" />
-            <p className="font-medium mt-2">.Net</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border     hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconRuby className="w-10 h-10  bg-infrastack  rounded-full" />
-            <p className="font-medium mt-2">Ruby</p>
-          </div>
-          <div className="h-26 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
-            <p className="font-medium mt-2 text-green-400">+4 more</p>
-          </div>
+          <Link href="https://docs.infrastack.ai/integrations/golang" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconGoLang className="w-10 h-10  bg-infrastack  rounded-full" />
+              <p className="font-medium mt-2">Go Lang</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/python" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconPython className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+              <p className="font-medium mt-2">Python</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/java" target="_blank" prefetch={false}>
+            <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+              <Icons.IconJava className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+              <p className="font-medium mt-2">Java</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/net" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconDotNet className="w-10 h-10  bg-infrastack   rounded-full" />
+              <p className="font-medium mt-2">.Net</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/ruby" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border     hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconRuby className="w-10 h-10  bg-infrastack  rounded-full" />
+              <p className="font-medium mt-2">Ruby</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+              <p className="font-medium mt-2 text-green-400">+4 more</p>
+            </div>
+          </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconPostgres className="w-10 h-10  bg-infrastack  rounded-full" />
-            <p className="font-medium mt-2">Postgres</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconRedis className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
-            <p className="font-medium mt-2">Redis</p>
-          </div>
-          <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
-            <Icons.IconOpenAI className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
-            <p className="font-medium mt-2">OpenAI</p>
-          </div>
-          <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-            <Icons.IconPinecone className="w-10 h-10  bg-infrastack   rounded-full" />
-            <p className="font-medium mt-2">Pinecone</p>
-          </div>
-          <div className="h-26 w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
-            <p className="font-medium mt-2 text-green-400">+8 more</p>
-          </div>
+          <Link href="https://docs.infrastack.ai/integrations/postgres" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconPostgres className="w-10 h-10  bg-infrastack  rounded-full" />
+              <p className="font-medium mt-2">Postgres</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/redis" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconRedis className="w-10 h-10  bg-infrastack    p-1 rounded-full" />
+              <p className="font-medium mt-2">Redis</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/openai" target="_blank" prefetch={false}>
+            <div className="h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border   hover:border-indigo-600 bg-infrastack hover:bg-muted/50  text-card-foreground shadow transition-colors sm:p-6">
+              <Icons.IconOpenAI className="w-10 h-10  bg-white text-infrastack p-1 rounded-xl" />
+              <p className="font-medium mt-2">OpenAI</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations/pinecone" target="_blank" prefetch={false}>
+            <div className="group h-26 cursor-pointer flex w-36 flex-col items-center justify-center rounded-xl border    hover:border-indigo-600 bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
+              <Icons.IconPinecone className="w-10 h-10  bg-infrastack   rounded-full" />
+              <p className="font-medium mt-2">Pinecone</p>
+            </div>
+          </Link>
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
+              <p className="font-medium mt-2 text-green-400">+8 more</p>
+            </div>
+          </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-        <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
-          </div>
+          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+            <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
+          </Link>
+        </div>
       </div>
 
       <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-16 md:mt-40">
@@ -552,14 +621,14 @@ export function register() {
           speed="slow"
         /> */}
 
-      <div className="w-full text-center mt-32  md:mt-48">
+      <div className="w-full text-center mt-32  md:mt-24">
         <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Source <br></br>& Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
       </div>
 
       <div className="container w-fit max-w-[800px] gap-x-5 gap-y-4 md:gap-y-0 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2  py-10">
         <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
-          <Image src="/images/integrations/otel_avatar.svg" alt="InfraStack AI Demo" width={40} height={40} />
+          <Image src="/images/integrations/otel_avatar.svg" alt="InfraStack AI OpenTelemetry" width={40} height={40} />
 
           <p className="w-full text-lg md:text-xl text-zinc-200 mt-4">OpenTelemetry</p>
           <p className="text-zinc-500 mt-4 md:">
@@ -577,11 +646,11 @@ export function register() {
         </div> */}
         <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
 
-          <Image src="/images/integrations/prometheusio-icon.svg" alt="InfraStack AI Demo" width={38} height={38} />
+          <Image src="/images/integrations/clickhouse.svg" alt="InfraStack AI Clickhouse" width={38} height={38} />
 
           <p className="w-full text-lg md:text-xl text-zinc-200 mt-4">Clickhouse</p>
           <p className="text-zinc-500 mt-4">
-          ClickHouse is an open-source, high-performance columnar database system, embraced and supported by industry leaders in data analytics.
+            ClickHouse is an open-source, high-performance columnar database system, embraced and supported by industry leaders in data analytics.
           </p>
         </div>
       </div>
