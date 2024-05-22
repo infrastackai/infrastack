@@ -294,7 +294,7 @@ export function register() {
           >
             Get started with InfraStack AI
           </Link> */}
-          <Link className="relaive items-center flex flex-col space-y-1 z-[60]" href="https://app.infrastack.ai" prefetch={false}>
+          <Link className="relaive items-center flex flex-col space-y-1 z-[60]" href="https://app.infrastack.ai/api/auth/login" prefetch={false}>
             {/* <ButtonMoving
               borderRadius="0.6rem"
               containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-900'
