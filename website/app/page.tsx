@@ -395,7 +395,7 @@ export function register() {
           </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai" target="_blank" prefetch={false}>
             <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
           </Link>
         </div>
