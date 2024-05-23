@@ -42,7 +42,7 @@ otlp_exporter = OTLPSpanExporter(
 )
 
 processor = BatchSpanProcessor(otlp_exporter)
-provider = TracerProvider(resource=Resource.create({"service.name": "openai.traces"}))
+provider = TracerProvider(resource=Resource.create({"service.name": "llama_index.traces"}))
 provider.add_span_processor(processor)
 ```
 
