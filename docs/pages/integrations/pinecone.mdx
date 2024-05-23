@@ -30,7 +30,7 @@ from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter
 )
 
-OTEL_EXPORTER_OTLP_ENDPOINT = "https://collector-us1.infrastack.ai"
+OTEL_EXPORTER_OTLP_ENDPOINT = "collector-us1.infrastack.ai"
 OTEL_EXPORTER_OTLP_HEADERS = "infrastack-api-key=<API-KEY>"
 
 os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"] = OTEL_EXPORTER_OTLP_ENDPOINT
