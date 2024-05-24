@@ -9,11 +9,11 @@ This documentation outlines the setup of the SDK and its fundamental application
 OpenTelemetry provides client libraries and agents for most of the popular programming languages. There are two types of instrumentation:
 
 
-- [Auto-instrumentation](https:google.com/)
+- [Auto-instrumentation](https://opentelemetry.io/docs/languages/java/automatic/)
 
   OpenTelemetry can collect data for many popular frameworks and libraries automatically. You don’t have to make any code changes.
 
-- [Manual instrumentation](https:google.com/)
+- [Manual instrumentation](https://opentelemetry.io/docs/languages/java/instrumentation/)
 
   If you want more application-specific data, OpenTelemetry SDK provides you with the capabilities to capture that data using OpenTelemetry APIs and SDKs.
 
@@ -48,19 +48,19 @@ Environment variables provide necessary configurations for the agent to send tel
 
 **Linux & MacOS:**
 ```bash
-export OTEL_EXPORTER_OTLP_ENDPOINT=https://collector-us1.infrastack.ai
+export OTEL_EXPORTER_OTLP_ENDPOINT=https://collector.infrastack.ai
 export OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key=<API-KEY>"
 ```
 
 **Windows:**
 ```cmd
-set OTEL_EXPORTER_OTLP_ENDPOINT=https://collector-us1.infrastack.ai
+set OTEL_EXPORTER_OTLP_ENDPOINT=https://collector.infrastack.ai
 set OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key=<API-KEY>"
 ```
 
 **Docker:**
 ```dockerfile
-ENV OTEL_EXPORTER_OTLP_ENDPOINT=https://collector-us1.infrastack.ai
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=https://collector.infrastack.ai
 ENV OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key=<API-KEY>"
 ```
 
