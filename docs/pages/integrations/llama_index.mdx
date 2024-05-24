@@ -1,0 +1,78 @@
+---
+title: "Instrumenting LlamaIndex"
+description: InfraStack AI OpenTelemetry instrumentation for python llama_index.
+---
+
+## Setup
+
+### Step 1: Installing Packages
+
+```bash
+pip3 install infrastack-otel
+pip3 install llama_index
+pip3 install opentelemetry-sdk
+```
+
+### Step 2: Telemetry Configuration
+
+Configure your application to collect and send telemetry data. Add the following lines to your python file:
+
+```python
+import os
+
+from opentelemetry import trace
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    BatchSpanProcessor
+)
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
+    OTLPSpanExporter
+)
+
+OTEL_EXPORTER_OTLP_ENDPOINT = "collector-us1.infrastack.ai"
+OTEL_EXPORTER_OTLP_HEADERS = "infrastack-api-key=<API-KEY>"
+
+os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"] = OTEL_EXPORTER_OTLP_ENDPOINT
+os.environ["OTEL_EXPORTER_OTLP_HEADERS"] = OTEL_EXPORTER_OTLP_HEADERS
+
+otlp_exporter = OTLPSpanExporter(
+    endpoint = OTEL_EXPORTER_OTLP_ENDPOINT,
+    headers=(tuple(OTEL_EXPORTER_OTLP_HEADERS.split("=")),)
+)
+
+processor = BatchSpanProcessor(otlp_exporter)
+provider = TracerProvider(resource=Resource.create({"service.name": "llama_index.traces"}))
+provider.add_span_processor(processor)
+```
+
+Now, add the intrumentation to the LlamaIndex API and possibly for OpenAI
+
+```python
+from llama_index.core import Document, Settings, StorageContext, VectorStoreIndex
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.llms.openai import OpenAI
+
+from opentelemetry.instrumentation.llamaindex import LlamaIndexInstrumentor
+from opentelemetry.instrumentation.openai import OpenAIInstrumentor
+
+LlamaIndexInstrumentor().instrument(tracer_provider = provider)
+OpenAIInstrumentor().instrument(tracer_provider = provider)
+```
+
+### Step 3: Using the OpenAI API
+
+All the OpenAI APIs can be used without modification and intrumentation provides
+immediate traces for this framework.
+
+```python
+OPENAI_API_KEY="<OPENAI-API-KEY>"
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+
+Settings.llm = OpenAI(model="gpt-3.5-turbo")
+Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-small")
+
+index = VectorStoreIndex.from_vector_store(vector_store=<YOUR_CHOICE_OF_VECTORDB>)
+retriever = index.as_retriever(similarity_top_k=5)
+rtriever.retrieve("find the relevant documents.")
+```
