@@ -294,7 +294,7 @@ export function register() {
           >
             Get started with InfraStack AI
           </Link> */}
-          <Link className="relaive items-center flex flex-col space-y-1 z-[60]" href="https://app.infrastack.ai" prefetch={false}>
+          <Link className="relaive items-center flex flex-col space-y-1 z-[60]" href="https://app.infrastack.ai/api/auth/login" prefetch={false}>
             {/* <ButtonMoving
               borderRadius="0.6rem"
               containerClassName='z-[60] w-[180px] md:w-[220px] h-[60px] mt-[-1px] rounded-sm dark:bg-zinc-900'
@@ -395,7 +395,7 @@ export function register() {
           </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai" target="_blank" prefetch={false}>
             <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
           </Link>
         </div>
@@ -507,7 +507,7 @@ export function register() {
           </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai" target="_blank" prefetch={false}>
             <p className="font-medium mt-4 text-zinc-400 items-center underline">View all integrations</p>
           </Link>
         </div>

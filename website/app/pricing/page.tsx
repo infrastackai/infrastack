@@ -1,7 +1,11 @@
 'use client'
 
 import Link from "next/link";
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import PricingWidget from "./components/pricing-widget";
+>>>>>>> dc640f9fae0b80dd939f4618a7720389836e3db1
 
 export default function Page() {
     const [isToggled, setIsToggled] = useState(false);
@@ -61,6 +65,7 @@ export default function Page() {
 
 
     return (
+<<<<<<< HEAD
     <div className="container mx-full mt-20 flex flex-col items-center">
     <div className="text-center">
         <h1 className="text-5xl md:text-6xl text-zinc-200 font-bold">Flexible and Transparent Pricing</h1>
@@ -99,3 +104,8 @@ export default function Page() {
 </div>
 )
 }
+=======
+        <PricingWidget/>
+    )
+}
+>>>>>>> dc640f9fae0b80dd939f4618a7720389836e3db1

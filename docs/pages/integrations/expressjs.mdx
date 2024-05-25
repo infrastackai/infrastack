@@ -1,0 +1,114 @@
+---
+title: "Express.js"
+description: OpenTelemetry Express.js integration and instrumentation.
+---
+
+import { Tabs } from 'nextra/components'
+import { Cards, Card, Steps } from 'nextra/components'
+import Link from 'next/link'
+
+
+# Express.js OpenTelemetry Integration Steps
+
+Integrating OpenTelemetry with Express.js allows you to gather and export telemetry data, such as traces, metrics, and logs, providing valuable insights into your application's behavior and performance.
+
+Follow the steps below to integrate OpenTelemetry with your Express.js application.
+Or checkout quick start guides and examples in the [InfraStack AI Otel GitHub repository](https://github.com/infrastackai/otel/).
+<Steps>
+### Install SDKs
+
+```sh npm2yarn
+npm install --save @opentelemetry/sdk-node
+npm install --save @opentelemetry/auto-instrumentations-node
+npm install --save @opentelemetry/exporter-trace-otlp-grpc
+npm install --save dotenv
+```
+ 
+You can use standard OpenTelemetry SDKs to send traces to our collector.
+List of all supported languages by OpenTelemetry and their SDK can be found in <Link href={"https://opentelemetry.io/docs/languages/"} target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600">OpenTelemetry docs</Link>.
+
+ 
+### Import your environment variables
+
+InfraStack and OpenTelemetry SDKs accepts environment variables to configure the SDK securely.
+You can store these variables in your .env file or set them as environment variables.
+
+<Tabs items={['grpc', 'http']} defaultIndex="0">
+<Tabs.Tab>
+```bash filename=".env"
+OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRSTACK_API_KEY}}"
+```
+</Tabs.Tab>
+<Tabs.Tab>
+```bash filename=".env"
+OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+OTEL_EXPORTER_OTLP_PROTOCOL="http"
+OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_ENVIRONMENT_API_KEY}}"
+```
+</Tabs.Tab>
+</Tabs>
+<Link href="https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/#otel_exporter_otlp_protocol" 
+target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600">
+Learn more about OTLP Protocol
+</Link>
+
+### Initialize OpenTelemetry
+Create an instrumentation.js file in the root of your project and add the following code to initialize and configure the SDK.
+
+```js filename="instrumentation.ts" /default/#s showLineNumbers
+"use strict";
+require('dotenv').config();
+const process = require("process");
+const opentelemetry = require("@opentelemetry/sdk-node");
+const {
+  getNodeAutoInstrumentations,
+} = require("@opentelemetry/auto-instrumentations-node");
+const {
+  OTLPTraceExporter,
+} = require("@opentelemetry/exporter-trace-otlp-grpc");
+const { Resource } = require("@opentelemetry/resources");
+const {
+  SemanticResourceAttributes,
+} = require("@opentelemetry/semantic-conventions");
+
+const exporterOptions = {
+  url: `${process.env.OTEL_EXPORTER_OTLP_ENDPOINT}/v1/traces`,
+  headers: { 'infrastack-api-key': process.env.OTEL_EXPORTER_OTLP_HEADERS.split('=')[1] },
+  compression: 'gzip',
+}
+
+const traceExporter = new OTLPTraceExporter(exporterOptions);
+
+const sdk = new opentelemetry.NodeSDK({
+  traceExporter,
+  instrumentations: [getNodeAutoInstrumentations()],
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: "{{YOUR_SERVICE_NAME}}",
+    [SemanticResourceAttributes.SERVICE_VERSION]: "{{YOUR_SERVICE_VERSION}}",
+    [SemanticResourceAttributes.SERVICE_INSTANCE_ID]: process.env.POD_NAME ?? `uuidgen`
+  }),
+});
+
+// initialize the SDK and register with the OpenTelemetry API
+sdk.start();
+
+// gracefully shut down the SDK on process exit
+process.on("SIGTERM", () => {
+  sdk
+    .shutdown()
+    .then(() => console.log("Tracing terminated"))
+    .catch((error) => console.log("Error terminating tracing", error))
+    .finally(() => process.exit(0));
+});  
+```
+
+### Run your application
+```bash
+node -r ./instrumentation.js server.js
+```
+
+### Go to [InfraStack AI Dashboard](https://app.infrastack.ai) to observe your traces
+
+
+</Steps>
