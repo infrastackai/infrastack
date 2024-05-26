@@ -6,7 +6,7 @@ export default function HeaderLogo() {
       className="font-bold select-none"
       title={`InfraStack AI`}
     >
-      <IconInfraStackOctopusDark className="h-8 w-8 inline mr-2 fill-zinc-800 dark:fill-white text-white dark:text-zinc-800" />
+      <IconInfraStackOctopusDark className="h-8 w-8 inline mr-2 fill-indigo-600 dark:fill-white text-white dark:text-zinc-800" />
       InfraStack AI
     </span>
   );

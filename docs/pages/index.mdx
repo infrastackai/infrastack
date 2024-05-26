@@ -5,52 +5,50 @@ description: Next-Gen Application Observability Platform Empowering Developers a
 
 import { IconInfraStackOctopus, IconDiscord, IconPython, 
 IconNextJs, IconFastAPI, IconGoLang, IconJavaScript, IconOpenAI, 
-IconPinecone, IconPostgres, IconRedis, IconKafka, IconClickhouse, IconJava, IconPHP, IconDotNet, IconRuby } from '@components/icons'
+IconPinecone, IconPostgres, IconRedis, IconKafka, IconClickhouse, IconJava, IconPHP, IconDotNet, IconRuby, IconDjango } from '@components/icons'
 import { Callout, Card, Cards, Steps, Tabs } from 'nextra/components'
 import Link from 'next/link'
+
+import { Code } from 'lucide-react'
 
 
 # Getting Started With InfraStack AI
 Integrate your applications within minutes by simply choosing your framework or programming language below.
 If you need any help with integration, you can reach out to our team on our <Link href={"https://discord.gg/DZRQKBpVT5"} target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600"><IconDiscord className="w-4 h-4 inline" /> Discord channel</Link>, or you can <Link href={"https://cal.com/aykut-gedik-infrastack-ai/onboarding"} target="_blank" className="nx-text-primary-600 dark:nx-text-primary-600 hover:underline">schedule a call</Link> with one of our engineers for a guided integration session.
 
-## Getting Started
-<Cards>
-  <Card icon={<IconInfraStackOctopus className="dark:text-white dark:fill-white" />} title="What is InfraStack?" href="/integrations/whatisinfrastack" />
-  <Card icon={<IconInfraStackOctopus className="dark:text-white dark:fill-white" />} title="Example apps" href="https://github.com/infrastackai" />
-</Cards>
+
 ## Frameworks
 <Cards>
-  <Card icon={<IconNextJs className="dark:text-white dark:fill-white" />} title="Next.js" href="/integrations/nextjs" />
-  <Card icon={<IconFastAPI className="dark:text-white dark:fill-white" />} title="FastAPI" href="/integrations/fastapi" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="Django" href="/integrations/django" />
-   <Card icon={<IconPHP className="dark:text-white dark:fill-white" />} title="Kerem" href="/integrations/kerem" />
+  <Card icon={<IconNextJs className="" />} title="Next.js" href="/integrations/nextjs" />
+  <Card icon={<IconFastAPI className="" />} title="FastAPI" href="/integrations/fastapi" />
+  <Card icon={<IconDjango className="" />} title="Django" href="/integrations/django" />
 </Cards>
 ## Programming Languages
 <Cards>
-  <Card icon={<IconJavaScript className="dark:text-white dark:fill-white" />} title="JavaScript" href="/integrations/nextjs" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="Python" href="/integrations/fastapi" />
-  <Card icon={<IconGoLang className="dark:text-white dark:fill-white" />} title="Go" href="/integrations/go" />
-  <Card icon={<IconJava className="dark:text-white dark:fill-white" />} title="Java" href="/integrations/java" />
-  <Card icon={<IconDotNet className="dark:text-white dark:fill-white" />} title=".Net" href="/integrations/net" />
-  <Card icon={<IconRuby className="dark:text-white dark:fill-white" />} title="Ruby" href="/integrations/ruby" />
-  <Card icon={<IconPHP className="dark:text-white dark:fill-white" />} title="PHP" href="/integrations/php" />
+  <Card icon={<IconJavaScript className="fill-white dark:fill-black" />} title="JavaScript" href="/integrations/nextjs" />
+  <Card icon={<IconPython className="" />} title="Python" href="/integrations/python" />
+  <Card icon={<IconGoLang className="" />} title="Go" href="/integrations/go" />
+  <Card icon={<IconJava className="" />} title="Java" href="/integrations/java" />
+  <Card icon={<IconDotNet className="" />} title=".Net" href="/integrations/net" />
+  <Card icon={<IconRuby className="" />} title="Ruby" href="/integrations/ruby" />
+  <Card icon={<IconPHP className="" />} title="PHP" href="/integrations/php" />
 </Cards>
-## Databases
+## Databases & Queues
 <Cards>
-  <Card icon={<IconPostgres className="dark:text-white dark:fill-white" />} title="Postgres" href="/integrations/postgres" />
-  <Card icon={<IconRedis className="dark:text-white dark:fill-white" />} title="Redis" href="/integrations/redis" />
-  <Card icon={<IconKafka className="dark:text-white dark:fill-white" />} title="Kafka" href="/integrations/kafka" />
-  <Card icon={<IconClickhouse className="dark:text-white dark:fill-white" />} title="Clickhouse" href="/integrations/clickhouse" />
+  <Card icon={<IconPostgres className="" />} title="Postgres" href="/integrations/postgres" />
+  <Card icon={<IconRedis className="" />} title="Redis" href="/integrations/redis" />
+  <Card icon={<IconKafka className="" />} title="Kafka" href="/integrations/kafka" />
+  <Card icon={<IconClickhouse className="" />} title="Clickhouse" href="/integrations/clickhouse" />
+  <Card icon={<IconPinecone className="" />} title="Pinecone" href="/integrations/pinecone" />
 </Cards>
-## Libraries
+## APIs & Libraries
 <Cards>
-  <Card icon={<IconOpenAI className="dark:text-white dark:fill-white" />} title="OpenAI" href="/integrations/openai" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="Mistral" href="/integrations/mistral" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="Antropic" href="/integrations/antropic" />
-  <Card icon={<IconPinecone className="dark:text-white dark:fill-white" />} title="Pinecone" href="/integrations/pinecone" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="LangChain" href="/integrations/langchain" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="LLamaIndex" href="/integrations/llamaindex" />
-  <Card icon={<IconPython className="dark:text-white dark:fill-white" />} title="LiteLLM" href="/integrations/litellm" />
+  <Card icon={<IconOpenAI className="" />} title="OpenAI" href="/integrations/openai" />
+  <Card icon={<Code className="" />} title="LLamaIndex" href="/integrations/llamaindex" />
+</Cards>
+
+## Example Apps
+<Cards>
+  <Card icon={<Code className="w-5 h-5" />} title="ExpressJs Simple Server App with OpenTelemetry" href="https://github.com/infrastackai/otel/tree/main/examples/expressjs/basic-app" target="_blank" />
 </Cards>
 
