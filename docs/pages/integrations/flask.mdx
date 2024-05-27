@@ -1,2 +1,52 @@
-# Flask
-We're are working on a Flask integration. Stay tuned!
+---
+title: "Flask"
+description: InfraStack AI Flask Integration with OpenTelemetry for application performance monitoring.
+---
+
+import { Tabs } from 'nextra/components'
+import { Cards, Card, Steps } from 'nextra/components'
+import Link from 'next/link'
+
+
+# Flask Integration Steps
+
+<Steps>
+### Install SDKs
+
+
+```bash 
+pip install opentelemetry-distro
+pip install opentelemetry-exporter-otlp
+```
+ 
+You can use standard OpenTelemetry SDKs to send traces to our collector.
+List of all supported languages by OpenTelemetry and their SDK can be found in <Link href={"https://opentelemetry.io/docs/languages/python/"} target="_blank" className="hover:underline nx-text-primary-600 dark:nx-text-primary-600">OpenTelemetry docs</Link>.
+
+ 
+### Add auto-instrumentation
+
+```bash
+opentelemetry-bootstrap --action=install
+```
+
+### Run your application
+
+```bash
+OTEL_RESOURCE_ATTRIBUTES=service.name=<your_service_name> \
+OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai" \
+OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key=<your_infrastack_api_key>" \
+OTEL_EXPORTER_OTLP_PROTOCOL=grpc \
+opentelemetry-instrument <your_run_command>
+```
+
+### Go to [InfraStack AI Dashboard](https://app.infrastack.ai) to observe your traces
+
+
+</Steps>
+
+### Running applications with Gunicorn, uWSGI
+For application servers which are based on pre fork model like Gunicorn, uWSGI you have to add a `post_fork` hook or a `@postfork` decorator in your configuration.
+
+Check this [documentation](https://opentelemetry-python.readthedocs.io/en/latest/examples/fork-process-model/README.html) from OpenTelemetry on how to set it up.
+
+[Here's](https://github.com/SigNoz/opentelemetry-python/tree/main/docs/examples/fork-process-model) a working example where we have configured a gunicorn server with `post_fork` hook.

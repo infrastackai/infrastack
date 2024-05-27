@@ -1,6 +1,6 @@
 ---
 title: "Instrumenting LlamaIndex"
-description: InfraStack AI OpenTelemetry instrumentation for python llama_index.
+description: InfraStack AI OpenTelemetry instrumentation for llamaindex.
 ---
 
 ## Setup
@@ -8,9 +8,7 @@ description: InfraStack AI OpenTelemetry instrumentation for python llama_index.
 ### Step 1: Installing Packages
 
 ```bash
-pip3 install infrastack-otel
-pip3 install llama_index
-pip3 install opentelemetry-sdk
+pip install opentelemetry-instrumentation-llamaindex
 ```
 
 ### Step 2: Telemetry Configuration
@@ -49,30 +47,18 @@ provider.add_span_processor(processor)
 Now, add the intrumentation to the LlamaIndex API and possibly for OpenAI
 
 ```python
-from llama_index.core import Document, Settings, StorageContext, VectorStoreIndex
-from llama_index.embeddings.openai import OpenAIEmbedding
-from llama_index.llms.openai import OpenAI
-
 from opentelemetry.instrumentation.llamaindex import LlamaIndexInstrumentor
-from opentelemetry.instrumentation.openai import OpenAIInstrumentor
-
 LlamaIndexInstrumentor().instrument(tracer_provider = provider)
-OpenAIInstrumentor().instrument(tracer_provider = provider)
 ```
 
-### Step 3: Using the OpenAI API
+### Content Privacy
 
-All the OpenAI APIs can be used without modification and intrumentation provides
-immediate traces for this framework.
+By default, this instrumentation logs prompts, completions, and embeddings to span attributes. This gives you a clear visibility into how your LLM application is working, and can make it easy to debug and evaluate the quality of the outputs.
 
-```python
-OPENAI_API_KEY="<OPENAI-API-KEY>"
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+However, you may want to disable this logging for privacy reasons, as they may contain highly sensitive data from your users. You may also simply want to reduce the size of your traces.
 
-Settings.llm = OpenAI(model="gpt-3.5-turbo")
-Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-small")
+To disable logging, set the `TRACELOOP_TRACE_CONTENT` environment variable to false.
 
-index = VectorStoreIndex.from_vector_store(vector_store=<YOUR_CHOICE_OF_VECTORDB>)
-retriever = index.as_retriever(similarity_top_k=5)
-rtriever.retrieve("find the relevant documents.")
+```
+TRACELOOP_TRACE_CONTENT=false
 ```

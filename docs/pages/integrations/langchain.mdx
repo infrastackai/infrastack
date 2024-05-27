@@ -1,6 +1,6 @@
 ---
-title: "OpenAI"
-description: InfraStack OpenTelemetry instrumentation for OpenAI.
+title: "Instrumenting Langchain"
+description: InfraStack AI OpenTelemetry instrumentation for Langchain.
 ---
 
 ## Setup
@@ -8,7 +8,7 @@ description: InfraStack OpenTelemetry instrumentation for OpenAI.
 ### Step 1: Installing Packages
 
 ```bash
-pip install opentelemetry-instrumentation-openai
+pip install opentelemetry-instrumentation-langchain
 ```
 
 ### Step 2: Telemetry Configuration
@@ -40,44 +40,17 @@ otlp_exporter = OTLPSpanExporter(
 )
 
 processor = BatchSpanProcessor(otlp_exporter)
-provider = TracerProvider(resource=Resource.create({"service.name": "openai.traces"}))
+provider = TracerProvider(resource=Resource.create({"service.name": "llama_index.traces"}))
 provider.add_span_processor(processor)
 ```
 
-Now, add the intrumentation to the OpenAI API,
+Now, add the intrumentation to the Langchain API and possibly for OpenAI
 
 ```python
-import openai
-
-from opentelemetry.instrumentation.openai import OpenAIInstrumentor
-
-OpenAIInstrumentor().instrument(tracer_provider = provider)
+from opentelemetry.instrumentation.langchain import LangchainInstrumentor
+LangchainInstrumentor().instrument(tracer_provider = provider)
 ```
 
-### Step 3: Using the OpenAI API
-
-All the OpenAI APIs can be used without modification and intrumentation provides
-immediate traces for this framework, i.e.
-
-```python
-import os
-
-from openai import OpenAI
-
-
-OPENAI_API_KEY="<OPENAI-API-KEY>"
-client = OpenAI(
-  api_key=os.environ.get('OPENAI_API_KEY') or OPENAI_API_KEY
-)
-
-client.chat.completions.create(
-    model='gpt-3.5-turbo',
-    messages=[
-        {'role': 'system', 'content': 'Answer in friendly and personal manner.'},
-        {'role': 'user', 'content': 'How are you today'},
-    ]
-)
-```
 
 ### Content Privacy
 

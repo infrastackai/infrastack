@@ -1,6 +1,6 @@
 ---
-title: "Instrumenting Pinecone"
-description: InfraStack AI OpenTelemetry instrumentation for python pinecone.
+title: "Pinecone"
+description: InfraStack AI OpenTelemetry instrumentation for pinecone.
 ---
 
 ## Setup
@@ -8,9 +8,7 @@ description: InfraStack AI OpenTelemetry instrumentation for python pinecone.
 ### Step 1: Installing Packages
 
 ```bash
-pip3 install infrastack-otel
-pip3 install opentelemetry-sdk
-pip3 install pinecone-client
+pip install opentelemetry-instrumentation-pinecone
 ```
 
 ### Step 2: Telemetry Configuration
@@ -72,7 +70,7 @@ pc.create_index(
   metric="euclidean",
   spec=ServerlessSpec(
       cloud='aws',
-      region='us-east-1'  # us-west-2 is not on a free plan
+      region='us-east-1'
   )
 )
 ```
