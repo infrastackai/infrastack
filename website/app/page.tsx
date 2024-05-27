@@ -276,7 +276,7 @@ export function register() {
         {/* <Announcement /> */}
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Ship High-Quality Code<br></br>with Next-Gen Observability</PageHeaderHeading>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Ship Quality Code<br></br>with Next-Gen Observability</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-200">
           <p className="hidden md:block">Stop wasting time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
           <p className="hidden md:block ">Find issues quickly and get actionable insights in milliseconds</p>
