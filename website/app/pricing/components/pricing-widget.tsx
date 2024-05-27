@@ -93,7 +93,7 @@ export default function PricingWidget() {
                     <Button variant="outline" className="absolute bottom-6 m-auto left-0 right-0 w-fit bg-indigo-500 hover:bg-indigo-600 disabled">Current Plan</Button>
                 </div>
                 <div className={cn("relative grow border rounded-lg text-center jus p-6 w-56", { 'ring-1 ring-indigo-500': (selectedPlan.toLowerCase() === 'essential') })}>
-                    <Badge variant='' className="bg-zinc-900 text-zinc-100">ESSENTIAL</Badge>
+                    <Badge className="bg-zinc-900 text-zinc-100">ESSENTIAL</Badge>
                     <p className="text-3xl font-normal mt-6">${20 + 20 * usersCount + (productionEvents === "5" ? 0 : parseInt(productionEvents) * 4)}/mo</p>
                     <p className="text-base text-muted-foreground font-normal mt-2">Best for teams and multiple environments.</p>
 
@@ -124,11 +124,12 @@ export default function PricingWidget() {
                     <p className="text-base text-muted-foreground font-normal">+ Everything Free</p>
 
 
-                    <Button variant="primary" className="absolute bottom-6 m-auto left-0 right-0 w-fit bg-indigo-500 hover:bg-indigo-600">Upgrade</Button>
+                    <Button className="absolute bottom-6 m-auto left-0 right-0 w-fit bg-indigo-500 hover:bg-indigo-600">Upgrade</Button>
 
 
                 </div>
-                <div className={cn("relative grow border rounded-lg text-center jus p-6 w-56", { 'ring-1 ring-indigo-500': (selectedPlan.toLowerCase() === "professional") })}>                    <Badge variant='' className="">PROFESSIONAL</Badge>
+                <div className={cn("relative grow border rounded-lg text-center jus p-6 w-56", { 'ring-1 ring-indigo-500': (selectedPlan.toLowerCase() === "professional") })}>                    
+                <Badge className="">PROFESSIONAL</Badge>
                     <p className="text-3xl font-normal mt-6">Get in touch</p>
                     <p className="text-base text-muted-foreground font-normal mt-2">Best for unique requirements that <br></br> need to scale.</p>
                     <p className="text-base text-muted-foreground font-normal mt-6">Talk with an expert to discuss <br></br> your unique needs.</p>
@@ -138,7 +139,7 @@ export default function PricingWidget() {
                     <p className="text-base text-muted-foreground font-normal">On Prem Support</p>
                     <p className="text-base text-muted-foreground font-normal mb-20">+ Everything Essential</p>
                     <Link href="mailto:hello@infrastack.ai">
-                        <Button variant="primary" className="absolute bottom-6 m-auto left-0 right-0 w-fit bg-indigo-500 hover:bg-indigo-600">Contact Us</Button>
+                        <Button className="absolute bottom-6 m-auto left-0 right-0 w-fit bg-indigo-500 hover:bg-indigo-600">Contact Us</Button>
                     </Link>
                 </div>
             </div>
