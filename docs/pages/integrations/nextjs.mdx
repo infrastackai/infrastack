@@ -14,9 +14,9 @@ import Link from 'next/link'
 ### Install SDKs
 
 ```sh npm2yarn
-npm install @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/sdk-trace-node \
-@opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-grpc \ 
-@opentelemetry/resources @opentelemetry/semantic-conventions
+npm install @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/sdk-trace-node
+npm install @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-grpc
+npm install @opentelemetry/resources @opentelemetry/semantic-conventions
 ```
  
 You can use standard OpenTelemetry SDKs to send traces to our collector.
@@ -47,13 +47,13 @@ You can store these variables in your .env file or set them as environment varia
 
 <Tabs items={['grpc', 'http']} defaultIndex="0">
 <Tabs.Tab>
-```bash
+```bash filename=".env"
 OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
 OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRSTACK_API_KEY}}"
 ```
 </Tabs.Tab>
 <Tabs.Tab>
-```bash
+```bash filename=".env"
 OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
 OTEL_EXPORTER_OTLP_PROTOCOL="http"
 OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRSTACK_API_KEY}}"
@@ -86,6 +86,10 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
 import {
     SEMRESATTRS_SERVICE_NAME,
     SEMRESATTRS_SERVICE_VERSION,
+    SEMRESATTRS_SERVICE_INSTANCE_ID,
+    SEMRESATTRS_SERVICE_NAMESPACE,
+    SEMRESATTRS_K8S_NAMESPACE_NAME,
+    SEMRESATTRS_K8S_POD_NAME
   } from '@opentelemetry/semantic-conventions';
 import { Resource } from '@opentelemetry/resources';
 
@@ -93,7 +97,12 @@ const traceExporter = new OTLPTraceExporter();
 
 const sdk = new NodeSDK({
     resource: new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: 'service-name', // Change this to your service name
+        [SEMRESATTRS_SERVICE_NAME]: 'your-service-name', // Change this to your service name
+        [SEMRESATTRS_SERVICE_VERSION]: "0.0.1", // Change this to your service version
+        [SEMRESATTRS_SERVICE_INSTANCE_ID]: process.env.POD_NAME ?? "", // you can use uuid if pod name is not available
+        [SEMRESATTRS_K8S_NAMESPACE_NAME]: process.env.POD_NAMESPACE ?? "",
+        [SEMRESATTRS_K8S_POD_NAME]: process.env.POD_NAME ?? "",
+        "project.id": "your-project-id", // Change this to your project id to filter traces, metrics, and logs by project
     }),
     traceExporter,
     instrumentations: [
@@ -109,6 +118,35 @@ sdk.start();
 ```
 
 ### Run your application
+
+<Tabs items={['local development', 'production']} defaultIndex="0">
+<Tabs.Tab>
+Run development server:
+```bash 
+npm run dev
+```
+Open http://localhost:3000 with your browser to see the result.
+</Tabs.Tab>
+<Tabs.Tab>
+#### Add support for Docker to an existing project
+Create a `Dockerfile` in the root of your project with the following content:
+[Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)
+
+```js filename="next.config.js"
+module.exports = {
+  // ... rest of the configuration.
+  output: "standalone",
+};
+```
+This will build the project as a standalone app inside the Docker image.
+#### Build your container
+`docker build -t nextjs-docker .`
+#### Run your container
+`docker run -p 3000:3000 nextjs-docker`
+
+[Follow the Offical Next.js Docker Example](https://github.com/vercel/next.js/tree/canary/examples/with-docker)
+</Tabs.Tab>
+</Tabs>
 
 
 </Steps>
