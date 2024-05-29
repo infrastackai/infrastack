@@ -40,6 +40,10 @@ const customers = [
   //   logo: "/images/mercedes.svg",
   // },
   {
+    logo: "/images/glide.svg",
+    className: "h-12 w-32"
+  },
+  {
     logo: "/images/thirdweb.svg",
     className: "h-40 w-40"
   },
@@ -59,6 +63,10 @@ const customers = [
   //   logo: "/images/tesla.svg",
   //   className: "h-28 w-28"
   // },
+  {
+    logo: "/images/glide.svg",
+    className: "h-12 w-32"
+  },
   {
     logo: "/images/permify-logo.svg",
     className: "h-40 w-40"
