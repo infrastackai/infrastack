@@ -1,6 +1,9 @@
+import { PricingView } from "./components/pricing-view";
+
 export default function Page() {
-    return (
-        <div className="w-full text-center mt-20 text-2xl">We're working on a developer-friendly pricing model. Stay tuned!
-        </div>
-    )
+  return (
+    <div className="container relative">
+      <PricingView />
+    </div>
+  );
 }
