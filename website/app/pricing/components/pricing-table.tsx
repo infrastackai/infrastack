@@ -41,10 +41,9 @@ export function PricingTable() {
               key={index}
               className={cn(
                 "text-center p-2 border-b",
-                Array.from(
-                  { length: 3 },
-                  (_, i) => `md:[&:nth-child(8n+${i + 2})]:bg-muted/60`
-                )
+                "md:[&:nth-child(8n+2)]:bg-muted/60",
+                "md:[&:nth-child(8n+3)]:bg-muted/60",
+                "md:[&:nth-child(8n+4)]:bg-muted/60",
               )}
             >
               {data}

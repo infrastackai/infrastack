@@ -2,16 +2,15 @@
 import { PricingStickyHeader } from "./pricing-sticky-header";
 import { PricingTable } from "./pricing-table";
 import { PricingCalculator } from "./pricing-calculator";
-import { use, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { PaymentInterval } from "@/types/pricing";
-import PricingWidget from "./pricing-widget";
 import { PricingFAQ } from "./pricing-faq";
-import { PricingCardsDesktop } from "./pricing-cards.desktop";
 import { PricingIntervalToggle } from "./pricing-interval-toggle";
-import { cn } from "@/lib/utils";
+import { CustomersSection } from "@/components/customers-section";
+
 export function PricingView() {
   const [paymentInterval, setPaymentInterval] =
-    useState<PaymentInterval>("monthly");
+    useState<PaymentInterval>("yearly");
 
   return (
     <div className="my-10 md:my-20">
@@ -27,14 +26,15 @@ export function PricingView() {
         </div>
         <PricingStickyHeader paymentInterval={paymentInterval} />
         <div className="my-10">
-          <h2 className="text-xl md:text-2xl font-semibold mb-6">
+          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-center">
             Plans Comparison
           </h2>
           <PricingTable />
         </div>
       </div>
+      <CustomersSection />
       <div className="my-10">
-        <h2 className="text-xl md:text-2xl font-semibold mb-6">Pricing Calculator</h2>
+        <h2 className="text-xl md:text-2xl font-semibold mb-6 text-center">Pricing Calculator</h2>
         <div className="mb-8 text-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
           voluptatem possimus officia pariatur adipisci repellat odio, modi

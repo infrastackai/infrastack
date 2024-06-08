@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { pricingCalculator } from "@/lib/pricingUtils";
 import { cn } from "@/lib/utils";
 import { PaymentInterval, PricingOptions } from "@/types/pricing";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 
 import Link from "next/link";
 
@@ -29,41 +30,53 @@ export function PricingCardsDesktop({ paymentInterval }: Props) {
         </div>
 
         <div className="grow">
-          <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-            <li className="text-base text-muted-foreground font-normal mt-8">
+          <ul className="my-6 ml-6 list-disc [&>li]:mt-2 list-none">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1 User
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1 Development Environment
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1 Production Environment
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               100k Ingested Events Per Day
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Basic Copilots
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Unlimeted Copilot Usage
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Retention Period 7 Days
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1 Alert
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Slack & Email Notifications
             </li>
           </ul>
         </div>
 
-        <div className="text-center">
-          <Button variant="secondary" disabled>
-            Current Plan
+        <div className="text-center mb-2">
+          <Button variant="secondary">
+            Get Started
           </Button>
+        </div>
+        <div className="text-center text-muted-foreground">
+          No credit card required
         </div>
       </div>
       <div
@@ -81,36 +94,44 @@ export function PricingCardsDesktop({ paymentInterval }: Props) {
           </p>
         </div>
         <div className="grow">
-          <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-            <li className="text-base text-muted-foreground font-normal mt-8">
+          <ul className="my-6 ml-6 list-disc [&>li]:mt-2 list-none">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               up to 50 Users
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               up to 50 Development Environments
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1 Production Environment
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               1M Ingested Events Per Day
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Standard Copilots
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Retention Period 1 Month
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               5 Alerts
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               + Everything Free
             </li>
           </ul>
         </div>
 
         <div className="text-center">
-          <Button>Upgrade</Button>
+          <Button>Start a free trial</Button>
         </div>
       </div>
       <div className={cn("border rounded-lg jus p-6 flex flex-col")}>
@@ -122,17 +143,21 @@ export function PricingCardsDesktop({ paymentInterval }: Props) {
           </p>
         </div>
         <div className="grow">
-          <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-            <li className="text-base text-muted-foreground font-normal mt-6">
+          <ul className="my-6 ml-6 list-disc [&>li]:mt-2 list-none">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Talk with an expert to discuss <br></br> your unique needs.
             </li>
-            <li className="text-base text-muted-foreground font-normal mt-12">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               Advanced Copilots & Agents
             </li>
-            <li className="text-base text-muted-foreground font-normal">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               On Prem Support
             </li>
-            <li className="text-base text-muted-foreground font-normal mb-20">
+            <li className="text-base text-muted-foreground font-normal  relative">
+              <CheckCircledIcon className="absolute -left-5 top-1 text-primary" />
               + Everything Essential
             </li>
           </ul>
