@@ -289,8 +289,8 @@ export function register() {
         <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 hidden md:block">InfraStack is <br/>Datadog + PostHog + GPT <br/> for <TypedHeader /> Developers</PageHeaderHeading>
         <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 md:hidden">InfraStack is <br/>Datadog +<br/> PostHog + GPT <br/> for <TypedHeader /> Developers</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-400">
-          <p className="hidden md:block ">A real-time view of application insights and user behavior, intelligently corralated, beautifully visualized.</p>
-          <p className="md:hidden ">A real-time view of application insights and user behavior, intelligently corralated, beautifully visualized.</p>
+          <p className="hidden md:block font-normal">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
+          <p className="md:hidden">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
         </PageHeaderDescription>
         <PageActions className="mt-2 items-start">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
@@ -315,8 +315,8 @@ export function register() {
             <Button
               variant={"outline"}
               className={cn("text-white dark:hover:bg-indigo-800 bg-indigo-600 dark:md:text-lg border-zinc-800 dark:border-[1px] dark:border-solid z-50 h-[56px] w-[180px] md:w-[220px] rounded-lg")}
-            >Get Started Free</Button>
-            <p className="text-muted-foreground text-zinc-300">No credit card required</p>
+            >Get Started</Button>
+            <p className="text-muted-foreground text-zinc-300 opacity-50 text-base">No credit card needed</p>
           </Link>
           {/* <Link
             target="_blank"
