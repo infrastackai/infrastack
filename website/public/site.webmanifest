@@ -1,6 +1,6 @@
 {
-    "name": "InfraStack AI",
-    "short_name": "InfraStack AI",
+    "name": "InfraStack",
+    "short_name": "InfraStack",
     "start_url": ".",
     "background_color": "#000",
     "description": "InfraStack AI | Next-Gen Observability Copilot for Developers.",

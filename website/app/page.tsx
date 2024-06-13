@@ -30,6 +30,8 @@ import { Separator } from "@/components/ui/separator"
 import GetDemoButton from "@/components/get-demo"
 import { use, useEffect, useRef } from "react"
 
+import TypedHeader from "@/components/typed"
+
 
 const customers = [
   // {
@@ -281,13 +283,12 @@ export function register() {
     <div className="container relative">
       <PageHeader className="relative dark:bg-dot-white/[0.2] bg-dot-black/[0.2] rounded-full">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_1%,#09090b)]"></div>
-        {/* <Announcement /> */}
+        <Announcement />
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">AI-Powered Application Intelligence Platform</PageHeaderHeading>
-        <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-200">
-          <p className="hidden md:block ">Understand Application Behaviors & User Journeys Instantly.</p>
-          <p className="md:hidden">Understand Application Behaviors & User Journeys Instantly.</p>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">InfraStack is <br/>Datadog + PostHog + GPT <br/> for <TypedHeader /> Developers</PageHeaderHeading>
+        <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-400">
+          <p className="hidden md:block ">A real-time view of application insights and user behavior, intelligently corralated, beautifully visualized.</p>
         </PageHeaderDescription>
         <PageActions className="mt-2 items-start">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
@@ -313,7 +314,7 @@ export function register() {
               variant={"outline"}
               className={cn("text-white dark:hover:bg-indigo-800 bg-indigo-600 dark:md:text-lg border-zinc-800 dark:border-[1px] dark:border-solid z-50 h-[56px] w-[180px] md:w-[220px] rounded-lg")}
             >Get Started Free</Button>
-            <p className="text-muted-foreground text-sm">No credit card required</p>
+            <p className="text-muted-foreground text-zinc-300">No credit card required</p>
           </Link>
           {/* <Link
             target="_blank"
@@ -361,7 +362,7 @@ export function register() {
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
             {/* <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Next-Gen Developers</div> */}
-            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Teams <br></br>and Developers</div>
+            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Teams</div>
 
           </div>
         </div>
@@ -516,7 +517,7 @@ export function register() {
       </div>
 
       <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-16 md:mt-40">
-        <p className="">Supercharge Your Developers<br></br>with Intelligent Tooling</p>
+        <p className="">Supercharge Your Developers<br></br>with Smart Tooling</p>
       </div>
 
       <div className="relative container w-fit  gap-x-6 gap-y-4 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3  py-10">
@@ -623,12 +624,12 @@ export function register() {
           speed="slow"
         /> */}
 
-      {false && <div className="w-full text-center mt-32  md:mt-24">
+      {<div className="w-full text-center mt-32  md:mt-24">
         <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Source <br></br>& Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
       </div>}
 
-      {false && <div className="container w-fit max-w-[800px] gap-x-5 gap-y-4 md:gap-y-0 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2  py-10">
+      {<div className="container w-fit max-w-[800px] gap-x-5 gap-y-4 md:gap-y-0 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2  py-10">
         <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
           <Image src="/images/integrations/otel_avatar.svg" alt="InfraStack AI OpenTelemetry" width={40} height={40} />
 

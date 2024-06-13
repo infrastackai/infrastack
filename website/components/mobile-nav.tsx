@@ -86,13 +86,13 @@ export function MobileNav() {
           >
             For Enterprise
           </MobileLink> */}
-          <MobileLink
+          {/* <MobileLink
             key={"/pricing"}
             href={"/pricing"}
             onOpenChange={setOpen}
           >
             Pricing
-          </MobileLink>
+          </MobileLink> */}
           <MobileLink
             key={"/docs"}
             href={"https://docs.infrastack.ai"}
@@ -114,13 +114,13 @@ export function MobileNav() {
           >
             Careers
           </MobileLink>
-          <MobileLink
+          {/* <MobileLink
             key={"blog"}
             href={"https://docs.infrastack.ai/blog"}
             onOpenChange={setOpen}
           >
             Blog
-          </MobileLink>
+          </MobileLink> */}
         </div>
         {/* <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-3">

@@ -50,7 +50,8 @@
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.161.0"
+    "three": "^0.161.0",
+    "typed.js": "^2.1.0"
   },
   "devDependencies": {
     "@swc-jotai/react-refresh": "^0.1.0",
