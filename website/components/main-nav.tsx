@@ -31,14 +31,14 @@ export function MainNav() {
               {siteConfig.name}
             </span>
           </Link>
-          <Link
+          {/* <Link
             href="/pricing"
             className={cn(
               "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block uppercase font-semibold"
             )}
           >
             Pricing
-          </Link>
+          </Link> */}
           <Link
             href="https://docs.infrastack.ai"
             target="_blank"
@@ -48,7 +48,7 @@ export function MainNav() {
           >
             Docs
           </Link>
-          <Link
+          {/* <Link
             href="https://docs.infrastack.ai/blog"
             target="_blank"
             className={cn(
@@ -56,7 +56,7 @@ export function MainNav() {
             )}
           >
             Blog
-          </Link>
+          </Link> */}
         </div>
         <div className="flex flex-row space-x-4 items-center">
           <Link

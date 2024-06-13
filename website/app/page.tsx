@@ -284,11 +284,10 @@ export function register() {
         {/* <Announcement /> */}
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">Ship Quality Code<br></br>with Next-Gen Observability</PageHeaderHeading>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 ">AI-Powered Application Intelligence Platform</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-200">
-          <p className="hidden md:block">Stop wasting time and money <Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image> on legacy monitoring</p>
-          <p className="hidden md:block ">Find issues quickly and get actionable insights in milliseconds</p>
-          <p className="md:hidden">Stop wasting time and money <br></br><Image className="inline mb-3" src={burningMoney} width={30} height={30} alt="burning money"></Image>on legacy monitoring<br></br>Find issues quickly and get actionable insights <br></br> in milliseconds</p>
+          <p className="hidden md:block ">Understand Application Behaviors & User Journeys Instantly.</p>
+          <p className="md:hidden">Understand Application Behaviors & User Journeys Instantly.</p>
         </PageHeaderDescription>
         <PageActions className="mt-2 items-start">
           {/* <Link href="/docs" className={cn(buttonVariants())}>
@@ -324,7 +323,7 @@ export function register() {
           >
             Get a Demo
           </Link> */}
-          <GetDemoButton />
+          {/* <GetDemoButton /> */}
         </PageActions>
         {/* <div className="flex flex-col items-center justify-center z-[60]">
           <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-2xl md:text-4xl font-bold">1B+ <BarChart4 className="h-5 w-5 md:h-9 md:w-9 inline" /></span><br></br><span className="text-xl md:text-3xl">Traces Proceessed</span></div>
@@ -351,10 +350,10 @@ export function register() {
       <section className="">
         {/* <div className="overflow-hidden h-fit rounded-lg riolng-1 ring-zinc-900 bg-background p-0"> */}
         {/* <MailPage /> */}
-        <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border border-indigo-700 rounded-lg drop-shadow-2" />
+        {/* <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border border-indigo-700 rounded-lg drop-shadow-2" /> */}
         {/* </div> */}
       </section>
-      {true && <div className="w-full md:mt-40 mt-20 relative" id="featuresContainerId">
+      {true && <div className="w-full md:mt-20 mt-20 relative" id="featuresContainerId">
         <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
         <div className="w-full text-center">
           <div className="flex flex-col space-y- items-center justify-center h-0">
@@ -362,7 +361,7 @@ export function register() {
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
             {/* <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Next-Gen Developers</div> */}
-            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Developers</div>
+            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Teams <br></br>and Developers</div>
 
           </div>
         </div>
@@ -381,7 +380,7 @@ export function register() {
       <div className=" md:hidden">
         <div className="w-full text-center mt-20 md:mt-24">
           <p className="text-[28px] md:text-5xl font-bold text-zinc-200">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing in minutes</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Choose Your Application Stacks and Gain Insights in Minutes</p>
         </div>
         <div className="w-full flex flex-row space-x-4 items-center justify-center mt-8">
           <Link href="https://docs.infrastack.ai/integrations/nextjs" target="_blank" prefetch={false}>
@@ -396,11 +395,6 @@ export function register() {
               <p className="font-medium mt-2">FastAPI</p>
             </div>
           </Link>
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
-            <div className="group h-28 cursor-pointer flex w-32 flex-col items-center justify-center rounded-xl border  hover:border-indigo-600  bg-infrastack hover:bg-muted/50 text-card-foreground shadow transition-colors  sm:p-6">
-              <p className="font-medium mt-2 text-green-400">+16 more</p>
-            </div>
-          </Link>
         </div>
         <div className="w-full flex flex-row space-x-4 justify-center mt-3">
           <Link href="https://docs.infrastack.ai" target="_blank" prefetch={false}>
@@ -412,7 +406,7 @@ export function register() {
       <div className="hidden md:block mt-20 md:mt-32">
         <div className="w-full text-center">
           <p className="font-semibold text-zinc-200 text-[26px] md:text-5xl">Getting Started is Simple</p>
-          <p className="text-zinc-500 mt-2  md:text-lg">Choose your application stacks and start observing in minutes</p>
+          <p className="text-zinc-500 mt-2  md:text-lg">Choose Your Application Stacks and Gain Insights in Minutes</p>
         </div>
 
         <div className="w-full flex flex-row space-x-4 items-center justify-center mt-8">
@@ -522,7 +516,7 @@ export function register() {
       </div>
 
       <div className="w-full text-center text-[28px] md:text-5xl font-bold text-zinc-200 mt-16 md:mt-40">
-        <p className="">Supercharge your developers<br></br>with smart observability</p>
+        <p className="">Supercharge Your Developers<br></br>with Intelligent Tooling</p>
       </div>
 
       <div className="relative container w-fit  gap-x-6 gap-y-4 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2 xl:grid-cols-3  py-10">
@@ -536,39 +530,9 @@ export function register() {
             </div>
           </div>
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Natural Language Querying
+            Natural Language Search
           </p>
-          <p className="text-zinc-600 md:text-lg">Ask questions in any language and find the needle in the haystack within milliseconds.</p>
-        </div>
-        <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900 ">
-          <div className="m-auto left-0 right-0 top-[14px] blur-xl bg-indigo-700/30 rounded-full h-24 w-24 absolute z-20">
-          </div>
-          <div className="bg-gradient-to-tr from-green-400 via-[#5865F2] to-[#EB459E] p-[3px] rounded-full  bg-zinc-950 ">
-            <div className="h-full w-full bg-zinc-950 p-2 rounded-full">
-              <Signal className="md:h-fit md:w-fit w-6 h-6 bg-zinc-950 p-1 md:p-2" />
-            </div>
-          </div>
-          <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Traces, Metrics, and Logs
-          </p>
-          <p className="text-zinc-600 md:text-lg">
-            Only the most useful telemetry data, seamlessly integrated and intelligently correlated.
-          </p>
-        </div>
-        <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
-          <div className="m-auto left-0 right-0 top-[14px] blur-xl bg-indigo-700/30 rounded-full h-24 w-24 absolute z-20">
-          </div>
-          <div className="bg-gradient-to-bl from-green-400 via-[#5865F2] to-[#EB459E] p-[3px] rounded-full  bg-zinc-950 ">
-            <div className="h-full w-full bg-zinc-950 p-2 rounded-full">
-              <Radio className="md:h-fit md:w-fit w-6 h-6 bg-zinc-950 p-1 md:p-2" />
-            </div>
-          </div>
-          <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Real Time & Dynamic
-          </p>
-          <p className="text-zinc-600 md:text-lg">
-            Live graphs and dashboards are dynamically generated based on the context.
-          </p>
+          <p className="text-zinc-600 md:text-lg">Ask questions in any language and get instant insights from your telemetry data.</p>
         </div>
         <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
           <div className="m-auto left-0 right-0 top-[14px] blur-xl bg-indigo-700/30 rounded-full h-24 w-24 absolute z-20">
@@ -579,10 +543,40 @@ export function register() {
             </div>
           </div>
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Domain Expert Copilots
+            Agentic AI Workflows
           </p>
           <p className="text-zinc-600 md:text-lg">
-            AI Copilots, equipped with specialized knowledge, ready to offer assistance & insights in niche domains.
+            Use AI to handle complex tasks quickly and easily, so you can focus on what matters most.
+          </p>
+        </div>
+        <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
+          <div className="m-auto left-0 right-0 top-[14px] blur-xl bg-indigo-700/30 rounded-full h-24 w-24 absolute z-20">
+          </div>
+          <div className="bg-gradient-to-bl from-green-400 via-[#5865F2] to-[#EB459E] p-[3px] rounded-full  bg-zinc-950 ">
+            <div className="h-full w-full bg-zinc-950 p-2 rounded-full">
+              <LineChart className="md:h-fit md:w-fit w-6 h-6 bg-zinc-950 p-1 md:p-2" />
+            </div>
+          </div>
+          <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
+            Charts and Dashboards
+          </p>
+          <p className="text-zinc-600 md:text-lg">
+            Live charts and dashboards are dynamically generated based on your application stacks.
+          </p>
+        </div>
+        <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900 ">
+          <div className="m-auto left-0 right-0 top-[14px] blur-xl bg-indigo-700/30 rounded-full h-24 w-24 absolute z-20">
+          </div>
+          <div className="bg-gradient-to-tr from-green-400 via-[#5865F2] to-[#EB459E] p-[3px] rounded-full  bg-zinc-950 ">
+            <div className="h-full w-full bg-zinc-950 p-2 rounded-full">
+              <Signal className="md:h-fit md:w-fit w-6 h-6 bg-zinc-950 p-1 md:p-2" />
+            </div>
+          </div>
+          <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
+            Application and Analytics Telemetry Data
+          </p>
+          <p className="text-zinc-600 md:text-lg">
+            Only the most useful telemetry data seamlessly integrated on one platform.
           </p>
         </div>
         <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
@@ -597,7 +591,7 @@ export function register() {
             Quick Start Guides
           </p>
           <p className="text-zinc-600 md:text-lg">
-            Get started in minutes with our quick start guides tailored to your application & cloud stack.
+            Get started in minutes with our quick start guides tailored to your application stacks.
           </p>
         </div>
         <div className="relative md:w-80 md:h-72 border border-zinc-800 rounded-xl p-6 flex flex-col items-center pt-8 space-y-2 shadow-inner  shadow-zinc-900">
@@ -609,10 +603,10 @@ export function register() {
             </div>
           </div>
           <p className="w-full text-lg md:text-xl text-zinc-200 pt-2">
-            Discord & Slack
+            Slack & Discord
           </p>
           <p className="text-zinc-600 md:text-lg w-full">
-            Receive timely and actionable alerts directly within your preferred productivity platform.
+            Receive timely and actionable notifications directly within your preferred productivity platform.
           </p>
         </div>
       </div>
@@ -629,12 +623,12 @@ export function register() {
           speed="slow"
         /> */}
 
-      <div className="w-full text-center mt-32  md:mt-24">
+      {false && <div className="w-full text-center mt-32  md:mt-24">
         <p className="text-[26px] md:text-5xl font-semibold text-zinc-200">Built on Open Source <br></br>& Open Standards</p>
         <p className="text-zinc-500 mt-2 md:text-lg">Have full ownership and control of your telemetry data</p>
-      </div>
+      </div>}
 
-      <div className="container w-fit max-w-[800px] gap-x-5 gap-y-4 md:gap-y-0 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2  py-10">
+      {false && <div className="container w-fit max-w-[800px] gap-x-5 gap-y-4 md:gap-y-0 grid grid-cols-1 md:grid-cols-2  lg:grid-cols-2  py-10">
         <div className="md:h-72 border border-zinc-800 rounded-xl p-6 shadow-inner  shadow-zinc-900">
           <Image src="/images/integrations/otel_avatar.svg" alt="InfraStack AI OpenTelemetry" width={40} height={40} />
 
@@ -661,7 +655,7 @@ export function register() {
             ClickHouse is an open-source, high-performance columnar database system, embraced and supported by industry leaders in data analytics.
           </p>
         </div>
-      </div>
+      </div>}
 
       <div className="relative mt-60 md:mt-80 pt-20 md:p-20">
         <div className="h-64 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] w-full absolute top-[-210px] m-auto left-0 right-0 z-50">

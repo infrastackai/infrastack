@@ -12,21 +12,20 @@ export default function IndexPage() {
                 <p className="mt-12 text-md text-zinc-400">
                     <span className="font-semibold text-lg text-left text-zinc-300">Our Mission</span>
                     <br></br>
-                    We aim to make observability limitless and easy for every developer.
+                    We Aim to Make Application Intelligence Easy and Understanable for Every Developer.
                 </p>
                 <p className="mt-12 text-lg text-zinc-400">
                     <span className="font-semibold text-left text-zinc-300">About InfraStack AI</span>
-                    <br></br>Our journey began through firsthand experience with the challenges of managing development teams, compounded by the lack of sophisticated tools necessary to effectively identify and address the complexities inherent in modern cloud-native systems. This journey has shaped our mission: to pioneer a new epoch in observability.
+                    <br></br>Our journey began through firsthand experience with the challenges of managing development teams, compounded by the lack of sophisticated tools necessary to effectively identify and address the complexities inherent in modern application stacks. This journey has shaped our mission: to pioneer a new epoch in application intelligence.
 
                     <br></br>
                     <br></br>
-                    Our vision is to replace antiquated monitoring systems with a next-generation observability copilot. This innovative copilot is designed to empower developers with unparalleled insights, enabling them to swiftly diagnose and resolve issues, foster rapid innovation, and bolster system robustness. At the core of this transformation is artificial intelligence, driving the evolution towards a more resilient, efficient, and forward-thinking digital infrastructure.
+                    Our vision is to replace outdated monitoring systems with a next-generation application intelligence platform. This platform empowers developers with deep insights, helping them quickly find and fix issues, innovate faster, and strengthen system reliability. At the heart of this change is artificial intelligence, making application development smarter and more efficient.
                 </p>
                 <h1 className="font-semibold text-lg text-left text-zinc-300 mt-12">Meet our team</h1>
                 <div className="flex flex-col space-y-2 text-zinc-400">
                     <div className="mt-2"><Link href="https://www.linkedin.com/in/aykutgk/" target="_blank" className="text-indigo-500">Aykut Gedik</Link> - Founder</div>
-                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Data Science</div>
-                    <div><Link href="https://www.linkedin.com/in/receperdg/" target="_blank" className="text-indigo-500">Recep Erdogan</Link> - Infra Engineer</div>
+                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Data Science Advisor</div>
                     <div><Link href="https://www.linkedin.com/in/delly-tamer/" target="_blank" className="text-indigo-500">Delly Tamer</Link> - Operations Advisor</div>
                 </div>
 
