@@ -12,7 +12,7 @@ export default function IndexPage() {
                 <p className="mt-12 text-md text-zinc-400">
                     <span className="font-semibold text-lg text-left text-zinc-300">Our Mission</span>
                     <br></br>
-                    We Aim to Make Application Intelligence Easy and Understanable for Every Developer.
+                    We aim to create a new category in application monitoring, observability, and user analytics, shaping the future of agentic workflows and next-gen application intelligence.
                 </p>
                 <p className="mt-12 text-lg text-zinc-400">
                     <span className="font-semibold text-left text-zinc-300">About InfraStack AI</span>

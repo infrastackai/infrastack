@@ -303,7 +303,7 @@ export const Icons = {
   },
   IconUpstash({ className, ...props }: React.ComponentProps<'svg'>) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" width="1631" height="472" className={cn('h-6 w-6', className)}  fill="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1631" height="472" className={cn('h-6 w-6', className)} fill="currentColor">
         <g clip-path="url(#upstash_white_bg)">
           <path fill="currentColor" d="M.422 412.975c78.105 78.104 204.738 78.104 282.843 0 78.104-78.105 78.104-204.738 0-282.843l-35.356 35.355c58.579 58.579 58.579 153.554 0 212.132-58.578 58.579-153.553 58.579-212.132 0L.422 412.975Z" />
           <path fill="currentColor" d="M71.133 342.264c39.052 39.052 102.368 39.052 141.421 0 39.052-39.052 39.052-102.369 0-141.421l-35.355 35.355c19.526 19.526 19.526 51.184 0 70.711-19.527 19.526-51.185 19.526-70.711 0l-35.355 35.355ZM353.975 59.421c-78.105-78.105-204.738-78.105-282.843 0-78.105 78.105-78.105 204.738 0 282.843l35.355-35.355c-58.578-58.579-58.578-153.554 0-212.132 58.579-58.579 153.554-58.579 212.132 0l35.356-35.356Z" />
@@ -319,7 +319,7 @@ export const Icons = {
         </defs>
       </svg>
     )
-  }
+  },
 }
 
 

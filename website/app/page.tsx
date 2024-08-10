@@ -46,6 +46,14 @@ const customers = [
     className: "h-12 w-32"
   },
   {
+    logo: "/images/super-duper-secret.svg",
+    className: "h-12 w-32"
+  },
+  {
+    logo: "/images/deeptrust.svg",
+    className: "h-40 w-48"
+  },
+  {
     logo: "/images/thirdweb.svg",
     className: "h-40 w-40"
   },
@@ -68,6 +76,14 @@ const customers = [
   {
     logo: "/images/glide.svg",
     className: "h-12 w-32"
+  },
+  {
+    logo: "/images/super-duper-secret.svg",
+    className: "h-12 w-32"
+  },
+  {
+    logo: "/images/deeptrust.svg",
+    className: "h-40 w-48"
   },
   {
     logo: "/images/permify-logo.svg",
@@ -287,7 +303,7 @@ export function register() {
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
         <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 hidden md:block">InfraStack is <br/>Datadog + PostHog + GPT <br/> for <TypedHeader /> Developers</PageHeaderHeading>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 md:hidden">InfraStack is <br/>Datadog +<br/> PostHog + GPT <br/> for <TypedHeader /> Developers</PageHeaderHeading>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 md:hidden">InfraStack is <br/>Datadog +<br/> PostHog + GPT <br/> for <TypedHeader /><br/>Developers</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-400">
           <p className="hidden md:block font-normal">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
           <p className="md:hidden">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
@@ -315,7 +331,7 @@ export function register() {
             <Button
               variant={"outline"}
               className={cn("text-white dark:hover:bg-indigo-800 bg-indigo-600 dark:md:text-lg border-zinc-800 dark:border-[1px] dark:border-solid z-50 h-[56px] w-[180px] md:w-[220px] rounded-lg")}
-            >Get Started</Button>
+            >Get started - free</Button>
             <p className="text-muted-foreground text-zinc-300 opacity-50 text-base">No credit card needed</p>
           </Link>
           {/* <Link
@@ -437,7 +453,7 @@ export function register() {
               <p className="font-medium mt-2">Django</p>
             </div>
           </Link>
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai" target="_blank" prefetch={false}>
             <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
               <p className="font-medium mt-2 text-green-400">+2 more</p>
             </div>
@@ -474,7 +490,7 @@ export function register() {
               <p className="font-medium mt-2">Ruby</p>
             </div>
           </Link>
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai/" target="_blank" prefetch={false}>
             <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
               <p className="font-medium mt-2 text-green-400">+4 more</p>
             </div>
@@ -505,7 +521,7 @@ export function register() {
               <p className="font-medium mt-2">Pinecone</p>
             </div>
           </Link>
-          <Link href="https://docs.infrastack.ai/integrations" target="_blank" prefetch={false}>
+          <Link href="https://docs.infrastack.ai/" target="_blank" prefetch={false}>
             <div className="h-[123px] w-36 cursor-pointer flex flex-col items-center justify-center rounded-xl border  bg-infrastack text-card-foreground shadow transition-colors hover:bg-muted/50 sm:p-6">
               <p className="font-medium mt-2 text-green-400">+8 more</p>
             </div>
@@ -700,7 +716,7 @@ export function register() {
       <div className="md:mt-20 mt-10  w-[20] relative">
 
         <div className="w-full text-center text-[26px] md:text-5xl font-semibold text-white">
-          <p>Backed By</p>
+          <p>Partners</p>
         </div>
         <div className="container w-fit gap-x-5 gap-y-4 md:gap-y-4 grid grid-cols-1 md:grid-cols-1  lg:grid-cols-2 py-4  md:py-10">
           <div className="w-64 h-22 border border-zinc-800 rounded-xl p-6 flex flex-col items-center justify-center space-y-2 shadow-inner  shadow-zinc-900">

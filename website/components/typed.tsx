@@ -9,11 +9,11 @@ export default function TypedHeader() {
 
     useEffect(() => {
         const typed = new Typed(ref.current, {
-            strings: ['<span class="text-green-400">NextJS</span>', '<span class="text-yellow-400">FastAPI</span>', '<span class="text-indigo-400">Gen-AI</span>', '<span class="text-rose-400">Next-Gen</span>'],
+            strings: ['<span class="text-green-400">NextJS</span>', '<span class="text-yellow-400">FastAPI</span>', '<span class="text-indigo-400">Gen-AI</span>'],
             cursorChar: '',
             typeSpeed: 50,
             backDelay: 3000,
-            startDelay: 2000,
+            startDelay: 1000,
             loop: true,
             fadeOut: true,
             fadeOutClass: 'typed-fade-out',

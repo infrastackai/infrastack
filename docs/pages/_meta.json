@@ -4,6 +4,9 @@
         "title": "Docs"
     },
     "index": "Getting Started",
+    "integrations": {
+        "title": "Integrations"
+    },
     "blog": {
         "title": "Blog",
         "type": "page",
