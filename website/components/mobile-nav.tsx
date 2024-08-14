@@ -109,7 +109,7 @@ export function MobileNav() {
           </MobileLink>
           <MobileLink
             key={"jobs"}
-            href={"https://www.linkedin.com/company/infrastack-ai/jobs"}
+            href={"https://infrastackai.notion.site/Careers-at-InfraStack-AI-2f07b3b32b0740c9b16aafa09d7bd864"}
             onOpenChange={setOpen}
           >
             Careers

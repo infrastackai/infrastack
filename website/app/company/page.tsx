@@ -24,9 +24,8 @@ export default function IndexPage() {
                 </p>
                 <h1 className="font-semibold text-lg text-left text-zinc-300 mt-12">Meet our team</h1>
                 <div className="flex flex-col space-y-2 text-zinc-400">
-                    <div className="mt-2"><Link href="https://www.linkedin.com/in/aykutgk/" target="_blank" className="text-indigo-500">Aykut Gedik</Link> - Founder</div>
-                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Data Science Advisor</div>
-                    <div><Link href="https://www.linkedin.com/in/delly-tamer/" target="_blank" className="text-indigo-500">Delly Tamer</Link> - Operations Advisor</div>
+                    <div className="mt-2"><Link href="https://www.linkedin.com/in/aykutgk/" target="_blank" className="text-indigo-500">Aykut Gedik</Link> - Founder and CEO</div>
+                    <div><Link href="https://www.linkedin.com/in/frank-kuehnel-74a191/" target="_blank" className="text-indigo-500">Frank Kuehnel</Link> - Artificial Intelligence and Research</div>
                 </div>
 
                 <h1 className="font-semibold text-lg text-left text-zinc-300 mt-12">Where we work from</h1>
@@ -36,7 +35,7 @@ export default function IndexPage() {
                     <Image src={fortMason} className="object-fit rounded-lg" alt="Fort Mason" />
                 </div>
 
-                <Link href="https://www.linkedin.com/company/infrastack-ai" target="_blank" className="text-indigo-500 mt-8 mb-12 text-lg">We are hiring! Check out our open roles <ArrowUpRightFromSquare className="inline h-5" /></Link>
+                <Link href="https://infrastackai.notion.site/Careers-at-InfraStack-AI-2f07b3b32b0740c9b16aafa09d7bd864" target="_blank" className="text-indigo-500 mt-8 mb-12 text-lg">We are hiring! Check out our open roles <ArrowUpRightFromSquare className="inline h-5" /></Link>
             </div>
 
         </div>

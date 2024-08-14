@@ -13,6 +13,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher"
 import { Toaster as DefaultToaster } from "@/components/ui/toaster"
 import { Toaster as NewYorkSonner } from "@/components/ui/sonner"
 import GoogleAnalytics from "@/components/ganalytics"
+import RB2B from "@/components/rb2b"
 
 export const metadata: Metadata = {
   title: {
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <NewYorkSonner />
           </ThemeProvider>
           {process.env.NODE_ENV === "production" &&  <GoogleAnalytics />}
+          {process.env.NODE_ENV === "production" && <RB2B />}
         </body>
       </html>
     </>

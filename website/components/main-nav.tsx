@@ -71,7 +71,7 @@ export function MainNav() {
             Company
           </Link>
           <Link
-            href="https://www.linkedin.com/company/infrastack-ai/jobs"
+            href="https://infrastackai.notion.site/Careers-at-InfraStack-AI-2f07b3b32b0740c9b16aafa09d7bd864"
             target="_blank"
             className={cn(
               "transition-colors hover:text-foreground/80 uppercase font-semibold",
