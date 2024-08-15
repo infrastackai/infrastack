@@ -360,7 +360,7 @@ export function register() {
         {/* <Image priority src={demoPic} alt="InfraStack AI Demo" quality={100} className="mt-4 border border-indigo-700 rounded-lg drop-shadow-2" /> */}
         {/* </div> */}
       </section>
-      {true && <div className="w-full md:mt-20 mt-10 relative" id="featuresContainerId">
+      {true && <div className="w-full md:mt-16 mt-8 relative" id="featuresContainerId">
         <div className="m-auto left-0 right-0 top- blur-3xl bg-indigo-800/20 h-52 w-full absolute z-40"></div>
         <div className="w-full text-center">
           <div className="flex flex-col space-y- items-center justify-center h-0">
@@ -373,7 +373,7 @@ export function register() {
           </div>
         </div>
 
-        <div className="w-full mt-8 md:mt-12">
+        <div className="w-full mt-4 md:mt-4">
 
           <InfiniteMovingCards
             items={customers}
