@@ -291,7 +291,7 @@ export function register() {
         {/* <iframe className="bg-transparent h-60" src='https://my.spline.design/untitled-7aa2af24d18f7d296b43cefbb501a930/' frameborder='0' width='100%' height='100%'></iframe>        <Announcement /> */}
         <div className="top-20 blur-3xl bg-indigo-500/30 h-32 w-52 absolute"></div>
         <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 hidden md:block">Next-Gen <br/>Application Intelligence <br/> for <TypedHeader /> Developers</PageHeaderHeading>
-        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 md:hidden">InfraStack is <br/>Datadog +<br/> PostHog + GPT <br/> for <TypedHeader /><br/>Developers</PageHeaderHeading>
+        <PageHeaderHeading className="z-[60] text-zinc-200 mt-4 md:hidden">Next-Gen <br/>Application Intelligence <br/> for <TypedHeader /><br/>Developers</PageHeaderHeading>
         <PageHeaderDescription className="z-[60] text-lg md:text-2xl font-semibold mt-2 text-center text-zinc-400">
           <p className="hidden md:block font-normal">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
           <p className="md:hidden">A real-time view of application insights and user behavior, intelligently correlated, beautifully visualized.</p>
@@ -368,7 +368,7 @@ export function register() {
             {/* <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">200M+ <BarChart4 className="h-10 w-10 inline" /></span><br></br>Traces Proceessed</div>
             <div className=" shadow-inner rounded-xl px-4 text-center p-2 pl-4 pr-4 text-2xl"><span className="text-green-400 text-4xl font-bold">1K+ Human Hours <Sparkles className="h-10 w-10 inline" /></span><br></br>Saved by InfraStack AI Copilots</div> */}
             {/* <div className="text text-3xl md:text-5xl p-2 mt- font-bold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Next-Gen Developers</div> */}
-            <div className="text text-[26px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Teams</div>
+            <div className="text text-[32px] md:text-5xl p-2 mt- font-semibold bg-gradient-to-r from-[#5865F2] to-green-400 inline-block text-transparent bg-clip-text z-[60]">Loved By Modern Teams</div>
 
           </div>
         </div>
