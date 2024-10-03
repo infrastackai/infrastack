@@ -11,6 +11,9 @@ jobs:
   release:
     name: Release SDK to npm
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/javascript/infrastack-otel
 
     steps:
       - name: Checkout repository
@@ -18,22 +21,24 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        working-directory: packages/javascript/infrastack-otel
         with:
           node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+          cache-dependency-path: packages/javascript/infrastack-otel/package-lock.json
 
       - name: Install dependencies
-        working-directory: packages/javascript/infrastack-otel
         run: npm install
       
       - name: Build
-        working-directory: packages/javascript/infrastack-otel
         run: npm run build
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm
-          token: ${{ secrets.NPM_TOKEN }}
+          publish: npm publish
+          working-directory: ./packages/javascript/infrastack-otel
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
