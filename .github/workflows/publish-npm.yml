@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_PAT }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -40,5 +43,5 @@ jobs:
           publish: npm run publish
           cwd: ./packages/javascript/infrastack-otel
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
