@@ -37,8 +37,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm publish
-          working-directory: ./packages/javascript/infrastack-otel
+          publish: npm run publish
+          cwd: ./packages/javascript/infrastack-otel
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
