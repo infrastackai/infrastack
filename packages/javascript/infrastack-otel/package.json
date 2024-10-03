@@ -10,6 +10,7 @@
     "lint": "tsc"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.8",
     "tsup": "^8.3.0",
     "typescript": "^5.6.2"
   },
