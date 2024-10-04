@@ -1,4 +1,4 @@
-export enum Instrumentations {
+export enum Instrumentation {
   AMQP,
   AWS_LAMBDA,
   AWS_SDK,

@@ -1,8 +1,5 @@
-import { Instrumentations } from "../instrumentations";
+import { Instrumentation } from "../instrumentations";
 
-export type llmOptions = {
-  includePrompts: boolean;
-};
 export type tag = {
   key: string;
   value: string;
@@ -10,18 +7,17 @@ export type tag = {
 export enum Environment {
   DEV,
   DEBUG,
-  PROD
+  PROD,
 }
-export const INFRASTACK_API_KEY_HEADER : string = 'infrastack-api-key';
+
+export const INFRASTACK_API_KEY_HEADER: string = "infrastack-api-key";
 export type sdkOptions = {
-  instrumentations: Instrumentations[];
+  instrumentations: Instrumentation[];
   environment: Environment;
   tags: tag[];
-  llmOptions: llmOptions;
   serviceName: string;
   serviceVersion: string;
   podNamespace: string;
   podName: string;
-  environmentId: string;
   logsEnabled: boolean;
 };

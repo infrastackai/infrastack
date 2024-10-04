@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/javascript/infrastack-otel/**'
+      - 'packages/javascript/otel/**'
 
 jobs:
   release:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: packages/javascript/infrastack-otel
+        working-directory: packages/javascript/otel
 
     steps:
       - name: Checkout repository
@@ -26,18 +26,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
-          cache-dependency-path: packages/javascript/infrastack-otel/package-lock.json
+          cache-dependency-path: packages/javascript/otel/package-lock.json
       
-      - name: Setup npm authentication
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-
       - name: Install dependencies
         run: npm install
       
@@ -46,7 +37,7 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: npm run release
-          cwd: ./packages/javascript/infrastack-otel
+          cwd: ./packages/javascript/otel
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
