@@ -1,6 +1,6 @@
 {
   "name": "infrastack-demo-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
-    "release" : "npm run build && changeset publish",
+    "release": "npm run build && changeset publish",
     "lint": "tsc"
   },
   "devDependencies": {

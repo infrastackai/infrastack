@@ -1,5 +1,11 @@
 # infrastack-demo-sdk
 
+## 0.0.4
+
+### Patch Changes
+
+- b4c2e16: test
+
 ## 0.0.3
 
 ### Patch Changes
