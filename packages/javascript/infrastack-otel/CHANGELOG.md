@@ -1,5 +1,11 @@
 # infrastack-demo-sdk
 
+## 0.0.6
+
+### Patch Changes
+
+- 365c14e: test update
+
 ## 0.0.4
 
 ### Patch Changes
