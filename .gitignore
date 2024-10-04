@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+**/node_modules
 /website/node_modules
 /docs/node_modules
 /blog/node_modules
@@ -20,7 +20,8 @@
 /*/Makefile
 
 # production
-/build
+**/build
+**/dist
 
 # misc
 .DS_Store
@@ -40,3 +41,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python SDK
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info
