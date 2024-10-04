@@ -8,6 +8,25 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infrastackai/infrastack.git",
+    "directory": "packages/javascript/otel"
+  },
+  "keywords": [
+    "infrastack",
+    "otel",
+    "opentelemetry",
+    "open-source",
+    "observability",
+    "monitoring",
+    "tracing",
+    "metrics",
+    "javascript",
+    "typescript",
+    "nextjs",
+    "express"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "release": "npm run build && changeset publish",
