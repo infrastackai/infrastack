@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
+    "release" : "npm run build && changeset publish",
     "lint": "tsc"
   },
   "devDependencies": {

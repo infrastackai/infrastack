@@ -33,14 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Build
-        run: npm run build
-
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: changeset publish
+          publish: npm run release
           cwd: ./packages/javascript/infrastack-otel
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
