@@ -1,3 +1,4 @@
 export { Instrumentation } from "./instrumentations";
 export { InfrastackSDK } from "./sdk";
-export { sdkOptions } from "./sdk-options";
+export { Environment, sdkOptions, tag } from "./sdk-options";
+
