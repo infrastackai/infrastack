@@ -1,0 +1,42 @@
+name: Test npm package
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'packages/javascript/otel/**'
+
+jobs:
+  build-and-test:
+    name: Build and Test @infrastack/otel Package
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: packages/javascript/otel
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: packages/javascript/otel/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Build the package
+        run: npm run build
+
+      - name: Run Tests
+        env:
+          INFRASTACK_TAGS: '[{"key": "env", "value": "test"}]'
+        run: npm run test
