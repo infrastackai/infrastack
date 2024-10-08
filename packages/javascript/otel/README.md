@@ -96,8 +96,8 @@ sdk.init();
 Partial SDK options are also possible. For example:
 
 ```javascript
-const options : sdkOptions = {
-    logsEnabled:false
+const options : Partial<sdkOptions> = {
+    logsEnabled: false
 }
 const sdk = new InfrastackSDK(options);
 sdk.init();
