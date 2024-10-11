@@ -1,7 +1,7 @@
 {
   "name": "@infrastack/otel",
   "version": "0.0.1",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -28,7 +28,7 @@
     "express"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
     "release": "npm run build && changeset publish",
     "lint": "tsc",
     "test": "jest"
@@ -45,9 +45,6 @@
   },
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.50.0",
-    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.53.0",
-    "@opentelemetry/resources": "^1.26.0",
-    "@opentelemetry/sdk-node": "^0.53.0",
-    "@opentelemetry/semantic-conventions": "^1.27.0"
+    "@opentelemetry/sdk-node": "^0.53.0"
   }
 }
