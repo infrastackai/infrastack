@@ -16,6 +16,11 @@
 /.next/
 /*/.next/
 /out/
+*.next
+# next.js build output
+.next
+
+
 
 /*/Makefile
 
@@ -32,8 +37,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
+# env files
 .env*.local
+*.env
 
 # vercel
 .vercel
@@ -48,3 +54,4 @@ __pycache__/
 *.pyo
 *.pyd
 *.egg-info
+examples/nextjs/.next/
