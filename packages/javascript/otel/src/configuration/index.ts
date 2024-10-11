@@ -1,6 +1,4 @@
-import { Instrumentation } from "../instrumentations";
-
-export type tag = {
+export type Tag = {
   key: string;
   value: string;
 };
@@ -11,13 +9,14 @@ export enum Environment {
 }
 
 export const INFRASTACK_API_KEY_HEADER: string = "infrastack-api-key";
-export type sdkOptions = {
-  instrumentations: Instrumentation[];
+export type Configuration = {
   environment: Environment;
-  tags: tag[];
+  tags: Tag[];
   serviceName: string;
   serviceVersion: string;
   podNamespace: string;
   podName: string;
   logsEnabled: boolean;
+  endpoint: string;
+  apiKey: string;
 };
