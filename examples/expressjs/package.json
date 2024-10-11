@@ -1,0 +1,21 @@
+{
+  "name": "infrastack-expressjs-example",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npx tsc && node -r ./dist/instrumentation.js dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@infrastack/otel": "^0.1.0",
+    "@types/express": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  }
+}
