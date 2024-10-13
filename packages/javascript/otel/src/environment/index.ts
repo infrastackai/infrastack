@@ -1,7 +1,8 @@
 //infrastack.ai environment variables
 export const INFRASTACK_LOGS_ENABLED: string = "INFRASTACK_LOGS_ENABLED";
 export const INFRASTACK_TAGS: string = "INFRASTACK_TAGS";
-export const INFRASTACK_ENVIRONMENT: string = "INFRASTACK_ENVIRONMENT";
+export const INFRASTACK_DEVELOPMENT_MODE: string =
+  "INFRASTACK_DEVELOPMENT_MODE";
 export const INFRASTACK_API_KEY: string = "INFRASTACK_API_KEY";
 
 //opentelemetry environment variables

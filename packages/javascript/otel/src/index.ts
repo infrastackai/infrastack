@@ -12,5 +12,6 @@ export function startOtel(configuration?: Partial<Configuration>) {
   sdk.init();
 }
 
-export { Configuration, Environment } from "./configuration";
+export { Configuration } from "./configuration";
 export type { Tag } from "./configuration";
+

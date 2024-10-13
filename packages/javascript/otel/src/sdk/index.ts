@@ -12,10 +12,10 @@ import {
   ATTR_SERVICE_NAME,
   ATTR_SERVICE_VERSION,
 } from "@opentelemetry/semantic-conventions";
-import { Configuration, Environment, Tag } from "../configuration";
+import { Configuration, Tag } from "../configuration";
 import {
   INFRASTACK_API_KEY,
-  INFRASTACK_ENVIRONMENT,
+  INFRASTACK_DEVELOPMENT_MODE,
   INFRASTACK_LOGS_ENABLED,
   INFRASTACK_TAGS,
   OTEL_EXPORTER_OTLP_ENDPOINT,
@@ -61,7 +61,9 @@ export class InfrastackSDK {
     providedConfig?: Partial<Configuration>
   ): Configuration {
     const envTags = this.parseEnvTags();
-    const environment = this.determineEnvironment(providedConfig?.environment);
+    const isDevelopmentMode = this.determineDevelopmentMode(
+      providedConfig?.isDevelopmentMode
+    );
 
     return {
       serviceName:
@@ -79,7 +81,7 @@ export class InfrastackSDK {
         providedConfig?.logsEnabled ??
         process.env[INFRASTACK_LOGS_ENABLED] !== "false",
       tags: providedConfig?.tags ?? envTags,
-      environment,
+      isDevelopmentMode,
       endpoint: this.determineEndpoint(providedConfig?.endpoint),
       apiKey: this.determineApiKey(providedConfig?.apiKey),
     };
@@ -95,12 +97,11 @@ export class InfrastackSDK {
     }
   }
 
-  private determineEnvironment(providedEnvironment?: Environment): Environment {
-    const envEnvironment = process.env[INFRASTACK_ENVIRONMENT];
-    if (providedEnvironment) return providedEnvironment;
-    if (envEnvironment === "PROD") return Environment.PROD;
-    if (envEnvironment === "DEBUG") return Environment.DEBUG;
-    return Environment.DEV;
+  private determineDevelopmentMode(providedDevelopmentMode?: boolean): boolean {
+    const isDevelopmentMode =
+      process.env[INFRASTACK_DEVELOPMENT_MODE]?.toLowerCase() === "true";
+    if (providedDevelopmentMode) return providedDevelopmentMode;
+    return isDevelopmentMode ?? false;
   }
 
   private determineEndpoint(providedEndpoint?: string): string {
@@ -172,18 +173,13 @@ export class InfrastackSDK {
   }
 
   private createSpanProcessors(traceExporter: OTLPTraceExporter): any[] {
-    switch (this.configuration.environment) {
-      case Environment.DEBUG:
-        this.logDebugMode();
-        return [
-          new SimpleSpanProcessor(new ConsoleSpanExporter()),
-          new SimpleSpanProcessor(traceExporter),
-        ];
-      case Environment.DEV:
-        return [new SimpleSpanProcessor(traceExporter)];
-      default:
-        return [new BatchSpanProcessor(traceExporter)];
+    if (this.configuration.isDevelopmentMode) {
+      return [
+        new SimpleSpanProcessor(new ConsoleSpanExporter()),
+        new SimpleSpanProcessor(traceExporter),
+      ];
     }
+    return [new BatchSpanProcessor(traceExporter)];
   }
 
   private getNodeAutoInstrumentations() {
@@ -258,10 +254,11 @@ export class InfrastackSDK {
   }
 
   private performInitialLogging(): void {
-    if (this.configuration.environment === Environment.DEV) {
+    if (this.configuration.isDevelopmentMode) {
       console.warn(
-        "⚠️ Environment is set to DEV. Make sure not to deploy this to production."
+        "⚠️ Development mode is enabled. Make sure not to deploy this to production."
       );
+      this.logDevelopmentMode();
     }
     if (!this.configuration.logsEnabled) return;
     this.logConfigurationDetails();
@@ -294,9 +291,9 @@ export class InfrastackSDK {
     }
   }
 
-  private logDebugMode(): void {
+  private logDevelopmentMode(): void {
     if (!this.configuration.logsEnabled) return;
-    console.info("🔍 Debug mode enabled.");
+    console.info("🔍 Development mode enabled.");
     console.info(
       "You will be able to see the traces in the console as well as in the dashboard."
     );
