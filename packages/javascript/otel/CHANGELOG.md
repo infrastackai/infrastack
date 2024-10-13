@@ -1,5 +1,11 @@
 # @infrastack/otel
 
+## 0.1.1
+
+### Patch Changes
+
+- eae7622: Development mode has been converted to boolean flag instead of enumeration, examples are updated with latest version of @infrastack/otel
+
 ## 0.1.0
 
 ### Minor Changes
