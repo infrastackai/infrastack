@@ -4,10 +4,9 @@ import {
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 import sinon from "sinon";
-import { Environment } from "../configuration";
 import {
   INFRASTACK_API_KEY,
-  INFRASTACK_ENVIRONMENT,
+  INFRASTACK_DEVELOPMENT_MODE,
   INFRASTACK_TAGS,
   OTEL_EXPORTER_OTLP_ENDPOINT,
   OTEL_EXPORTER_OTLP_HEADERS,
@@ -27,7 +26,7 @@ describe("InfrastackSDK", () => {
     sinon.restore();
     delete process.env[INFRASTACK_TAGS];
     delete process.env[OTEL_SERVICE_NAME];
-    delete process.env[INFRASTACK_ENVIRONMENT];
+    delete process.env[INFRASTACK_DEVELOPMENT_MODE];
     delete process.env[OTEL_EXPORTER_OTLP_HEADERS];
     delete process.env[INFRASTACK_API_KEY];
     delete process.env[OTEL_EXPORTER_OTLP_ENDPOINT];
@@ -41,19 +40,19 @@ describe("InfrastackSDK", () => {
 
   it("should log the correct warnings for development environment", () => {
     const consoleWarnStub = sinon.stub(console, "warn");
-    sdk = new InfrastackSDK({ environment: Environment.DEV });
+    sdk = new InfrastackSDK({ isDevelopmentMode: true });
     sdk.init();
-    expect(consoleWarnStub.calledWithMatch(/Environment is set to DEV/)).toBe(
+    expect(consoleWarnStub.calledWithMatch(/Development mode is enabled/)).toBe(
       true
     );
   });
 
   it("should merge options with environment variables correctly", () => {
     process.env[OTEL_SERVICE_NAME] = "test-service";
-    process.env[INFRASTACK_ENVIRONMENT] = "PROD";
+    process.env[INFRASTACK_DEVELOPMENT_MODE] = "true";
     sdk = new InfrastackSDK({});
     expect(sdk["configuration"].serviceName).toBe("test-service");
-    expect(sdk["configuration"].environment).toBe(Environment.PROD);
+    expect(sdk["configuration"].isDevelopmentMode).toBe(true);
   });
 
   it("should handle parsing error for INFRASTACK_TAGS", () => {
@@ -92,23 +91,16 @@ describe("InfrastackSDK", () => {
     expect(consoleInfoStub.calledWithMatch(/Found an API Key:/)).toBe(true);
   });
 
-  it("should create SimpleSpanProcessor for DEV environment", () => {
-    sdk = new InfrastackSDK({ environment: Environment.DEV });
-    const processors = sdk["createSpanProcessors"](new OTLPTraceExporter());
-    expect(processors.length).toBe(1);
-    expect(processors[0]).toBeInstanceOf(SimpleSpanProcessor);
-  });
-
-  it("should create both ConsoleSpanProcessor and SimpleSpanProcessor for DEBUG environment", () => {
-    sdk = new InfrastackSDK({ environment: Environment.DEBUG });
+  it("should create both ConsoleSpanProcessor and SimpleSpanProcessor for development mode", () => {
+    sdk = new InfrastackSDK({ isDevelopmentMode: true });
     const processors = sdk["createSpanProcessors"](new OTLPTraceExporter());
     expect(processors.length).toBe(2);
     expect(processors[0]).toBeInstanceOf(SimpleSpanProcessor);
     expect(processors[1]).toBeInstanceOf(SimpleSpanProcessor);
   });
 
-  it("should create BatchSpanProcessor for PROD environment", () => {
-    sdk = new InfrastackSDK({ environment: Environment.PROD });
+  it("should create BatchSpanProcessor for non-development mode", () => {
+    sdk = new InfrastackSDK({ isDevelopmentMode: false });
     const processors = sdk["createSpanProcessors"](new OTLPTraceExporter());
     expect(processors.length).toBe(1);
     expect(processors[0]).toBeInstanceOf(BatchSpanProcessor);
