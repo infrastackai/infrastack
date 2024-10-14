@@ -1,0 +1,73 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "infrastack.ai Documentation",
+  "logo": {
+    "dark": "/logo/logo.svg",
+    "light": "/logo/logo-black.svg"
+  },
+  "topbar": {
+    "style": "gradient"
+  },
+  "favicon": "/favicon.svg",
+  "theme": "prism",
+  "colors": {
+    "primary": "#4F46E5",
+    "light": "#4F46E5",
+    "dark": "#4F46E5",
+    "anchors": {
+      "from": "#4F46E5",
+      "to": "#4F46E5"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:hello@infrastack.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://app.infrastack.ai"
+  },
+  "anchors": [
+    {
+      "name": "Schedule a demo",
+      "icon": "calendar",
+      "url": "https://cal.com/aykut-gedik-infrastack-ai/onboarding"
+    },
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://docs.infrastack.ai/blog"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "Documentation",
+      "pages": [
+        "documentation/integrate-opentelemetry-for-nextjs-with-infrastack",
+        "documentation/integrate-opentelemetry-for-nestjs-with-infrastack",
+        "documentation/integrate-opentelemetry-for-expressjs-with-infrastack"
+      ]
+    },
+    {
+      "group": "SDK Reference",
+      "pages": [
+        {
+          "group": "Javascript",
+          "pages": ["sdk-reference/javascript/configuration"]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/infrastackai/infrastack",
+    "linkedin": "https://www.linkedin.com/company/infrastack-ai",
+    "x": "https://x.com/infrastackai"
+  },
+  "seo": { "indexHiddenPages": true }
+}
