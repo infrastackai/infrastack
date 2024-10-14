@@ -1,0 +1,113 @@
+---
+title: Integrate OpenTelemetry for Next.js with infrastack.ai
+description: 'Learn how to instrument your Next.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights.'
+og:site_name: "infrastack.ai"
+og:title: "Integrate OpenTelemetry for Next.js with infrastack.ai"
+og:description: "Learn how to instrument your Next.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights."
+og:locale: "en_US"
+article:publisher: "https://www.linkedin.com/company/infrastack-ai"
+twitter:title: "Integrate OpenTelemetry for Next.js with infrastack.ai"
+twitter:description: "Learn how to instrument your Next.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights."
+twitter:site: "@infrastackai"
+---
+
+import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
+
+#### What you will learn
+- Installing the `@infrastack/otel` NPM package
+- Setting up your environment
+- Instrumenting your application
+
+#### Prerequisites
+- An [infrastack.ai](https://app.infrastack.ai) account to get your API key
+- A Next.js application
+
+<CardGroup cols={1}>
+  <Card title="Follow the example project on GitHub" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+  icon={<GithubIcon />}
+  />
+</CardGroup>
+
+### Getting started
+
+<Steps>
+
+  <Step title="Install the NPM package">
+  <CodeGroup>
+  ```bash npm
+  npm install @infrastack/otel
+  ```
+  ```bash yarn
+  yarn add @infrastack/otel
+  ```
+  ```bash pnpm
+  pnpm add @infrastack/otel
+  ```
+  </CodeGroup>
+  </Step>
+
+ 
+  <Step title="Prepare your environment">
+  Create an `.env` file in the root of your project and add your API key.
+  ```properties .env
+  INFRASTACK_API_KEY=sk-1*************************f5af
+  ```
+  </Step>
+  
+  <Step title="Configure your Next.js application">
+  This is step is required in order to enable instrumentation. Right now, `instrumentationHook` and `serverComponentsExternalPackages` are expermiental. Please follow the [Official Next.js Documentation for instrumentationHook](https://nextjs.org/docs/app/api-reference/next-config-js/instrumentationHook) if this document is outdated.
+
+```javascript next.config.mjs
+const nextConfig = {
+  experimental: {
+    instrumentationHook: true, // To enable instrumentation
+      serverComponentsExternalPackages: [ // To utilize node.js specific features in a next.js environment
+     "@opentelemetry/auto-instrumentations-node",
+     "@opentelemetry/sdk-node",
+   ],
+  },
+};
+
+export default nextConfig;
+```
+  </Step> 
+
+  <Step title="Create instrumentation.ts">
+    <Info>If you are using a `src` folder in your Next.js application, create an `instrumentation.ts` file there. If not, create the file in the root of your project.</Info>
+      ```javascript instrumentation.ts
+      export async function register() {
+        if (process.env.NEXT_RUNTIME === "nodejs") {
+          const { startOtel } = await import("@infrastack/otel");
+    startOtel({
+            "serviceName": "YOUR_SERVICE_NAME",
+          });
+        }
+      }
+      ```
+      <Info>If you don't provide a service name, we will create a random name for you.</Info>
+
+  </Step>
+
+  <Step title="Run your application">
+    Run your Next.js application with the default command.
+    ```bash
+    npm run dev
+    ```
+
+  <Tip>You can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+
+  </Step>
+
+</Steps>
+
+### Next steps
+<CardGroup cols={2}>
+  <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
+  icon={<JsIcon />}
+  />
+  <Card title="Explore the Next.js example project" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+  icon={<GithubIcon />}
+  />
+</CardGroup>
+
+

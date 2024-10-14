@@ -1,0 +1,86 @@
+---
+title: Integrate OpenTelemetry for Express.js with infrastack.ai
+description: 'Learn how to instrument your Express.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights.'
+og:site_name: "infrastack.ai"
+og:title: "Integrate OpenTelemetry for Express.js with infrastack.ai"
+og:description: "Learn how to instrument your Express.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights."
+og:locale: "en_US"
+article:publisher: "https://www.linkedin.com/company/infrastack-ai"
+twitter:title: "Integrate OpenTelemetry for Express.js with infrastack.ai"
+twitter:description: "Learn how to instrument your Express.js application with infrastack.ai and OpenTelemetry for comprehensive observability and performance insights."
+twitter:site: "@infrastackai"
+---
+
+import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
+
+#### What you will learn
+- Installing the `@infrastack/otel` NPM package
+- Setting up your environment
+- Instrumenting your application
+
+#### Prerequisites
+- An [infrastack.ai](https://app.infrastack.ai) account to get your API key
+- An Express.js application
+
+<CardGroup cols={1}>
+  <Card title="Follow the example project on GitHub" href="https://github.com/infrastackai/infrastack/tree/main/examples/expressjs"
+  icon={<GithubIcon />}
+  />
+</CardGroup>
+### Getting started
+
+<Steps>
+
+  <Step title="Install the NPM package">
+  <CodeGroup>
+  ```bash npm
+  npm install @infrastack/otel
+  ```
+  ```bash yarn
+  yarn add @infrastack/otel
+  ```
+  ```bash pnpm
+  pnpm add @infrastack/otel
+  ```
+  </CodeGroup>
+  </Step>
+  <Step title="Prepare your environment">
+  Export your API key as an environment variable.
+  ```bash
+  export INFRASTACK_API_KEY=sk-1*************************f5af
+  ```
+  </Step>
+
+  <Step title="Create instrumentation.ts">
+      ```javascript instrumentation.ts
+      import { startOtel } from "@infrastack/otel"; 
+      startOtel({
+        serviceName:"YOUR_SERVICE_NAME",
+      });
+      ```
+      <Info>If you don't provide a service name, we will create a random name for you.</Info>
+  </Step>
+
+  <Step title="Build and run your application">
+    Run your Express.js application with the node required command.
+    ```bash
+    npx tsc && node -r ./dist/instrumentation.js dist/index.js
+    ```
+
+  <Tip>After creating some traffic, you can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+  </Step>
+
+</Steps>
+
+### Next steps
+<CardGroup cols={2}>
+  <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
+  icon={<JsIcon />}
+  />
+  <Card title="Explore the Express.js example project" href="https://github.com/infrastackai/infrastack/tree/main/examples/expressjs"
+  icon={<GithubIcon />}
+  />
+</CardGroup>
+
+
+

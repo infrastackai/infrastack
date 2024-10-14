@@ -1,0 +1,210 @@
+---
+title: Configuring the SDK
+description: 'Configure the infrastack.ai Javascript SDK to suit your needs'
+og:site_name: "infrastack.ai"
+og:title: "Javascript SDK Configuration - infrastack.ai Observability Platform"
+og:description: "Learn how to configure the infrastack.ai Javascript SDK for optimal performance and customization in your application."
+og:locale: "en_US"
+article:publisher: "https://www.linkedin.com/company/infrastack-ai"
+twitter:title: "Javascript SDK Configuration - infrastack.ai Observability Platform"
+twitter:description: "Learn how to configure the infrastack.ai Javascript SDK for optimal performance and customization in your application."
+twitter:site: "@infrastackai"
+---
+
+#### What you will learn
+- Configuring the infrastack.ai Javascript SDK for your needs
+
+#### Prerequisites
+- An application using the infrastack.ai Javascript SDK `@infrastack/otel`
+
+### Overview
+Our Javascript SDK provides flexibility to developers to configure the SDK. There are 2 ways to configure the SDK:
+- Via environment variables
+- Via code
+
+<Warning> What you provide in the code will override what you provide in the environment variables </Warning>
+
+### Setting the API Key
+API key is required when you initialize the SDK to use it with infrastack.ai. 
+
+To set the API key, you can set the `apiKey` option in the `startOtel` function or set the `INFRASTACK_API_KEY` environment variable.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  apiKey: 'sk-1*****f5af',
+  serviceName: 'my-service'
+})
+```
+```properties .env
+INFRASTACK_API_KEY=sk-1*****f5af
+```
+
+```bash terminal
+export INFRASTACK_API_KEY=sk-1*****f5af
+```
+</CodeGroup>
+
+---
+
+### Setting the service name
+The service name is used to identify the service in the [infrastack.ai dashboard](https://app.infrastack.ai).
+
+To set the service name, you can set the `serviceName` option in the `startOtel` function or set the `OTEL_SERVICE_NAME` environment variable.
+If you do not provide a service name from either of the options, it will generate a random service name.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  serviceName: 'my-service'
+})
+```
+
+```properties .env
+OTEL_SERVICE_NAME=my-service
+```
+
+```bash terminal
+export OTEL_SERVICE_NAME=my-service
+```
+</CodeGroup>
+
+---
+
+### Setting the service version
+The service version is used to identify the version of the service in the [infrastack.ai dashboard](https://app.infrastack.ai). 
+It becomes useful to capture deployment information and other versioning information. 
+
+If you do not provide a service version from either of the options, it will default to `0.0.1`.
+
+To set the service version, you can set the `serviceVersion` option in the `startOtel` function or set the `OTEL_SERVICE_VERSION` environment variable.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  serviceVersion: '1.0.0',
+  serviceName: 'my-service'
+})
+```
+```properties .env
+OTEL_SERVICE_VERSION=1.0.0
+```
+
+```bash terminal
+export OTEL_SERVICE_VERSION=1.0.0
+```
+</CodeGroup>
+
+---
+
+### Development mode
+Development mode is disabled by default. In that case, it will not log anything to the console and will use `BatchSpanProcessor` for span exports.
+
+Visit the Documentation [OpenTelemetry - Picking the right span processor](https://opentelemetry.io/docs/languages/js/instrumentation/#picking-the-right-span-processor) for more information. 
+
+To toggle development mode, you can set the `developmentMode` option to `true` in the `startOtel` function or set the `INFRASTACK_DEVELOPMENT_MODE` environment variable to `true`.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  developmentMode: true,
+  serviceName: 'my-service'
+})
+```
+
+```properties .env
+INFRASTACK_DEVELOPMENT_MODE=true
+```
+ 
+```bash terminal
+export INFRASTACK_DEVELOPMENT_MODE=true
+```
+</CodeGroup>
+
+<Warning> Development mode is only recommended for development purposes. It is not recommended for production. </Warning>
+
+---
+
+### Disabling the SDK logs
+By default, when you set up the SDK and run your application, you will see logs in the console as below:
+
+```
+Exporter endpoint is set as: https://collector.infrastack.ai
+Found an API Key: sk-1*****f5af
+Service name is set as: infrastack-example
+Service version is set as: 0.0.1
+Application is now instrumented with infrastack.ai
+```
+To disable them for cleaner startup logs for your application, you can set the `logsEnabled` option to `false` in the `startOtel` function **or** set the `INFRASTACK_LOGS_ENABLED` environment variable to `false`.
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  logsEnabled: false,
+  serviceName: 'my-service'
+})
+```
+
+```properties .env
+INFRASTACK_LOGS_ENABLED=false
+```
+
+```bash terminal
+export INFRASTACK_LOGS_ENABLED=false
+```
+</CodeGroup>
+
+---
+
+### Tags
+You can define a set of tags to enrich your spans. It is also recommended to add the tag for your environment (Production, Staging, Development etc.)
+
+All of these tags will be added to every span that is created.
+
+To set the tags, you can set the `tags` option in the `startOtel` function or set the `INFRASTACK_TAGS` environment variable.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel, Tag } from '@infrastack/otel'
+const tags: Tag[] = [{ key: 'environment', value: 'production' }]
+startOtel({
+  tags: tags,
+  serviceName: 'my-service'
+})
+```
+```properties .env
+INFRASTACK_TAGS='[{"key": "environment", "value": "production"}]'
+```
+```bash terminal
+export INFRASTACK_TAGS='[{"key": "environment", "value": "production"}]'
+```
+</CodeGroup>
+
+--- 
+
+### Configuring the exporter endpoint
+By default, the SDK will use the `infrastack.ai` collector endpoint. However, it can be overriden to use a different endpoint.
+
+To set the endpoint, you can set the `endpoint` option in the `startOtel` function or set the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { startOtel } from '@infrastack/otel'
+startOtel({
+  endpoint: 'http://localhost:4317',
+  serviceName: 'my-service'
+})
+```
+```properties .env
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+```bash terminal
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+</CodeGroup>
+
+---
