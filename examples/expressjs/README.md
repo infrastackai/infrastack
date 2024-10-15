@@ -2,7 +2,7 @@
 
 This is an example Express.js app integrated with [InfraStack](https://infrastack.ai) for observability.
 
-Follow along [our documentation](https://docs.infrastack.ai/quickstarts/expressjs) for more information.
+Follow along [our documentation](https://docs.infrastack.ai/documentation/integrate-opentelemetry-for-expressjs-with-infrastack) for more information.
 
 ## Getting Started
 
