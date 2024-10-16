@@ -3,7 +3,7 @@
   "name": "infrastack.ai Documentation",
   "logo": {
     "dark": "/logo/logo.svg",
-    "light": "/logo/infrastack-logo-grey.svg"
+    "light": "/logo/infrastack-logo-grey-light.svg"
   },
   "topbar": {
     "style": "gradient"
