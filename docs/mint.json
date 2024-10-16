@@ -34,6 +34,21 @@
       "name": "Schedule a demo",
       "icon": "calendar",
       "url": "https://cal.com/aykut-gedik-infrastack-ai/onboarding"
+    },
+    {
+      "name": "Changelog",
+      "icon": "rotate",
+      "url": "https://feedback.infrastack.ai/changelog"
+    },
+    {
+      "name": "Roadmap",
+      "icon": "map",
+      "url": "https://feedback.infrastack.ai/roadmap"
+    },
+    {
+      "name": "Feedback",
+      "icon": "lightbulb",
+      "url": "https://feedback.infrastack.ai"
     }
   ],
   "navigation": [
