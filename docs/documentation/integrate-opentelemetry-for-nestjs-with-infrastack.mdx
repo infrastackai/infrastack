@@ -14,10 +14,8 @@ twitter:site: "@infrastackai"
 import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
 
 #### What you will learn
-- Installing the `@infrastack/otel` NPM package
-- Setting up your environment
-- Instrumenting your application
-
+- How to set up your environment
+- How to <Tooltip tip="To make an application observable, it must be instrumented: That is, code from the system's components must emit traces, metrics, and logs."> **instrument** </Tooltip> your application using the infrastack.ai SDK or the official OpenTelemetry SDK
 #### Prerequisites
 - An [infrastack.ai](https://app.infrastack.ai) account to get your API key
 - A Nest.js application
@@ -30,6 +28,9 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
 
 ### Getting started
 
+<Tabs>
+<Tab title="Using the Infrastack SDK">
+You can use the Infrastack SDK to instrument your Nest.js application with a single line of code.
 <Steps>
 
   <Step title="Install the NPM package">
@@ -51,6 +52,8 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
   ```bash
   export INFRASTACK_API_KEY=sk-1*************************f5af
   ```
+   <Info>Or you can set the environment variables in your `.env` file by using the [dotenv](https://www.npmjs.com/package/dotenv) library.</Info>
+
   </Step>
 
   <Step title="Create instrumentation.ts">
@@ -88,7 +91,106 @@ import { AppModule } from './app.module';
   </Step>
 
 </Steps>
+</Tab>
+  <Tab title="Using the OpenTelemetry SDK">
+    You can use the [OpenTelemetry Javascript SDK](https://opentelemetry.io/docs/languages/js/) to instrument your Nest.js application.
+    <Steps>
+      <Step title="Install the NPM packages">
+        <CodeGroup>
+          ```bash npm
+          npm install --save @opentelemetry/sdk-node
+          npm install --save @opentelemetry/auto-instrumentations-node
+          npm install --save @opentelemetry/exporter-trace-otlp-grpc
+          ```
+          ```bash yarn
+          yarn add @opentelemetry/sdk-node
+          yarn add @opentelemetry/auto-instrumentations-node
+          yarn add @opentelemetry/exporter-trace-otlp-grpc
+          ```
+          ```bash pnpm
+          pnpm add @opentelemetry/sdk-node
+          pnpm add @opentelemetry/auto-instrumentations-node
+          pnpm add @opentelemetry/exporter-trace-otlp-grpc
+          ```
+        </CodeGroup>
+      </Step>
+      <Step title = "Prepare your environment">
+     
+      ```bash
+      export OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+      export OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRASTACK_API_KEY}}"
+      ```
+      <Info>Or you can set the environment variables in your `.env` file by using the [dotenv](https://www.npmjs.com/package/dotenv) library.</Info>
+      </Step>
 
+    <Step title="Create instrumentation.ts">
+      Here, you will create a file that will be used to instrument your application. You will have lower level control over the instrumentation process.
+        
+      ```javascript instrumentation.ts
+      import { NodeSDK } from '@opentelemetry/sdk-node';
+      import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+      import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+      import { Resource } from '@opentelemetry/resources';
+      import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+      import { CompressionAlgorithm } from '@opentelemetry/otlp-exporter-base';
+      import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
+
+      // Exporter options with compression set to Gzip
+      const exporterOptions = {
+        compression: CompressionAlgorithm.GZIP,
+      };
+
+      // Trace exporter initialization
+      const traceExporter = new OTLPTraceExporter(exporterOptions);
+
+      // SDK initialization with exporter, auto-instrumentation, and resource attributes
+      const sdk = new NodeSDK({
+        traceExporter,
+        instrumentations: [getNodeAutoInstrumentations()],
+        resource: new Resource({
+          [ATTR_SERVICE_NAME]: "{{YOUR_SERVICE_NAME}}",
+          [ATTR_SERVICE_VERSION]: "{{YOUR_SERVICE_VERSION}}",
+        }),
+      });
+
+      // Start the SDK and register it with the OpenTelemetry API
+      sdk.start();
+
+      // Graceful shutdown of SDK on process exit
+      process.on("SIGTERM", () => {
+        sdk
+          .shutdown()
+          .then(() => console.log("Tracing terminated"))
+          .catch((error) => console.log("Error terminating tracing", error))
+          .finally(() => process.exit(0));
+      });
+      ```
+    </Step>
+    <Step title="Import the instrumentation module in your main.ts file">
+    ```javascript main.ts
+    import './instrumentation';
+    import { NestFactory } from '@nestjs/core';
+    import { AppModule } from './app.module';
+
+    async function bootstrap() {
+      const app = await NestFactory.create(AppModule);
+      await app.listen(8081);
+      console.log('Server is running on port 8081');
+    }
+    bootstrap();
+    ```
+    </Step>
+
+    <Step title="Run your application">
+      Run your Nest.js application with the default Nest.js command.
+      ```bash
+      npm run start
+      ```
+      <Tip>After creating some traffic, you can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+    </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 ### Next steps
 <CardGroup cols={2}>
   <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
