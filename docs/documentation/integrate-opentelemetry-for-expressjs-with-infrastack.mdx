@@ -14,9 +14,8 @@ twitter:site: "@infrastackai"
 import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
 
 #### What you will learn
-- Installing the `@infrastack/otel` NPM package
-- Setting up your environment
-- Instrumenting your application
+- How to set up your environment
+- How to <Tooltip tip="To make an application observable, it must be instrumented: That is, code from the system's components must emit traces, metrics, and logs."> **instrument** </Tooltip> your application using the infrastack.ai SDK or the official OpenTelemetry SDK
 
 #### Prerequisites
 - An [infrastack.ai](https://app.infrastack.ai) account to get your API key
@@ -28,49 +27,132 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
   />
 </CardGroup>
 ### Getting started
+<Tabs>
+  <Tab title="Using the Infrastack SDK">
+   You can use the Infrastack SDK to instrument your Express.js application with a single line of code.
+    <Steps>
+      <Step title="Install the NPM package">
+        <CodeGroup>
+          ```bash npm
+          npm install @infrastack/otel
+          ```
+          ```bash yarn
+          yarn add @infrastack/otel
+          ```
+          ```bash pnpm
+          pnpm add @infrastack/otel
+          ```
+        </CodeGroup>
+      </Step>
+      <Step title="Prepare your environment">
+        Export your API key as an environment variable.
+        ```bash
+        export INFRASTACK_API_KEY=sk-1*************************f5af
+        ```
+        <Info>Or you can set the environment variables in your `.env` file by using the [dotenv](https://www.npmjs.com/package/dotenv) library.</Info>
+      </Step>
+      <Step title="Create instrumentation.ts">
+        ```javascript instrumentation.ts
+        import { startOtel } from "@infrastack/otel"; 
+        startOtel({
+          serviceName:"YOUR_SERVICE_NAME",
+        });
+        ```
+        <Info>If you don't provide a service name, we will create a random name for you.</Info>
+      </Step>
+      <Step title="Build and run your application">
+        Run your Express.js application with the node required command.
+        ```bash
+        npx tsc && node -r ./dist/instrumentation.js dist/index.js
+        ```
+        <Tip>After creating some traffic, you can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Using the OpenTelemetry SDK">
+    You can use the [OpenTelemetry Javascript SDK](https://opentelemetry.io/docs/languages/js/) to instrument your Express.js application.
+    <Steps>
+      <Step title="Install the NPM packages">
+        <CodeGroup>
+          ```bash npm
+          npm install --save @opentelemetry/sdk-node
+          npm install --save @opentelemetry/auto-instrumentations-node
+          npm install --save @opentelemetry/exporter-trace-otlp-grpc
+          ```
+          ```bash yarn
+          yarn add @opentelemetry/sdk-node
+          yarn add @opentelemetry/auto-instrumentations-node
+          yarn add @opentelemetry/exporter-trace-otlp-grpc
+          ```
+          ```bash pnpm
+          pnpm add @opentelemetry/sdk-node
+          pnpm add @opentelemetry/auto-instrumentations-node
+          pnpm add @opentelemetry/exporter-trace-otlp-grpc
+          ```
+        </CodeGroup>
+      </Step>
+      <Step title = "Prepare your environment">
+     
+      ```bash
+      export OTEL_EXPORTER_OTLP_ENDPOINT="https://collector.infrastack.ai"
+      export OTEL_EXPORTER_OTLP_HEADERS="infrastack-api-key={{YOUR_INFRASTACK_API_KEY}}"
+      ```
+      <Info>Or you can set the environment variables in your `.env` file by using the [dotenv](https://www.npmjs.com/package/dotenv) library.</Info>
+      </Step>
 
-<Steps>
-
-  <Step title="Install the NPM package">
-  <CodeGroup>
-  ```bash npm
-  npm install @infrastack/otel
-  ```
-  ```bash yarn
-  yarn add @infrastack/otel
-  ```
-  ```bash pnpm
-  pnpm add @infrastack/otel
-  ```
-  </CodeGroup>
-  </Step>
-  <Step title="Prepare your environment">
-  Export your API key as an environment variable.
-  ```bash
-  export INFRASTACK_API_KEY=sk-1*************************f5af
-  ```
-  </Step>
-
-  <Step title="Create instrumentation.ts">
+    <Step title="Create instrumentation.ts">
+      Here, you will create a file that will be used to instrument your application. You will have lower level control over the instrumentation process.
+        
       ```javascript instrumentation.ts
-      import { startOtel } from "@infrastack/otel"; 
-      startOtel({
-        serviceName:"YOUR_SERVICE_NAME",
+      import { NodeSDK } from '@opentelemetry/sdk-node';
+      import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+      import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-grpc';
+      import { Resource } from '@opentelemetry/resources';
+      import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+      import { CompressionAlgorithm } from '@opentelemetry/otlp-exporter-base';
+      import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
+
+      // Exporter options with compression set to Gzip
+      const exporterOptions = {
+        compression: CompressionAlgorithm.GZIP,
+      };
+
+      // Trace exporter initialization
+      const traceExporter = new OTLPTraceExporter(exporterOptions);
+
+      // SDK initialization with exporter, auto-instrumentation, and resource attributes
+      const sdk = new NodeSDK({
+        traceExporter,
+        instrumentations: [getNodeAutoInstrumentations()],
+        resource: new Resource({
+          [ATTR_SERVICE_NAME]: "{{YOUR_SERVICE_NAME}}",
+          [ATTR_SERVICE_VERSION]: "{{YOUR_SERVICE_VERSION}}",
+        }),
+      });
+
+      // Start the SDK and register it with the OpenTelemetry API
+      sdk.start();
+
+      // Graceful shutdown of SDK on process exit
+      process.on("SIGTERM", () => {
+        sdk
+          .shutdown()
+          .then(() => console.log("Tracing terminated"))
+          .catch((error) => console.log("Error terminating tracing", error))
+          .finally(() => process.exit(0));
       });
       ```
-      <Info>If you don't provide a service name, we will create a random name for you.</Info>
-  </Step>
-
-  <Step title="Build and run your application">
-    Run your Express.js application with the node required command.
-    ```bash
-    npx tsc && node -r ./dist/instrumentation.js dist/index.js
-    ```
-
-  <Tip>After creating some traffic, you can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
-  </Step>
-
-</Steps>
+    </Step>
+    <Step title="Build and run your application">
+      Run your Express.js application with the [node required](https://nodejs.org/api/cli.html#cli_r_require_module) command.
+      ```bash
+      npx tsc && node -r ./dist/instrumentation.js dist/index.js
+      ```
+      <Tip>After creating some traffic, you can check your data from the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+    </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 
 ### Next steps
 <CardGroup cols={2}>
@@ -81,6 +163,3 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
   icon={<GithubIcon />}
   />
 </CardGroup>
-
-
-
