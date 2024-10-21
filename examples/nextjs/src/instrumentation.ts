@@ -1,9 +1,7 @@
-export async function register() {
-  if (process.env.NEXT_RUNTIME === "nodejs") {
-    const { startOtel } = await import("@infrastack/otel");
+import { Infrastack } from "@infrastack-otel";
 
-    startOtel({
-      serviceName: "infrastack-nextjs-example",
-    });
-  }
+export async function register() {
+  Infrastack.init({
+    serviceName: "Infrastack NextJS Example",
+  });
 }

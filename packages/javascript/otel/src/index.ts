@@ -1,17 +1,23 @@
 import { Configuration } from "./configuration";
 import { InfrastackSDK } from "./sdk";
 
+/**
+ * @deprecated Use Infrastack.init() instead.
+ */
 export function startOtel(configuration?: Partial<Configuration>) {
-  if (
-    (process.env.NEXT_RUNTIME && process.env.NEXT_RUNTIME !== "nodejs") ||
-    typeof window !== "undefined"
-  ) {
-    return;
-  }
   const sdk = new InfrastackSDK(configuration ?? {});
   sdk.init();
 }
 
-export { Configuration } from "./configuration";
+
+export { Configuration, Instrumentation, Protocol } from "./configuration";
 export type { Tag } from "./configuration";
 
+export class Infrastack {
+  private static sdk: InfrastackSDK;
+
+  static init(configuration?: Partial<Configuration>) {
+    this.sdk = new InfrastackSDK(configuration ?? {});
+    this.sdk.init();
+  }
+}

@@ -21,8 +21,8 @@ $ npm install @infrastack/otel
 To configure Infrastack SDK, call the `init` function in the `instrumentation.ts`:
 
 ```javascript
-import { startOtel } from "@infrastack/otel";
-startOtel();
+import { Infrastack } from "@infrastack/otel";
+Infrastack.init();
 ```
 
 This will capture all the configurations from the `.env` file. This produces an output similar to below:
@@ -59,7 +59,7 @@ You can initialize the SDK with configuration, which overrides the environment v
 1. First, gather the related imports from `@infrastack/otel` in your `instrumentation.ts`
 
 ```javascript
-import { startOtel, Instrumentation, Configuration, Environment, Tag } from "@infrastack/otel";
+import { Infrastack, Instrumentation, Configuration, Environment, Tag } from "@infrastack/otel";
 ```
 2. Then, set up your SDK options. 
 
@@ -82,7 +82,7 @@ const configuration : Configuration = {
 
 3. Initialize the Infrastack SDK
 ```javascript
-startOtel(configuration);
+Infrastack.init(configuration);
 ```
 
 ---
@@ -92,7 +92,7 @@ Partial configuration is also possible. For example:
 const configuration : Configuration = {
     logsEnabled:false
 }
-startOtel(configuration);
+Infrastack.init(configuration);
 ```
 This disables Infrastack SDK logs but collects the rest of the configuration from your `.env` file if available.
 
