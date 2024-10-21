@@ -27,12 +27,12 @@ Our Javascript SDK provides flexibility to developers to configure the SDK. Ther
 ### Setting the API Key
 API key is required when you initialize the SDK to use it with infrastack.ai. 
 
-To set the API key, you can set the `apiKey` option in the `startOtel` function or set the `INFRASTACK_API_KEY` environment variable.
+To set the API key, you can set the `apiKey` option in the `Infrastack.init` function or set the `INFRASTACK_API_KEY` environment variable.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   apiKey: 'sk-1*****f5af',
   serviceName: 'my-service'
 })
@@ -51,13 +51,13 @@ export INFRASTACK_API_KEY=sk-1*****f5af
 ### Setting the service name
 The service name is used to identify the service in the [infrastack.ai dashboard](https://app.infrastack.ai).
 
-To set the service name, you can set the `serviceName` option in the `startOtel` function or set the `OTEL_SERVICE_NAME` environment variable.
+To set the service name, you can set the `serviceName` option in the `Infrastack.init` function or set the `OTEL_SERVICE_NAME` environment variable.
 If you do not provide a service name from either of the options, it will generate a random service name.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   serviceName: 'my-service'
 })
 ```
@@ -79,12 +79,12 @@ It becomes useful to capture deployment information and other versioning informa
 
 If you do not provide a service version from either of the options, it will default to `0.0.1`.
 
-To set the service version, you can set the `serviceVersion` option in the `startOtel` function or set the `OTEL_SERVICE_VERSION` environment variable.
+To set the service version, you can set the `serviceVersion` option in the `Infrastack.init` function or set the `OTEL_SERVICE_VERSION` environment variable.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   serviceVersion: '1.0.0',
   serviceName: 'my-service'
 })
@@ -105,12 +105,12 @@ Development mode is disabled by default. In that case, it will not log anything 
 
 Visit the Documentation [OpenTelemetry - Picking the right span processor](https://opentelemetry.io/docs/languages/js/instrumentation/#picking-the-right-span-processor) for more information. 
 
-To toggle development mode, you can set the `developmentMode` option to `true` in the `startOtel` function or set the `INFRASTACK_DEVELOPMENT_MODE` environment variable to `true`.
+To toggle development mode, you can set the `developmentMode` option to `true` in the `Infrastack.init` function or set the `INFRASTACK_DEVELOPMENT_MODE` environment variable to `true`.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   developmentMode: true,
   serviceName: 'my-service'
 })
@@ -139,11 +139,11 @@ Service name is set as: infrastack-example
 Service version is set as: 0.0.1
 Application is now instrumented with infrastack.ai
 ```
-To disable them for cleaner startup logs for your application, you can set the `logsEnabled` option to `false` in the `startOtel` function **or** set the `INFRASTACK_LOGS_ENABLED` environment variable to `false`.
+To disable them for cleaner startup logs for your application, you can set the `logsEnabled` option to `false` in the `Infrastack.init` function **or** set the `INFRASTACK_LOGS_ENABLED` environment variable to `false`.
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   logsEnabled: false,
   serviceName: 'my-service'
 })
@@ -165,13 +165,13 @@ You can define a set of tags to enrich your spans. It is also recommended to add
 
 All of these tags will be added to every span that is created.
 
-To set the tags, you can set the `tags` option in the `startOtel` function or set the `INFRASTACK_TAGS` environment variable.
+To set the tags, you can set the `tags` option in the `Infrastack.init` function or set the `INFRASTACK_TAGS` environment variable.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel, Tag } from '@infrastack/otel'
+import { Infrastack, Tag } from '@infrastack/otel'
 const tags: Tag[] = [{ key: 'environment', value: 'production' }]
-startOtel({
+Infrastack.init({
   tags: tags,
   serviceName: 'my-service'
 })
@@ -189,12 +189,12 @@ export INFRASTACK_TAGS='[{"key": "environment", "value": "production"}]'
 ### Configuring the exporter endpoint
 By default, the SDK will use the `infrastack.ai` collector endpoint. However, it can be overriden to use a different endpoint.
 
-To set the endpoint, you can set the `endpoint` option in the `startOtel` function or set the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable.
+To set the endpoint, you can set the `endpoint` option in the `Infrastack.init` function or set the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable.
 
 <CodeGroup>
 ```javascript instrumentation.ts
-import { startOtel } from '@infrastack/otel'
-startOtel({
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
   endpoint: 'http://localhost:4317',
   serviceName: 'my-service'
 })
@@ -208,3 +208,47 @@ export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 </CodeGroup>
 
 ---
+
+### Configuring the exporter protocol
+By default, the SDK will use the `grpc` protocol. However, it can be overriden to use a different protocol.
+
+To set the protocol, you can set the `protocol` option in the `Infrastack.init` function or set the `OTEL_EXPORTER_OTLP_PROTOCOL` environment variable.
+
+<CodeGroup>
+```javascript instrumentation.ts
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
+  protocol: Protocol.HTTP,
+  serviceName: 'my-service'
+})
+```
+```properties .env
+OTEL_EXPORTER_OTLP_PROTOCOL=http
+```
+```bash terminal
+export OTEL_EXPORTER_OTLP_PROTOCOL=http
+```
+</CodeGroup>
+
+By doing so, the SDK will use the `http` protocol to export the spans to the collector.
+
+<Warning> If you are using your own collector, you will need to set the correct endpoint and protocol. </Warning>
+
+### Disabling instrumentations
+You can disable specific instrumentations by setting the `disabledInstrumentations` option in the `Infrastack.init` function or set the `INFRASTACK_DISABLED_INSTRUMENTATIONS` environment variable.
+List of instrumentations can be found [here](https://github.com/infrastackai/infrastack/blob/96334ec455956c16837f276b1a5450ffc57ba17d/packages/javascript/otel/src/configuration/index.ts#L25).
+<CodeGroup>
+```javascript instrumentation.ts
+import { Infrastack } from '@infrastack/otel'
+Infrastack.init({
+  disabledInstrumentations: [Instrumentation.HTTP],
+  serviceName: 'my-service'
+})
+```
+```properties .env
+INFRASTACK_DISABLED_INSTRUMENTATIONS='["http"]'
+```
+```bash terminal
+export INFRASTACK_DISABLED_INSTRUMENTATIONS='["http"]'
+```
+</CodeGroup>

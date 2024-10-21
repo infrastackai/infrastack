@@ -59,8 +59,8 @@ You can use the Infrastack SDK to instrument your Nest.js application with a sin
   <Step title="Create instrumentation.ts">
   Create an `instrumentation.ts` file under the `src` folder.
       ```javascript instrumentation.ts
-      import { startOtel } from '@infrastack/otel';
-      startOtel({
+      import { Infrastack } from '@infrastack/otel';
+      Infrastack.init({
         serviceName: 'nestjs-otel-example',
       });
 
