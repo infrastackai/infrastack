@@ -1,4 +1,9 @@
 # Infrastack Otel
+
+Official Infrastack OpenTelemetry SDK for JavaScript. 
+
+Visit the [Documentation](https://docs.infrastack.ai) for more information.
+
 ## [infrastack.ai](https://infrastack.ai) - Next-Gen Application Intelligence for Developers.
 
 [![npm](https://img.shields.io/npm/v/@infrastack/otel.svg)](https://www.npmjs.com/package/@infrastack/otel) ![npm](https://img.shields.io/npm/dm/@infrastack/otel)
