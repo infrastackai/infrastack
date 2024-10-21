@@ -1,9 +1,11 @@
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import {
   BatchSpanProcessor,
+  ConsoleSpanExporter,
   SimpleSpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 import sinon from "sinon";
+import { Instrumentation, Protocol } from "../configuration";
 import {
   INFRASTACK_API_KEY,
   INFRASTACK_DEVELOPMENT_MODE,
@@ -13,6 +15,8 @@ import {
   OTEL_SERVICE_NAME,
 } from "../environment";
 import { InfrastackSDK } from "../sdk";
+import { getInfrastackAutoInstrumentations } from "../utils/auto-instrumentation";
+import { CompositeSpanProcessor } from "../utils/span-processor";
 
 describe("InfrastackSDK", () => {
   let sdk: InfrastackSDK;
@@ -91,19 +95,39 @@ describe("InfrastackSDK", () => {
     expect(consoleInfoStub.calledWithMatch(/Found an API Key:/)).toBe(true);
   });
 
-  it("should create both ConsoleSpanProcessor and SimpleSpanProcessor for development mode", () => {
+  it("should create CompositeSpanProcessor with ConsoleSpanExporter and SimpleSpanProcessor for development mode", () => {
     sdk = new InfrastackSDK({ isDevelopmentMode: true });
-    const processors = sdk["createSpanProcessors"](new OTLPTraceExporter());
-    expect(processors.length).toBe(2);
-    expect(processors[0]).toBeInstanceOf(SimpleSpanProcessor);
-    expect(processors[1]).toBeInstanceOf(SimpleSpanProcessor);
+    const processor = sdk["createSpanProcessors"](new OTLPTraceExporter());
+    expect(processor).toBeInstanceOf(CompositeSpanProcessor);
+
+    // Access the internal processors using type assertion
+    const compositeProcessor = processor as CompositeSpanProcessor;
+    expect(compositeProcessor["processors"].length).toBe(2);
+
+    const firstProcessor = compositeProcessor["processors"][0];
+    const secondProcessor = compositeProcessor["processors"][1];
+
+    expect(firstProcessor).toBeInstanceOf(SimpleSpanProcessor);
+    expect((firstProcessor as SimpleSpanProcessor)["_exporter"]).toBeInstanceOf(
+      ConsoleSpanExporter
+    );
+
+    expect(secondProcessor).toBeInstanceOf(SimpleSpanProcessor);
+    expect(
+      (secondProcessor as SimpleSpanProcessor)["_exporter"]
+    ).toBeInstanceOf(OTLPTraceExporter);
   });
 
   it("should create BatchSpanProcessor for non-development mode", () => {
     sdk = new InfrastackSDK({ isDevelopmentMode: false });
-    const processors = sdk["createSpanProcessors"](new OTLPTraceExporter());
-    expect(processors.length).toBe(1);
-    expect(processors[0]).toBeInstanceOf(BatchSpanProcessor);
+    const processor = sdk["createSpanProcessors"](new OTLPTraceExporter());
+    expect(processor).toBeInstanceOf(CompositeSpanProcessor);
+
+    const compositeProcessor = processor as CompositeSpanProcessor;
+    expect(compositeProcessor["processors"].length).toBe(1);
+
+    const batchProcessor = compositeProcessor["processors"][0];
+    expect(batchProcessor).toBeInstanceOf(BatchSpanProcessor);
   });
 
   it("should not log if logsEnabled is false", () => {
@@ -231,5 +255,57 @@ describe("InfrastackSDK", () => {
         { key: "env", value: "test" },
       ])
     ).toBe(true);
+  });
+
+  it("should use GRPC exporter by default", () => {
+    sdk = new InfrastackSDK();
+    expect(sdk["configuration"].protocol).toBe(Protocol.GRPC);
+    expect(sdk["configuration"].endpoint).toBe(
+      "https://collector.infrastack.ai"
+    );
+    const exporter = require("@opentelemetry/exporter-trace-otlp-grpc");
+    const createSpanProcessorsSpy = jest.spyOn(
+      sdk as any,
+      "createSpanProcessors"
+    );
+    sdk.init();
+    expect(createSpanProcessorsSpy).toHaveBeenCalledWith(
+      expect.any(exporter.OTLPTraceExporter)
+    );
+  });
+
+  it("should use HTTP exporter when protocol is HTTP", () => {
+    sdk = new InfrastackSDK({ protocol: Protocol.HTTP });
+    expect(sdk["configuration"].protocol).toBe(Protocol.HTTP);
+    expect(sdk["configuration"].endpoint).toBe(
+      "https://collector-http.infrastack.ai"
+    );
+    const exporter = require("@opentelemetry/exporter-trace-otlp-proto");
+    const createSpanProcessorsSpy = jest.spyOn(
+      sdk as any,
+      "createSpanProcessors"
+    );
+    sdk.init();
+    expect(createSpanProcessorsSpy).toHaveBeenCalledWith(
+      expect.any(exporter.OTLPTraceExporter)
+    );
+  });
+
+  it("should use auto instrumentation with all the default instrumentations", () => {
+    const instrumentations = getInfrastackAutoInstrumentations([]);
+    expect(instrumentations.length).toBe(Object.keys(Instrumentation).length);
+  });
+
+  it("should disable instrumentation via init configuration", () => {
+    const disabledInstrumentations = [
+      Instrumentation.EXPRESS,
+      Instrumentation.MYSQL2,
+    ];
+    const instrumentations = getInfrastackAutoInstrumentations(
+      disabledInstrumentations
+    );
+    expect(instrumentations.length).toBe(
+      Object.keys(Instrumentation).length - 2
+    );
   });
 });

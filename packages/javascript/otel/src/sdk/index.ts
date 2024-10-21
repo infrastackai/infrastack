@@ -1,30 +1,47 @@
-import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
+import {
+  CompositePropagator,
+  W3CBaggagePropagator,
+  W3CTraceContextPropagator,
+} from "@opentelemetry/core";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
+import { registerInstrumentations } from "@opentelemetry/instrumentation";
 import { CompressionAlgorithm } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
-import { NodeSDK } from "@opentelemetry/sdk-node";
 import {
+  BasicTracerProvider,
   BatchSpanProcessor,
   ConsoleSpanExporter,
   SimpleSpanProcessor,
+  SpanProcessor,
 } from "@opentelemetry/sdk-trace-base";
 import {
   ATTR_SERVICE_NAME,
   ATTR_SERVICE_VERSION,
 } from "@opentelemetry/semantic-conventions";
-import { Configuration, Tag } from "../configuration";
+import {
+  Configuration,
+  INFRASTACK_API_KEY_HEADER,
+  Instrumentation,
+  Protocol,
+  Tag,
+} from "../configuration";
 import {
   INFRASTACK_API_KEY,
   INFRASTACK_DEVELOPMENT_MODE,
+  INFRASTACK_DISABLED_INSTRUMENTATIONS,
   INFRASTACK_LOGS_ENABLED,
   INFRASTACK_TAGS,
   OTEL_EXPORTER_OTLP_ENDPOINT,
   OTEL_EXPORTER_OTLP_HEADERS,
+  OTEL_EXPORTER_OTLP_PROTOCOL,
   OTEL_K8S_NAMESPACE,
   OTEL_K8S_POD_NAME,
   OTEL_SERVICE_NAME,
   OTEL_SERVICE_VERSION,
 } from "../environment";
+import { getInfrastackAutoInstrumentations } from "../utils/auto-instrumentation";
+import { generateRandomServiceName } from "../utils/service-name";
+import { CompositeSpanProcessor } from "../utils/span-processor";
 
 const ATTR_SERVICE_INSTANCE_ID = "service.instance.id";
 const ATTR_K8S_NAMESPACE_NAME = "k8s.namespace.name";
@@ -40,20 +57,50 @@ export class InfrastackSDK {
   public init(): void {
     this.performInitialLogging();
     this.validateConfiguration();
-    this.setEnvironmentVariables();
 
-    const traceExporter = new OTLPTraceExporter(this.getExporterOptions());
+    const exporterOptions = this.getExporterOptions();
+    let traceExporter;
+    if (this.configuration.protocol === Protocol.GRPC) {
+      try {
+        const grpcExporter = require("@opentelemetry/exporter-trace-otlp-grpc");
+        traceExporter = new grpcExporter.OTLPTraceExporter(exporterOptions);
+      } catch (error) {
+        console.warn(
+          "Failed to load grpc exporter, falling back to HTTP exporter."
+        );
+        if (this.configuration.endpoint.includes("infrastack.ai")) {
+          process.env[OTEL_EXPORTER_OTLP_ENDPOINT] =
+            "https://collector-http.infrastack.ai";
+        }
+        traceExporter = new OTLPTraceExporter(exporterOptions);
+      }
+    } else {
+      traceExporter = new OTLPTraceExporter(exporterOptions);
+    }
     const resource = this.createResource();
-    const spanProcessors = this.createSpanProcessors(traceExporter);
+    const spanProcessor = this.createSpanProcessors(traceExporter);
 
-    const otelSDK = new NodeSDK({
-      traceExporter,
+    const provider = new BasicTracerProvider({
       resource,
-      instrumentations: [this.getNodeAutoInstrumentations()],
-      spanProcessors,
+    });
+    provider.addSpanProcessor(spanProcessor);
+    provider.register({
+      propagator: new CompositePropagator({
+        propagators: [
+          new W3CTraceContextPropagator(),
+          new W3CBaggagePropagator(),
+        ],
+      }),
     });
 
-    otelSDK.start();
+    registerInstrumentations({
+      instrumentations: [
+        getInfrastackAutoInstrumentations(
+          this.configuration.disabledInstrumentations
+        ),
+      ],
+    });
+
     this.logInitializationComplete();
   }
 
@@ -64,12 +111,16 @@ export class InfrastackSDK {
     const isDevelopmentMode = this.determineDevelopmentMode(
       providedConfig?.isDevelopmentMode
     );
-
+    const disabledInstrumentationsEnv = this.parseDisabledInstrumentations();
+    const protocol =
+      providedConfig?.protocol ??
+      (process.env[OTEL_EXPORTER_OTLP_PROTOCOL] as Protocol) ??
+      Protocol.GRPC;
     return {
       serviceName:
         providedConfig?.serviceName ??
         process.env[OTEL_SERVICE_NAME] ??
-        this.generateRandomServiceName(),
+        generateRandomServiceName(),
       serviceVersion:
         providedConfig?.serviceVersion ??
         process.env[OTEL_SERVICE_VERSION] ??
@@ -82,8 +133,13 @@ export class InfrastackSDK {
         process.env[INFRASTACK_LOGS_ENABLED] !== "false",
       tags: providedConfig?.tags ?? envTags,
       isDevelopmentMode,
-      endpoint: this.determineEndpoint(providedConfig?.endpoint),
+      endpoint: this.determineEndpoint(providedConfig?.endpoint, protocol),
       apiKey: this.determineApiKey(providedConfig?.apiKey),
+      disabledInstrumentations:
+        providedConfig?.disabledInstrumentations ??
+        disabledInstrumentationsEnv ??
+        [],
+      protocol,
     };
   }
 
@@ -97,6 +153,19 @@ export class InfrastackSDK {
     }
   }
 
+  private parseDisabledInstrumentations(): Instrumentation[] {
+    const envDisabledInstrumentations =
+      process.env[INFRASTACK_DISABLED_INSTRUMENTATIONS];
+    if (!envDisabledInstrumentations) return [];
+    try {
+      return JSON.parse(envDisabledInstrumentations);
+    } catch (error) {
+      throw new Error(
+        "Failed to parse INFRASTACK_DISABLED_INSTRUMENTATIONS environment variable"
+      );
+    }
+  }
+
   private determineDevelopmentMode(providedDevelopmentMode?: boolean): boolean {
     const isDevelopmentMode =
       process.env[INFRASTACK_DEVELOPMENT_MODE]?.toLowerCase() === "true";
@@ -104,11 +173,21 @@ export class InfrastackSDK {
     return isDevelopmentMode ?? false;
   }
 
-  private determineEndpoint(providedEndpoint?: string): string {
+  private determineEndpoint(
+    providedEndpoint?: string,
+    protocol?: Protocol
+  ): string {
+    if (protocol === Protocol.GRPC) {
+      return (
+        providedEndpoint ??
+        process.env[OTEL_EXPORTER_OTLP_ENDPOINT] ??
+        "https://collector.infrastack.ai"
+      );
+    }
     return (
       providedEndpoint ??
       process.env[OTEL_EXPORTER_OTLP_ENDPOINT] ??
-      "https://collector.infrastack.ai"
+      "https://collector-http.infrastack.ai"
     );
   }
 
@@ -139,21 +218,24 @@ export class InfrastackSDK {
     }
   }
 
-  private setEnvironmentVariables(): void {
-    if (this.configuration.endpoint.includes("infrastack.ai")) {
-      process.env.OTEL_EXPORTER_OTLP_ENDPOINT =
-        "https://collector.infrastack.ai";
-      process.env.OTEL_EXPORTER_OTLP_HEADERS = `infrastack-api-key=${this.configuration.apiKey}`;
-    }
-  }
-
   private getExporterOptions() {
+    if (this.configuration.endpoint.includes("infrastack.ai")) {
+      process.env[OTEL_EXPORTER_OTLP_HEADERS] =
+        process.env[OTEL_EXPORTER_OTLP_HEADERS] ?? "";
+      process.env[
+        OTEL_EXPORTER_OTLP_HEADERS
+      ] += `infrastack-api-key=${this.configuration.apiKey}`;
+      process.env[OTEL_EXPORTER_OTLP_ENDPOINT] =
+        this.configuration.endpoint.split("/v1/traces")[0];
+      return { compression: CompressionAlgorithm.GZIP };
+    }
     const options: Record<string, any> = {
       url: this.configuration.endpoint,
-      compression: CompressionAlgorithm.GZIP,
     };
     if (this.configuration.apiKey) {
-      options.headers = { [INFRASTACK_API_KEY]: this.configuration.apiKey };
+      options.headers = {
+        [INFRASTACK_API_KEY_HEADER]: this.configuration.apiKey,
+      };
     }
     return options;
   }
@@ -172,85 +254,17 @@ export class InfrastackSDK {
     return new Resource(attributes);
   }
 
-  private createSpanProcessors(traceExporter: OTLPTraceExporter): any[] {
+  private createSpanProcessors(
+    traceExporter: OTLPTraceExporter
+  ): SpanProcessor {
     if (this.configuration.isDevelopmentMode) {
-      return [
+      const spanProcessor = new CompositeSpanProcessor([
         new SimpleSpanProcessor(new ConsoleSpanExporter()),
         new SimpleSpanProcessor(traceExporter),
-      ];
+      ]);
+      return spanProcessor;
     }
-    return [new BatchSpanProcessor(traceExporter)];
-  }
-
-  private getNodeAutoInstrumentations() {
-    return getNodeAutoInstrumentations({
-      "@opentelemetry/instrumentation-fs": {
-        enabled: false,
-      },
-    });
-  }
-
-  private generateRandomServiceName(): string {
-    const verbs = [
-      "run",
-      "jump",
-      "fly",
-      "swim",
-      "dance",
-      "sing",
-      "explore",
-      "build",
-      "think",
-      "create",
-      "develop",
-      "invent",
-      "imagine",
-      "design",
-      "develop",
-      "invent",
-      "imagine",
-    ];
-    const adjectives = [
-      "happy",
-      "quick",
-      "fuzzy",
-      "tiny",
-      "hero",
-      "brave",
-      "cool",
-      "bright",
-      "lucky",
-      "silly",
-      "witty",
-      "funny",
-      "quirky",
-      "groovy",
-    ];
-    const nouns = [
-      "octopus",
-      "cloud",
-      "dog",
-      "cat",
-      "bird",
-      "unicorn",
-      "tree",
-      "rocket",
-      "star",
-      "budgie",
-      "kitten",
-      "puppy",
-      "elephant",
-      "tiger",
-      "lion",
-      "monkey",
-      "penguin",
-      "dolphin",
-    ];
-    const randomVerb = verbs[Math.floor(Math.random() * verbs.length)];
-    const randomAdjective =
-      adjectives[Math.floor(Math.random() * adjectives.length)];
-    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    return `${randomVerb}-${randomAdjective}-${randomNoun}`;
+    return new CompositeSpanProcessor([new BatchSpanProcessor(traceExporter)]);
   }
 
   private performInitialLogging(): void {

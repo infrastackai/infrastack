@@ -1,5 +1,5 @@
-import { startOtel } from '@infrastack/otel';
+import { Infrastack } from "@infrastack-otel";
 
-startOtel({
-  serviceName: 'nestjs-otel-example',
+Infrastack.init({
+  serviceName: "Infrastack NestJS Example",
 });
