@@ -53,8 +53,8 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
       </Step>
       <Step title="Create instrumentation.ts">
         ```javascript instrumentation.ts
-        import { startOtel } from "@infrastack/otel"; 
-        startOtel({
+        import { Infrastack } from "@infrastack/otel"; 
+        Infrastack.init({
           serviceName:"YOUR_SERVICE_NAME",
         });
         ```

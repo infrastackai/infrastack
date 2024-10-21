@@ -11,7 +11,7 @@ twitter:description: "Learn how to instrument your Next.js application with infr
 twitter:site: "@infrastackai"
 ---
 
-import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
+import { GithubIcon, JsIcon, VercelIcon } from '/snippets/custom-icons.mdx'
 
 #### What you will learn
 - How to set up your environment
@@ -60,10 +60,6 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
                 const nextConfig = {
                     experimental: {
                         instrumentationHook: true, // To enable instrumentation
-                        serverComponentsExternalPackages: [ // To utilize node.js specific features in a next.js environment
-                            "@opentelemetry/auto-instrumentations-node",
-                            "@opentelemetry/sdk-node",
-                        ],
                     },
                 };
 
@@ -74,13 +70,12 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
             <Step title="Create instrumentation.ts">
                 <Info>If you are using a `src` folder in your Next.js application, create an `instrumentation.ts` file there. If not, create the file in the root of your project.</Info>
                 ```javascript instrumentation.ts
+                import { Infrastack, Protocol } from "@infrastack/otel";
                 export async function register() {
-                    if (process.env.NEXT_RUNTIME === "nodejs") {
-                        const { startOtel } = await import("@infrastack/otel");
-                        startOtel({
-                            "serviceName": "YOUR_SERVICE_NAME",
-                        });
-                    }
+                    Infrastack.init({
+                        serviceName: "YOUR_SERVICE_NAME",
+                        protocol: Protocol.HTTP, // Recommended for Vercel
+                    });
                 }
                 ```
                 <Info>If you don't provide a service name, we will create a random name for you.</Info>
@@ -199,6 +194,9 @@ import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
 </Tabs>
 ### Next steps
 <CardGroup cols={2}>
+<Card title="Deploy Next.js with OpenTelemetry to Vercel" href="/guides/deploy-nextjs-with-opentelemetry-to-vercel"
+    icon={<VercelIcon />}
+    />
     <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
     icon={<JsIcon />}
     />

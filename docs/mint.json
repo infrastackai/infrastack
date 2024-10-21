@@ -65,6 +65,10 @@
       ]
     },
     {
+      "group": "Guides",
+      "pages": ["guides/deploy-nextjs-with-opentelemetry-to-vercel"]
+    },
+    {
       "group": "SDK Reference",
       "pages": [
         {
