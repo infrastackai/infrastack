@@ -1,0 +1,142 @@
+---
+title: Dockerize your Next.js application with OpenTelemetry via infrastack.ai
+description: 'Learn how to dockerize your Next.js application with OpenTelemetry via infrastack.ai'
+og:site_name: "infrastack.ai"
+og:title: "Dockerize your Next.js application with OpenTelemetry via infrastack.ai"
+og:description: "Learn how to dockerize your Next.js application with OpenTelemetry via infrastack.ai"
+og:locale: "en_US"
+article:publisher: "https://www.linkedin.com/company/infrastack-ai"
+twitter:title: "Dockerize your Next.js application with OpenTelemetry via infrastack.ai"
+twitter:description: "Learn how to dockerize your Next.js application with OpenTelemetry via infrastack.ai"
+twitter:site: "@infrastackai"
+---
+import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
+
+#### What you will learn
+- How to dockerize your Next.js application with OpenTelemetry via infrastack.ai
+
+#### Prerequisites
+- Docker installed on your machine
+- An infrastack.ai account
+- A Next.js application configured with the infrastack.ai SDK, see [Integrate OpenTelemetry for Next.js with infrastack.ai](/documentation/integrate-opentelemetry-for-nextjs-with-infrastack)
+<Info>
+The application should be on the `nodejs` runtime. The `edge` runtime is not supported at this time.
+</Info>
+
+<CardGroup cols={1}>
+    <Card title="Follow the example project on GitHub" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+    icon={<GithubIcon />}
+    />
+</CardGroup>
+
+#### Overview
+Docker is a platform for building, running, and shipping applications with ease. With the power of infrastack.ai and OpenTelemetry, you can get comprehensive observability for your Next.js application.
+
+After you have configured your application with the infrastack.ai SDK by following the [Integrate OpenTelemetry for Next.js with infrastack.ai](/documentation/integrate-opentelemetry-for-nextjs-with-infrastack) guide, you can dockerize your application by following these steps:
+
+<Steps>
+<Step title="Configure next.config.mjs">
+In your `next.config.mjs` file, :
+```javascript
+const nextConfig = {
+  output: 'standalone', // For web services/Docker
+  experimental: {
+    instrumentationHook: true, // To enable instrumentation
+  },
+};
+
+export default nextConfig;
+```
+This will allow the Next.js application to be run as a web service.
+</Step>
+<Step title="Create a Dockerfile">
+Create a `Dockerfile` in the root of your project with the following content:
+```dockerfile Dockerfile
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM base as builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+RUN npm run build
+
+FROM base as runner
+WORKDIR /app
+
+ENV NODE_ENV production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+RUN mkdir .next
+
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+CMD HOSTNAME="0.0.0.0" node server.js
+```
+In this optimized dockerfile, we are using the `base` image as the base image for the builder and runner stages. The `builder` stage is used to build the application and the `runner` stage is used to run the application.
+<Tip>You can change the port if you will not be using the default port of 3000.</Tip>
+</Step>
+
+<Step title="Create a dockerignore file">
+Create a `.dockerignore` file in the root of your project with the following content:
+```dockerignore .dockerignore
+Dockerfile
+.dockerignore
+node_modules
+.next
+README.md
+npm-debug.log
+!.next/static
+!.next/standalone
+.git
+```
+This will prevent unnecessary files from being included in the Docker image. You can add more files to the ignore list if you see fit.
+</Step>
+
+<Step title="Build the Docker image">
+Build the Docker image with the following command:
+```bash
+docker image build -t nextjs-example:latest .        
+```
+<Tip>You can change the name `nextjs-example:latest` to your desired name and tag.</Tip>
+</Step>
+
+<Step title="Run the Docker container">
+Run the Docker container with the following command:
+```bash
+docker container run -p 3000:3000 -e INFRASTACK_API_KEY=<your-infrastack-api-key> nextjs-example:latest
+```
+</Step>
+
+<Step title="Visit your application">
+You can verify that the application is working by navigating to `http://localhost:3000` in your web browser.
+<Tip>Now, you can check your data in the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+</Step>
+
+<Step title="Optional: Deploy to a cloud provider">
+You can push the Docker image to a registry such as [Docker Hub](https://hub.docker.com) or [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-package-registry/working-with-the-container-registry) and then deploy it to a cloud provider of your choice.
+</Step>
+</Steps>
+
+<CardGroup cols={2}>
+    <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
+    icon={<JsIcon />}
+    />
+    <Card title="Explore the Next.js example project" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+    icon={<GithubIcon />}
+    />
+</CardGroup>

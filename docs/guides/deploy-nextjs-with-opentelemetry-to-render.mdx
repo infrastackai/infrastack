@@ -1,0 +1,82 @@
+---
+title: Deploy your Next.js application with OpenTelemetry to Render via infrastack.ai
+description: 'Learn how to deploy your Next.js application with OpenTelemetry to Render via infrastack.ai'
+og:site_name: "infrastack.ai"
+og:title: "Deploy your Next.js application with OpenTelemetry to Render via infrastack.ai"
+og:description: "Learn how to deploy your Next.js application with OpenTelemetry to Render via infrastack.ai"
+og:locale: "en_US"
+article:publisher: "https://www.linkedin.com/company/infrastack-ai"
+twitter:title: "Deploy your Next.js application with OpenTelemetry to Render via infrastack.ai"
+twitter:description: "Learn how to deploy your Next.js application with OpenTelemetry to Render via infrastack.ai"
+twitter:site: "@infrastackai"
+---
+import { GithubIcon, JsIcon } from '/snippets/custom-icons.mdx'
+
+#### What you will learn
+- How to deploy your Next.js application with OpenTelemetry to [Render](https://render.com) with infrastack.ai
+
+#### Prerequisites
+- A Render account
+- An infrastack.ai account
+- A Next.js application configured with the infrastack.ai SDK, see [Integrate OpenTelemetry for Next.js with infrastack.ai](/documentation/integrate-opentelemetry-for-nextjs-with-infrastack)
+<Info>
+The application should be on the `nodejs` runtime. The `edge` runtime is not supported at this time.
+</Info>
+
+<CardGroup cols={1}>
+    <Card title="Follow the example project on GitHub" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+    icon={<GithubIcon />}
+    />
+</CardGroup>
+
+#### Overview
+Render is a platform for deploying applications with ease. It supports a wide range of frameworks, including Next.js. With the power of infrastack.ai and OpenTelemetry, you can get comprehensive observability for your Next.js application on Render.
+
+After you have configured your application with the infrastack.ai SDK by following the [Integrate OpenTelemetry for Next.js with infrastack.ai](/documentation/integrate-opentelemetry-for-nextjs-with-infrastack) guide, you can deploy your application to Render by following these steps:
+
+<Steps>
+    <Step title="Push your application code to a GitHub repository">
+        - On your GitHub account, create a new repository or use an existing one. It can be private or public.
+        - Push your application code to the repository.
+        - If you need help setting up your repo, take a look at [this guide on GitHub](https://help.github.com/en/github/getting-started-with-github/create-a-repo).
+    </Step>
+    <Step title="Create a web service on Render">
+        - Go to the [Render dashboard](https://dashboard.render.com/).
+        - Click on the `+ New` button.
+        - Select the `Web Service` option.
+        ![Render New Web Service](/images/render-nextjs-step1.png)
+        - Select the `GitHub` option.
+        - Follow the instructions to connect your GitHub account to Render.
+        - Select the repository you created in the previous step.
+        - Click on the `Connect` button.
+
+        ![Render GitHub Repository](/images/render-nextjs-step2.png)
+    </Step>
+    <Step title="Configure your environment variables">
+        - Scroll down to the `Environment Variables` section.
+        - Add the following environment variable:
+        - `INFRASTACK_API_KEY`: Your infrastack.ai API key.
+
+        ![Render Environment Variables](/images/render-nextjs-step3.png)
+    </Step>
+    <Step title="Deploy your application">
+        - Click on the `Deploy Web Service` button.
+        <Tip>It will take a few minutes to deploy your application.</Tip>
+        During the deployment, you will see the following logs:
+        ![Render Deployment Logs](/images/render-nextjs-step4.png)
+    </Step>
+  <Step title='Visit your application'>
+        You can visit your application by clicking on the URL displayed in your web service dashboard. 
+    </Step>
+</Steps>
+
+<Tip>Now, you can check your data in the [infrastack.ai](https://app.infrastack.ai) dashboard.</Tip>
+
+<CardGroup cols={2}>
+    <Card title="Javascript SDK Reference" href="/sdk-reference/javascript/configuration" 
+    icon={<JsIcon />}
+    />
+    <Card title="Explore the Next.js example project" href="https://github.com/infrastackai/infrastack/tree/main/examples/nextjs"
+    icon={<GithubIcon />}
+    />
+</CardGroup>
