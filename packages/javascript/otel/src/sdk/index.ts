@@ -22,15 +22,20 @@ import {
   Configuration,
   INFRASTACK_API_KEY_HEADER,
   Instrumentation,
+  LLMOptions,
   Protocol,
   Tag,
 } from "../configuration";
 import {
+  ANTHROPIC_ENABLED,
+  ANTHROPIC_TRACE_CONTENT,
   INFRASTACK_API_KEY,
   INFRASTACK_DEVELOPMENT_MODE,
   INFRASTACK_DISABLED_INSTRUMENTATIONS,
   INFRASTACK_LOGS_ENABLED,
   INFRASTACK_TAGS,
+  OPENAI_ENABLED,
+  OPENAI_TRACE_CONTENT,
   OTEL_EXPORTER_OTLP_ENDPOINT,
   OTEL_EXPORTER_OTLP_HEADERS,
   OTEL_EXPORTER_OTLP_PROTOCOL,
@@ -96,7 +101,8 @@ export class InfrastackSDK {
     registerInstrumentations({
       instrumentations: [
         getInfrastackAutoInstrumentations(
-          this.configuration.disabledInstrumentations
+          this.configuration.disabledInstrumentations,
+          this.configuration.llmOptions
         ),
       ],
     });
@@ -116,6 +122,8 @@ export class InfrastackSDK {
       providedConfig?.protocol ??
       (process.env[OTEL_EXPORTER_OTLP_PROTOCOL] as Protocol) ??
       Protocol.GRPC;
+    const llmOptions = this.mergeLLMOptions(providedConfig?.llmOptions);
+
     return {
       serviceName:
         providedConfig?.serviceName ??
@@ -140,7 +148,44 @@ export class InfrastackSDK {
         disabledInstrumentationsEnv ??
         [],
       protocol,
+      llmOptions,
     };
+  }
+
+  private mergeLLMOptions(
+    providedLLMOptions?: Partial<LLMOptions>
+  ): LLMOptions {
+    const defaultLLMOptions: LLMOptions = {
+      openai: { enabled: true, traceContent: true },
+      anthropic: { enabled: true, traceContent: true },
+    };
+
+    const envLLMOptions: Partial<LLMOptions> = {
+      openai: {
+        enabled: process.env[OPENAI_ENABLED]?.toLowerCase() !== "false",
+        traceContent:
+          process.env[OPENAI_TRACE_CONTENT]?.toLowerCase() !== "false",
+      },
+      anthropic: {
+        enabled: process.env[ANTHROPIC_ENABLED]?.toLowerCase() !== "false",
+        traceContent:
+          process.env[ANTHROPIC_TRACE_CONTENT]?.toLowerCase() !== "false",
+      },
+    };
+
+    const mergedOptions: LLMOptions = { ...defaultLLMOptions };
+
+    for (const service of ["openai", "anthropic"] as const) {
+      if (providedLLMOptions?.[service] || envLLMOptions[service]) {
+        mergedOptions[service] = {
+          ...defaultLLMOptions[service],
+          ...envLLMOptions[service],
+          ...providedLLMOptions?.[service],
+        };
+      }
+    }
+
+    return mergedOptions;
   }
 
   private parseEnvTags(): Tag[] {

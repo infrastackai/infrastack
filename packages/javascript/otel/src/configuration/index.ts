@@ -16,6 +16,16 @@ export type Configuration = {
   apiKey: string;
   disabledInstrumentations: Instrumentation[];
   protocol: Protocol;
+  llmOptions?: Partial<LLMOptions>;
+};
+export type LLMOptionsBase = {
+  enabled?: boolean;
+  traceContent?: boolean;
+};
+
+export type LLMOptions = {
+  openai?: LLMOptionsBase;
+  anthropic?: LLMOptionsBase;
 };
 
 export enum Protocol {
@@ -23,6 +33,7 @@ export enum Protocol {
   GRPC = "grpc",
 }
 export enum Instrumentation {
+  //OpenTelemetry Instrumentations
   AMQPLIB = "amqplib",
   AWS_SDK = "aws-sdk",
   BUNYAN = "bunyan",
@@ -55,4 +66,7 @@ export enum Instrumentation {
   ROUTER = "router",
   SOCKET_IO = "socket.io",
   TEDIOUS = "tedious",
+  //External Instrumentations
+  OPENAI = "openai",
+  ANTHROPIC = "anthropic",
 }

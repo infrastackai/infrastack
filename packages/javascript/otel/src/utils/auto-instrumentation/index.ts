@@ -30,10 +30,12 @@ import { RestifyInstrumentation } from "@opentelemetry/instrumentation-restify";
 import { RouterInstrumentation } from "@opentelemetry/instrumentation-router";
 import { SocketIoInstrumentation } from "@opentelemetry/instrumentation-socket.io";
 import { TediousInstrumentation } from "@opentelemetry/instrumentation-tedious";
-
-import { Instrumentation } from "../../configuration";
+import { AnthropicInstrumentation } from "@traceloop/instrumentation-anthropic";
+import { OpenAIInstrumentation } from "@traceloop/instrumentation-openai";
+import { Instrumentation, LLMOptions } from "../../configuration";
 
 const instrumentationMap = {
+  //OpenTelemetry Instrumentations
   [Instrumentation.AMQPLIB]: AmqplibInstrumentation,
   [Instrumentation.AWS_SDK]: AwsInstrumentation,
   [Instrumentation.BUNYAN]: BunyanInstrumentation,
@@ -66,25 +68,57 @@ const instrumentationMap = {
   [Instrumentation.ROUTER]: RouterInstrumentation,
   [Instrumentation.SOCKET_IO]: SocketIoInstrumentation,
   [Instrumentation.TEDIOUS]: TediousInstrumentation,
+  //External Instrumentations
+  [Instrumentation.OPENAI]: OpenAIInstrumentation,
+  [Instrumentation.ANTHROPIC]: AnthropicInstrumentation,
 };
 
 export function getInfrastackAutoInstrumentations(
-  disabledInstrumentations: Instrumentation[]
+  disabledInstrumentations: Instrumentation[],
+  llmOptions?: Partial<LLMOptions>
 ) {
+  const defaultLLMOptions: LLMOptions = {
+    openai: { enabled: true, traceContent: true },
+    anthropic: { enabled: true, traceContent: true },
+  };
+
+  const mergedLLMOptions: LLMOptions = {
+    openai: { ...defaultLLMOptions.openai, ...llmOptions?.openai },
+    anthropic: { ...defaultLLMOptions.anthropic, ...llmOptions?.anthropic },
+  };
+
   const instrumentations = [];
   for (const [name, Instance] of Object.entries(instrumentationMap)) {
     if (!disabledInstrumentations.includes(name as Instrumentation)) {
       let initiatedInstance;
-      if (name === Instrumentation.HTTP) {
-        initiatedInstance = new Instance({
-          ignoreOutgoingRequestHook: (req) => {
-            return req.path?.includes("v1/traces") ?? false; // to avoid infinite recursion of tracing calls
-          },
-        });
-      } else {
-        initiatedInstance = new Instance();
+      switch (name) {
+        case Instrumentation.HTTP:
+          initiatedInstance = new Instance({
+            ignoreOutgoingRequestHook: (req) => {
+              return req.path?.includes("v1/traces") ?? false; // to avoid infinite recursion of tracing calls
+            },
+          });
+          break;
+        case Instrumentation.OPENAI:
+          if (mergedLLMOptions.openai?.enabled) {
+            initiatedInstance = new Instance({
+              traceContent: mergedLLMOptions.openai.traceContent,
+            });
+          }
+          break;
+        case Instrumentation.ANTHROPIC:
+          if (mergedLLMOptions.anthropic?.enabled) {
+            initiatedInstance = new Instance({
+              traceContent: mergedLLMOptions.anthropic.traceContent,
+            });
+          }
+          break;
+        default:
+          initiatedInstance = new Instance();
       }
-      instrumentations.push(initiatedInstance);
+      if (initiatedInstance) {
+        instrumentations.push(initiatedInstance);
+      }
     }
   }
   return instrumentations;

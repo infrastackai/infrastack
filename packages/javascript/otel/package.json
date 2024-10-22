@@ -44,8 +44,8 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "@opentelemetry/exporter-trace-otlp-proto": "^0.53.0",
     "@opentelemetry/exporter-trace-otlp-grpc": "^0.53.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.53.0",
     "@opentelemetry/instrumentation-amqplib": "^0.42.0",
     "@opentelemetry/instrumentation-aws-sdk": "^0.44.0",
     "@opentelemetry/instrumentation-bunyan": "^0.41.0",
@@ -78,6 +78,8 @@
     "@opentelemetry/instrumentation-router": "^0.40.0",
     "@opentelemetry/instrumentation-socket.io": "^0.42.0",
     "@opentelemetry/instrumentation-tedious": "^0.14.0",
-    "@opentelemetry/sdk-trace-base": "^1.26.0"
+    "@opentelemetry/sdk-trace-base": "^1.26.0",
+    "@traceloop/instrumentation-anthropic": "^0.11.1",
+    "@traceloop/instrumentation-openai": "^0.11.3"
   }
 }

@@ -302,10 +302,31 @@ describe("InfrastackSDK", () => {
       Instrumentation.MYSQL2,
     ];
     const instrumentations = getInfrastackAutoInstrumentations(
-      disabledInstrumentations
+      disabledInstrumentations,
+      {
+        openai: { enabled: true, traceContent: true },
+        anthropic: { enabled: true, traceContent: true },
+      }
     );
     expect(instrumentations.length).toBe(
       Object.keys(Instrumentation).length - 2
+    );
+  });
+
+  it("should not use the openai instrumentation if it is disabled", () => {
+    const instrumentations = getInfrastackAutoInstrumentations([], {
+      openai: { enabled: false, traceContent: false },
+    });
+    expect(instrumentations.length).toBe(
+      Object.keys(Instrumentation).length - 1
+    );
+  });
+  it("should not use the anthropic instrumentation if it is disabled", () => {
+    const instrumentations = getInfrastackAutoInstrumentations([], {
+      anthropic: { enabled: false, traceContent: false },
+    });
+    expect(instrumentations.length).toBe(
+      Object.keys(Instrumentation).length - 1
     );
   });
 });
