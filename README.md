@@ -1,7 +1,6 @@
 ![Infrastack Header](https://media.licdn.com/dms/image/v2/D563DAQF4Ho1gMJhqOg/image-scale_191_1128/image-scale_191_1128/0/1702098901527/infrastack_ai_cover?e=2147483647&v=beta&t=VT6FHJAZLKFGiz20tjdAhQDzn6kwVtUykAGKg7gZTmU)
 ---
 ![Static Badge](https://img.shields.io/badge/🐙_☁️_infrastack.ai-gray?style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/🧑‍💻_Open_Source-blue?style=for-the-badge&logo)
 ![Static Badge](https://img.shields.io/badge/📊_Observability-red?style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/🔭_OpenTelemetry-red?style=for-the-badge)
 
